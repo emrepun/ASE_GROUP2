@@ -48,6 +48,20 @@ class ViewController: UIViewController {
             showAlert(title: "Location Services Disabled", message: "Please enable Location Services in Settings to view your location on map")
         }
     }
+    
+    
+    @IBAction func locateMeButtonTapped(_ sender: Any) {
+        let authStat = CLLocationManager.authorizationStatus()
+        
+        if authStat == .denied || authStat == .restricted || authStat == .notDetermined {
+            showAlert(title: "Location Services Disabled", message: "Please enable Location Services in Settings to locate yourself!")
+        } else {
+            let distance: CLLocationDistance = 500
+            let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, latitudinalMeters: distance, longitudinalMeters: distance)
+            mapView.setRegion(region, animated: true)
+        }
+    }
+    
 }
 
 // MARK: Location Delegate Methods

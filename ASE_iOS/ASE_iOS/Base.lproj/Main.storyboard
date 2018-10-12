@@ -58,10 +58,19 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YIg-np-1tM">
+                                <rect key="frame" x="32" y="76" width="25" height="25"/>
+                                <state key="normal" image="locateMe"/>
+                                <connections>
+                                    <action selector="locateMeButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ei0-v5-9Ws"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="YIg-np-1tM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="5Cr-bT-bzk"/>
                             <constraint firstItem="2Od-Wl-qjv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="JSI-Sc-1wt"/>
+                            <constraint firstItem="YIg-np-1tM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="32" id="VGq-4B-bKn"/>
                             <constraint firstItem="FSe-mr-aHB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ww3-l5-dAj"/>
                             <constraint firstItem="2Od-Wl-qjv" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="cQL-O3-FOu"/>
                             <constraint firstItem="2Od-Wl-qjv" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="fC6-bw-DwH"/>
@@ -81,4 +90,7 @@
             <point key="canvasLocation" x="131.8840579710145" y="106.47321428571428"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="locateMe" width="25" height="25"/>
+    </resources>
 </document>
