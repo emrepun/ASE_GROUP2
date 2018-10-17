@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">ASE_android</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">ase_android</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
