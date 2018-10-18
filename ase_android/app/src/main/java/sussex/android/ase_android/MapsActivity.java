@@ -58,10 +58,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String provider = service.getBestProvider(criteria, false);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Location location = service.getLastKnownLocation(provider);
-                LatLng myLocation = new LatLng(location.getLatitude(),
-                        location.getLongitude());
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,
-                        16));
+            LatLng myLocation = new LatLng(location.getLatitude(),
+                    location.getLongitude());
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,
+                    14));
+            mMap.addMarker(new MarkerOptions().position(myLocation).title("Initial position").snippet("Lat/Lng:" + myLocation.latitude + " / " +  myLocation.longitude));
         }else{
             LatLng germany = new LatLng(48, 11);
             mMap.animateCamera(CameraUpdateFactory.newLatLng(germany));
