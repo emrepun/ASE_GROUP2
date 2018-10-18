@@ -19,6 +19,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.Locale;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -62,7 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     location.getLongitude());
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,
                     14));
-            mMap.addMarker(new MarkerOptions().position(myLocation).title("Initial position").snippet("Lat/Lng:" + myLocation.latitude + " / " +  myLocation.longitude));
+            mMap.addMarker(new MarkerOptions().position(myLocation).title("Initial position").snippet("Lat/Lng: " +String.format(Locale.UK,"%.6f", myLocation.latitude) + " / " +  String.format(Locale.UK,"%.6f", myLocation.longitude)));
         }else{
             LatLng germany = new LatLng(48, 11);
             mMap.animateCamera(CameraUpdateFactory.newLatLng(germany));
