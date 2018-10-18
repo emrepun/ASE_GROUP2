@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB6BCD5D21712ABB00778AC4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5C21712ABB00778AC4 /* User.swift */; };
+		FB6BCD5F21712B7D00778AC4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5E21712B7D00778AC4 /* Extensions.swift */; };
 		FBCB459F216FBD5F00089508 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCB459E216FBD5F00089508 /* AppDelegate.swift */; };
 		FBCB45A1216FBD5F00089508 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCB45A0216FBD5F00089508 /* ViewController.swift */; };
 		FBCB45A4216FBD5F00089508 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBCB45A2216FBD5F00089508 /* Main.storyboard */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FB6BCD5C21712ABB00778AC4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		FB6BCD5E21712B7D00778AC4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		FBCB459B216FBD5F00089508 /* ASE_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASE_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBCB459E216FBD5F00089508 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBCB45A0216FBD5F00089508 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +60,8 @@
 			children = (
 				FBCB459E216FBD5F00089508 /* AppDelegate.swift */,
 				FBCB45A0216FBD5F00089508 /* ViewController.swift */,
+				FB6BCD5C21712ABB00778AC4 /* User.swift */,
+				FB6BCD5E21712B7D00778AC4 /* Extensions.swift */,
 				FBCB45A2216FBD5F00089508 /* Main.storyboard */,
 				FBCB45A5216FBD6100089508 /* Assets.xcassets */,
 				FBCB45A7216FBD6100089508 /* LaunchScreen.storyboard */,
@@ -137,6 +143,8 @@
 			files = (
 				FBCB45A1216FBD5F00089508 /* ViewController.swift in Sources */,
 				FBCB459F216FBD5F00089508 /* AppDelegate.swift in Sources */,
+				FB6BCD5D21712ABB00778AC4 /* User.swift in Sources */,
+				FB6BCD5F21712B7D00778AC4 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +293,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 56D56RFRE4;
 				INFOPLIST_FILE = ASE_iOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -303,6 +312,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 56D56RFRE4;
 				INFOPLIST_FILE = ASE_iOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
