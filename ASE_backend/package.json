@@ -1,0 +1,19 @@
+{
+  "name": "ase_backend",
+  "version": "0.0.1",
+  "description": "Backend for ASE Task 3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emrepun/ASE_GROUP2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emrepun/ASE_GROUP2/issues"
+  },
+  "homepage": "https://github.com/emrepun/ASE_GROUP2#readme"
+}
