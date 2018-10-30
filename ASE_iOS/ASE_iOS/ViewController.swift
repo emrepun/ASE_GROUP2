@@ -27,7 +27,7 @@ class ViewController: UIViewController {
     let locationManager = CLLocationManager()
     var authorizationStatus = CLLocationManager.authorizationStatus()
     
-    var user = User(latitude: 0.0, longitude: 0.0)
+    //var user = User(latitude: 0.0, longitude: 0.0)
 
     override func viewDidLoad() {
         super.viewDidLoad()

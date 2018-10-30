@@ -10,10 +10,10 @@
 		393D4C9330485504721540FA /* Pods_ASE_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D812B3E38C30908B7B490F33 /* Pods_ASE_iOS.framework */; };
 		A96D15E0218714EB00CF96A2 /* SignUp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A96D15DF218714EB00CF96A2 /* SignUp.storyboard */; };
 		A96D15E22187151100CF96A2 /* LogIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A96D15E12187151100CF96A2 /* LogIn.storyboard */; };
-		A9CE617B218757EF003120EF /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9CE617A218757EF003120EF /* Welcome.storyboard */; };
 		A9CE617F2187D14F003120EF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE617E2187D14F003120EF /* MapViewController.swift */; };
 		A9CE61812187D19B003120EF /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE61802187D19B003120EF /* LogInViewController.swift */; };
 		A9CE61832187D1AD003120EF /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE61822187D1AD003120EF /* SignUpViewController.swift */; };
+		A9CE618521886F59003120EF /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9CE618421886F59003120EF /* Map.storyboard */; };
 		FB6BCD5D21712ABB00778AC4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5C21712ABB00778AC4 /* User.swift */; };
 		FB6BCD5F21712B7D00778AC4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5E21712B7D00778AC4 /* Extensions.swift */; };
 		FB77E0D921833139008A9448 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB77E0D821833139008A9448 /* GoogleService-Info.plist */; };
@@ -29,11 +29,10 @@
 		90C521729CB937294CF3C987 /* Pods-ASE_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASE_iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS.release.xcconfig"; sourceTree = "<group>"; };
 		A96D15DF218714EB00CF96A2 /* SignUp.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignUp.storyboard; sourceTree = "<group>"; };
 		A96D15E12187151100CF96A2 /* LogIn.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LogIn.storyboard; sourceTree = "<group>"; };
-		A9CE617A218757EF003120EF /* Welcome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
-		A9CE617D21875AD1003120EF /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Map.storyboard; path = /Users/jf/Documents/masters/advanced_software_engineering/ASE_GROUP2/ASE_iOS/ASE_iOS/Map.storyboard; sourceTree = "<absolute>"; };
 		A9CE617E2187D14F003120EF /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		A9CE61802187D19B003120EF /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		A9CE61822187D1AD003120EF /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		A9CE618421886F59003120EF /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		D812B3E38C30908B7B490F33 /* Pods_ASE_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASE_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB6BCD5C21712ABB00778AC4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FB6BCD5E21712B7D00778AC4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -102,12 +101,11 @@
 				FB6BCD5C21712ABB00778AC4 /* User.swift */,
 				FB6BCD5E21712B7D00778AC4 /* Extensions.swift */,
 				FBCB45A2216FBD5F00089508 /* Main.storyboard */,
-				A9CE617D21875AD1003120EF /* Map.storyboard */,
 				A9CE617E2187D14F003120EF /* MapViewController.swift */,
-				A9CE617A218757EF003120EF /* Welcome.storyboard */,
 				A96D15E12187151100CF96A2 /* LogIn.storyboard */,
 				A9CE61802187D19B003120EF /* LogInViewController.swift */,
 				A9CE61822187D1AD003120EF /* SignUpViewController.swift */,
+				A9CE618421886F59003120EF /* Map.storyboard */,
 				A96D15DF218714EB00CF96A2 /* SignUp.storyboard */,
 				FBCB45A5216FBD6100089508 /* Assets.xcassets */,
 				FBCB45A7216FBD6100089508 /* LaunchScreen.storyboard */,
@@ -178,12 +176,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBCB45A9216FBD6100089508 /* LaunchScreen.storyboard in Resources */,
+				A9CE618521886F59003120EF /* Map.storyboard in Resources */,
 				FB77E0D921833139008A9448 /* GoogleService-Info.plist in Resources */,
 				FBCB45A6216FBD6100089508 /* Assets.xcassets in Resources */,
 				FBCB45A4216FBD5F00089508 /* Main.storyboard in Resources */,
 				A96D15E22187151100CF96A2 /* LogIn.storyboard in Resources */,
 				A96D15E0218714EB00CF96A2 /* SignUp.storyboard in Resources */,
-				A9CE617B218757EF003120EF /* Welcome.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
