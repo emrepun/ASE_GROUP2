@@ -6,9 +6,9 @@ const PORT = 3000
 var app = express();
 app.use(bodyParser.json());
 
-var firebaseRouter = require('./routes/fbRoutes');
+var apiRouter = require('./routes/apiRoutes');
 
-app.use('/fb', firebaseRouter);
+app.use('/api', firebaseRouter);
 
 app.listen(PORT, function() {
   console.log(`listening on ${3000}`);
