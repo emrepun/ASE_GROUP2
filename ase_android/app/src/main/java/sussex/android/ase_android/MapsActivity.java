@@ -1,11 +1,17 @@
 package sussex.android.ase_android;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+
 import android.os.Handler;
+
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -17,6 +23,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +41,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private FirebaseUser user;
     private GoogleMap mMap;
     final int LOCATION_PERMISSION_REQUEST_CODE = 1532;
+    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,27 +89,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String provider = service.getBestProvider(criteria, false);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Location location = service.getLastKnownLocation(provider);
-            LatLng myLocation = new LatLng(location.getLatitude(),
-                    location.getLongitude());
+            if(location!=null){
+                LatLng myLocation = new LatLng(location.getLatitude(),
+                        location.getLongitude());
+                loc.put("latitude", location.getLatitude());
+                loc.put("longitude", location.getLongitude());
 
-            loc.put("latitude", location.getLatitude());
-            loc.put("longitude", location.getLongitude());
-
-            handler.postDelayed(new Runnable(){
-                public void run(){
-                    sendCoords(loc, user.getUid());
-                    handler.postDelayed(this, delay);
-                }
-            }, delay);
+                handler.postDelayed(new Runnable(){
+                    public void run(){
+                        sendCoords(loc, user.getUid());
+                        handler.postDelayed(this, delay);
+                    }
+                }, delay);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,
-                    14));
-            mMap.addMarker(new MarkerOptions().position(myLocation).title("Initial position").snippet("Lat/Lng: " +String.format(Locale.UK,"%.6f", myLocation.latitude) + " / " +  String.format(Locale.UK,"%.6f", myLocation.longitude)));
+                        14));
+                mMap.addMarker(new MarkerOptions()
+                        .position(myLocation)
+                        .icon(bitmapDescriptorFromVector(this, R.drawable.ic_marker))
+                        .title("Initial position")
+                        .snippet("Lat/Lng: " +String.format(Locale.UK,"%.6f", myLocation.latitude) + " / " +  String.format(Locale.UK,"%.6f", myLocation.longitude)));;
+            }
         }else{
             LatLng germany = new LatLng(48, 11);
             mMap.animateCamera(CameraUpdateFactory.newLatLng(germany));
         }
     }
-
 
     public void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
