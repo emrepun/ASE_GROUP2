@@ -14,6 +14,7 @@
 		A9CE61812187D19B003120EF /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE61802187D19B003120EF /* LogInViewController.swift */; };
 		A9CE61832187D1AD003120EF /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE61822187D1AD003120EF /* SignUpViewController.swift */; };
 		A9CE618521886F59003120EF /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9CE618421886F59003120EF /* Map.storyboard */; };
+		FB38D780218923DD00DE884A /* ColorSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB38D77F218923DD00DE884A /* ColorSingleton.swift */; };
 		FB6BCD5D21712ABB00778AC4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5C21712ABB00778AC4 /* User.swift */; };
 		FB6BCD5F21712B7D00778AC4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5E21712B7D00778AC4 /* Extensions.swift */; };
 		FB77E0D921833139008A9448 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB77E0D821833139008A9448 /* GoogleService-Info.plist */; };
@@ -34,6 +35,7 @@
 		A9CE61822187D1AD003120EF /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		A9CE618421886F59003120EF /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		D812B3E38C30908B7B490F33 /* Pods_ASE_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASE_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB38D77F218923DD00DE884A /* ColorSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSingleton.swift; sourceTree = "<group>"; };
 		FB6BCD5C21712ABB00778AC4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FB6BCD5E21712B7D00778AC4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		FB77E0D821833139008A9448 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -75,6 +77,24 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		FB38D77D2188F47500DE884A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FBCB45A0216FBD5F00089508 /* ViewController.swift */,
+				A9CE617E2187D14F003120EF /* MapViewController.swift */,
+				A9CE61802187D19B003120EF /* LogInViewController.swift */,
+				A9CE61822187D1AD003120EF /* SignUpViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		FB38D77E2188F48400DE884A /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
 		FBCB4592216FBD5E00089508 = {
 			isa = PBXGroup;
 			children = (
@@ -97,20 +117,19 @@
 			isa = PBXGroup;
 			children = (
 				FBCB459E216FBD5F00089508 /* AppDelegate.swift */,
-				FBCB45A0216FBD5F00089508 /* ViewController.swift */,
+				FB38D77D2188F47500DE884A /* Controllers */,
+				FB38D77E2188F48400DE884A /* Storyboards */,
 				FB6BCD5C21712ABB00778AC4 /* User.swift */,
-				FB6BCD5E21712B7D00778AC4 /* Extensions.swift */,
 				FBCB45A2216FBD5F00089508 /* Main.storyboard */,
-				A9CE617E2187D14F003120EF /* MapViewController.swift */,
 				A96D15E12187151100CF96A2 /* LogIn.storyboard */,
-				A9CE61802187D19B003120EF /* LogInViewController.swift */,
-				A9CE61822187D1AD003120EF /* SignUpViewController.swift */,
 				A9CE618421886F59003120EF /* Map.storyboard */,
-				A96D15DF218714EB00CF96A2 /* SignUp.storyboard */,
-				FBCB45A5216FBD6100089508 /* Assets.xcassets */,
 				FBCB45A7216FBD6100089508 /* LaunchScreen.storyboard */,
+				A96D15DF218714EB00CF96A2 /* SignUp.storyboard */,
+				FB6BCD5E21712B7D00778AC4 /* Extensions.swift */,
+				FBCB45A5216FBD6100089508 /* Assets.xcassets */,
 				FB77E0D821833139008A9448 /* GoogleService-Info.plist */,
 				FBCB45AA216FBD6100089508 /* Info.plist */,
+				FB38D77F218923DD00DE884A /* ColorSingleton.swift */,
 			);
 			path = ASE_iOS;
 			sourceTree = "<group>";
@@ -246,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBCB45A1216FBD5F00089508 /* ViewController.swift in Sources */,
+				FB38D780218923DD00DE884A /* ColorSingleton.swift in Sources */,
 				A9CE61832187D1AD003120EF /* SignUpViewController.swift in Sources */,
 				FBCB459F216FBD5F00089508 /* AppDelegate.swift in Sources */,
 				A9CE61812187D19B003120EF /* LogInViewController.swift in Sources */,

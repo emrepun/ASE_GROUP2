@@ -1,5 +1,5 @@
 //
-//  SignUpViewController.swift
+//  LogInViewController.swift
 //  ASE_iOS
 //
 //  Created by Work on 29/10/2018.
@@ -9,24 +9,24 @@
 import UIKit
 import FirebaseAuth
 
-class SignUpViewController: UIViewController {
+class LogInViewController: UIViewController {
 
+    let borderColor = BorderColor.borderColor
     
+    @IBOutlet var loginButton: UIButton!
     @IBOutlet weak var email: UITextField!
-    @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     
-    @IBAction func backButton(_ sender: UIButton) {
-        
-        performSegue(withIdentifier: "signUpMain", sender: self)
-        
+    @IBAction func backButton(_ sender: Any) {
+       
+        performSegue(withIdentifier: "logInMain", sender: self)
     }
     
-    @IBAction func signUpButton(_ sender: UIButton) {
+    @IBAction func LogInButton(_ sender: UIButton) {
         
-        Auth.auth().createUser(withEmail: email.text!, password: password.text!) { (authResult, error) in
-            if error == nil {
-                self.performSegue(withIdentifier: "", sender: self)
+        Auth.auth().signIn(withEmail: email.text!, password: password.text!) { (user, error) in
+            if error == nil{
+                self.performSegue(withIdentifier: "LogIn", sender: self)
             }
             else{
                 let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
@@ -35,17 +35,16 @@ class SignUpViewController: UIViewController {
                 alertController.addAction(defaultAction)
                 self.present(alertController, animated: true, completion: nil)
             }
-            guard let user = authResult?.user else { return }
         }
-        
-        performSegue(withIdentifier: "SignUp", sender: self)
-        
     }
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loginButton.layer.borderWidth = 1
+        loginButton.layer.borderColor = borderColor.cgColor
+        loginButton.layer.cornerRadius = 14
 
         // Do any additional setup after loading the view.
     }
@@ -54,6 +53,13 @@ class SignUpViewController: UIViewController {
         super.viewDidAppear(animated)
         
     }
+    
+    /*override func viewWillAppear(_ animated: Bool) {
+        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+            // ...
+        }
+    } */
+    
 
     /*
     // MARK: - Navigation

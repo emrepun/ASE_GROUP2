@@ -15,24 +15,21 @@ import FirebaseDatabase
 class MapViewController: UIViewController {
     
     @IBOutlet var mapView: MKMapView!
+    @IBOutlet var latitudeLabel: UILabel!
+    @IBOutlet var longitudeLabel: UILabel!
+    
+    
     
     let locationManager = CLLocationManager()
     var authorizationStatus = CLLocationManager.authorizationStatus()
-    var ref: DatabaseReference!
     var user = User(latitude: 0.0, longitude: 0.0)
     var postTimer: Timer!
-    var home: CLLocation!
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationSettings()
         checkForAuthorization()
-        postTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action:"handleTap:")
-        gestureRecognizer.delegate = (self as! UIGestureRecognizerDelegate)
-        mapView.addGestureRecognizer(gestureRecognizer)
-        // Do any additional setup after loading the view.
+        postTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -57,36 +54,27 @@ class MapViewController: UIViewController {
         }
     }
     
-    //Added to conform to design documentation but given Martin's reply I feel writeLocationData could just be mapped to a button or function 'contact home' that then provides feedback to user that location data has been sent
-    @objc
-    fileprivate func handleTap(gestureReconizer: UILongPressGestureRecognizer) {
-        
-        let location = gestureReconizer.location(in:mapView)
-        let coordinate = mapView.convert(location,toCoordinateFrom: mapView)
-        
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = coordinate
-        mapView.addAnnotation(annotation)
-    }
-    
     @objc
     fileprivate func writeLocationData() {
-        
         locationManager.startMonitoringSignificantLocationChanges()
         
         let innerUser = Auth.auth().currentUser
-                
-        let timeStamp = String(Date().ticks)
+        
+        let currentDate = getCurrentMillis()
+        
+        let timeStamp = String(currentDate)
                 
         let ref = Database.database().reference().child("gpsdata").child(innerUser!.uid).child(timeStamp)
                 
-        let dogObject = [
-            "Latitude": user.latitude,
-            "Longitude": user.longitude
+        let locationObject = [
+            "latitude": user.latitude,
+            "longitude": user.longitude
         ] as [String: Any]
-                
-                
-        ref.setValue(dogObject) { (error, ref) in
+        
+        latitudeLabel.text = "Latitude: \(user.latitude)"
+        longitudeLabel.text = "Longitude: \(user.longitude)"
+        
+        ref.setValue(locationObject) { (error, ref) in
             if error == nil {
                 print("chill")
             } else {
@@ -109,32 +97,21 @@ class MapViewController: UIViewController {
             mapView.setRegion(region, animated: true)
         }
     }
+    
+    func getCurrentMillis()->Int64 {
+        return Int64(Date().timeIntervalSince1970 * 1000)
+    }
 }
     // MARK: Location Delegate Methods
-    extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
-        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-            if let location = locations.last {
-                user.latitude = (location.coordinate.latitude).round(digit: 6)
-                user.longitude = location.coordinate.longitude.round(digit: 6)
-            
-            }
+extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            user.latitude = (location.coordinate.latitude).round(digit: 6)
+            user.longitude = location.coordinate.longitude.round(digit: 6)
+            latitudeLabel.text = "Latitude: \(user.latitude)"
+            longitudeLabel.text = "Longitude: \(user.longitude)"
         }
     }
-
-extension Date {
-    var ticks: UInt64 {
-        return UInt64((self.timeIntervalSince1970 + 62_135_596_800) * 10_000_000)
-    }
 }
-    
-    
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */

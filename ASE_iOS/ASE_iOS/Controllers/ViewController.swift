@@ -12,6 +12,11 @@ import MapKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet var loginButton: UIButton!
+    @IBOutlet var signupButton: UIButton!
+    
+    let borderColor = BorderColor.borderColor
+    
     @IBAction func logInButton(_ sender: UIButton) {
         
         performSegue(withIdentifier: "logIn", sender: self)
@@ -31,7 +36,12 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        loginButton.layer.cornerRadius = 14
+        loginButton.layer.borderWidth = 1
+        loginButton.layer.borderColor = borderColor.cgColor
+        signupButton.layer.cornerRadius = 14
+        signupButton.layer.borderWidth = 1
+        signupButton.layer.borderColor = borderColor.cgColor
     }
     
     override func viewDidAppear(_ animated: Bool) {

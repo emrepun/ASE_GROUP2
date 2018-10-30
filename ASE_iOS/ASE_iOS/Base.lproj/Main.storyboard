@@ -18,49 +18,68 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9bQ-c3-QYa">
-                                <rect key="frame" x="96" y="291" width="267" height="71"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WELCOME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1a7-W6-76a">
-                                        <rect key="frame" x="0.0" y="0.0" width="267" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please log in or sign up to continue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8gL-LP-nLI">
-                                        <rect key="frame" x="0.0" y="20.5" width="267" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MU0-pz-Xve">
-                                        <rect key="frame" x="0.0" y="41" width="267" height="30"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QoC-jG-agZ">
-                                                <rect key="frame" x="0.0" y="0.0" width="207" height="30"/>
-                                                <state key="normal" title="LOG IN"/>
-                                                <connections>
-                                                    <action selector="logInButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="h6h-7V-U36"/>
-                                                    <segue destination="2D6-Wl-noO" kind="show" identifier="logIn" id="r3M-Bs-ugt"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PLq-k7-4KN">
-                                                <rect key="frame" x="207" y="0.0" width="60" height="30"/>
-                                                <state key="normal" title="SIGN UP"/>
-                                                <connections>
-                                                    <action selector="signUpButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YBd-GU-26g"/>
-                                                    <segue destination="WWp-RT-Nz0" kind="show" identifier="signUp" id="BuR-2G-Ysh"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WELCOME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1a7-W6-76a">
+                                <rect key="frame" x="24" y="116" width="366" height="43"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please log in or sign up to continue" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8gL-LP-nLI">
+                                <rect key="frame" x="16" y="183" width="382" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PLq-k7-4KN">
+                                <rect key="frame" x="223" y="418" width="175" height="60"/>
+                                <color key="backgroundColor" red="0.1119886115193367" green="0.29664856195449829" blue="0.38834941387176514" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="SIGN UP">
+                                    <color key="titleColor" red="0.18823529411764706" green="0.792156862745098" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="signUpButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YBd-GU-26g"/>
+                                    <segue destination="WWp-RT-Nz0" kind="show" identifier="signUp" id="BuR-2G-Ysh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QoC-jG-agZ">
+                                <rect key="frame" x="16" y="418" width="175" height="60"/>
+                                <color key="backgroundColor" red="0.11229609698057175" green="0.29271498322486877" blue="0.38440313935279846" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="L1P-3V-CjF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="LOG IN">
+                                    <color key="titleColor" red="0.18673256039619446" green="0.7933729887008667" blue="0.80401343107223511" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="logInButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="h6h-7V-U36"/>
+                                    <segue destination="2D6-Wl-noO" kind="show" identifier="logIn" id="r3M-Bs-ugt"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.18719559907913208" green="0.36435851454734802" blue="0.5677986741065979" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="QoC-jG-agZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="1yz-9W-nfR"/>
+                            <constraint firstItem="1a7-W6-76a" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="4VQ-KI-lj7"/>
+                            <constraint firstItem="1a7-W6-76a" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="72" id="7KL-TO-PB8"/>
+                            <constraint firstItem="8gL-LP-nLI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Dyt-qO-rZU"/>
+                            <constraint firstItem="QoC-jG-agZ" firstAttribute="height" secondItem="PLq-k7-4KN" secondAttribute="height" id="RE7-oV-N11"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PLq-k7-4KN" secondAttribute="trailing" constant="16" id="UlV-0Q-zPH"/>
+                            <constraint firstItem="QoC-jG-agZ" firstAttribute="width" secondItem="PLq-k7-4KN" secondAttribute="width" id="V4g-dX-sB5"/>
+                            <constraint firstItem="8gL-LP-nLI" firstAttribute="top" secondItem="1a7-W6-76a" secondAttribute="bottom" constant="24" id="Zez-cs-jP6"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="8gL-LP-nLI" secondAttribute="trailing" constant="16" id="aXh-h3-ZAA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1a7-W6-76a" secondAttribute="trailing" constant="24" id="haZ-tc-nZo"/>
+                            <constraint firstItem="QoC-jG-agZ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="mwk-AZ-NzE"/>
+                            <constraint firstItem="PLq-k7-4KN" firstAttribute="leading" secondItem="QoC-jG-agZ" secondAttribute="trailing" constant="32" id="pNT-D1-1ZQ"/>
+                            <constraint firstItem="PLq-k7-4KN" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="rOE-hE-1ot"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="loginButton" destination="QoC-jG-agZ" id="I4k-rR-JdP"/>
+                        <outlet property="signupButton" destination="PLq-k7-4KN" id="Dkw-h0-N9Q"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
