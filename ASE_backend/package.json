@@ -18,6 +18,7 @@
   "homepage": "https://github.com/emrepun/ASE_GROUP2#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "firebase-admin": "^6.1.0"
   }
 }
