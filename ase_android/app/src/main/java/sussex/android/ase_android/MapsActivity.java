@@ -5,42 +5,42 @@ import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private DatabaseReference mDatabase;
+    private FirebaseUser user;
     private GoogleMap mMap;
     final int LOCATION_PERMISSION_REQUEST_CODE = 1532;
-
-    RequestQueue queue = Volley.newRequestQueue(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -58,6 +58,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        final HashMap loc = new HashMap<String, String>();
+        final Handler handler = new Handler();
+        final int delay = 10000;
         mMap = googleMap;
 
         enableMyLocation();
@@ -71,7 +74,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Location location = service.getLastKnownLocation(provider);
             LatLng myLocation = new LatLng(location.getLatitude(),
                     location.getLongitude());
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,
+
+            loc.put("latitude", location.getLatitude());
+            loc.put("longitude", location.getLongitude());
+
+            handler.postDelayed(new Runnable(){
+                public void run(){
+                    sendCoords(loc, user.getUid());
+                    handler.postDelayed(this, delay);
+                }
+            }, delay);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,
                     14));
             mMap.addMarker(new MarkerOptions().position(myLocation).title("Initial position").snippet("Lat/Lng: " +String.format(Locale.UK,"%.6f", myLocation.latitude) + " / " +  String.format(Locale.UK,"%.6f", myLocation.longitude)));
         }else{
@@ -92,39 +105,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    public void sendLocation(final String longi, final String lati) {
-        String url = "http://thegame:6969";
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response) {
-                        // response
-                        Log.d("Response", response);
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error
-                        Log.d("Error.Response", error.getMessage());
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String>  params = new HashMap<>();
-                params.put("longitude", longi);
-                params.put("latitude", lati);
-
-                return params;
-            }
-        };
-        queue.add(postRequest);
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -138,5 +118,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
         }
+    }
+
+    private void sendCoords(HashMap coords, String id) {
+        mDatabase.child("gpsdata").child(id).child(getUnixTime()).setValue(coords);
+    }
+
+    private String getUnixTime(){
+        return Long.toString(System.currentTimeMillis());
     }
 }
