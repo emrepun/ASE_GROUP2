@@ -18,79 +18,88 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2Od-Wl-qjv">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                            </mapView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="FSe-mr-aHB">
-                                <rect key="frame" x="64.5" y="750" width="285" height="82"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="64" translatesAutoresizingMaskIntoConstraints="NO" id="Iye-VX-KdV">
-                                        <rect key="frame" x="0.0" y="0.0" width="285" height="33"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Latitude:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6v-dc-Em3">
-                                                <rect key="frame" x="0.0" y="0.0" width="120.5" height="33"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="24"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="unknown" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Yx-OW-AsY">
-                                                <rect key="frame" x="184.5" y="2" width="100.5" height="29"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="64" translatesAutoresizingMaskIntoConstraints="NO" id="O43-rS-gui">
-                                        <rect key="frame" x="0.0" y="49" width="285" height="33"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Longitude:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rY5-hm-iBd">
-                                                <rect key="frame" x="0.0" y="0.0" width="120.5" height="33"/>
-                                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="24"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="unknown" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5iy-Ju-A9Q">
-                                                <rect key="frame" x="184.5" y="0.0" width="100.5" height="33"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                            </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YIg-np-1tM">
-                                <rect key="frame" x="32" y="76" width="25" height="25"/>
-                                <state key="normal" image="locateMe"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WELCOME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1a7-W6-76a">
+                                <rect key="frame" x="24" y="116" width="366" height="43"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please log in or sign up to continue" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8gL-LP-nLI">
+                                <rect key="frame" x="16" y="183" width="382" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PLq-k7-4KN">
+                                <rect key="frame" x="223" y="418" width="175" height="60"/>
+                                <color key="backgroundColor" red="0.1119886115193367" green="0.29664856195449829" blue="0.38834941387176514" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="SIGN UP">
+                                    <color key="titleColor" red="0.18823529411764706" green="0.792156862745098" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
-                                    <action selector="locateMeButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ei0-v5-9Ws"/>
+                                    <action selector="signUpButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YBd-GU-26g"/>
+                                    <segue destination="WWp-RT-Nz0" kind="show" identifier="signUp" id="BuR-2G-Ysh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QoC-jG-agZ">
+                                <rect key="frame" x="16" y="418" width="175" height="60"/>
+                                <color key="backgroundColor" red="0.11229609698057175" green="0.29271498322486877" blue="0.38440313935279846" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="L1P-3V-CjF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="LOG IN">
+                                    <color key="titleColor" red="0.18673256039619446" green="0.7933729887008667" blue="0.80401343107223511" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="logInButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="h6h-7V-U36"/>
+                                    <segue destination="2D6-Wl-noO" kind="show" identifier="logIn" id="r3M-Bs-ugt"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.18719559907913208" green="0.36435851454734802" blue="0.5677986741065979" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="YIg-np-1tM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="5Cr-bT-bzk"/>
-                            <constraint firstItem="2Od-Wl-qjv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="JSI-Sc-1wt"/>
-                            <constraint firstItem="YIg-np-1tM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="32" id="VGq-4B-bKn"/>
-                            <constraint firstItem="FSe-mr-aHB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ww3-l5-dAj"/>
-                            <constraint firstItem="2Od-Wl-qjv" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="cQL-O3-FOu"/>
-                            <constraint firstItem="2Od-Wl-qjv" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="fC6-bw-DwH"/>
-                            <constraint firstAttribute="bottom" secondItem="2Od-Wl-qjv" secondAttribute="bottom" id="hSp-Lh-bqu"/>
-                            <constraint firstItem="FSe-mr-aHB" firstAttribute="bottom" secondItem="2Od-Wl-qjv" secondAttribute="bottom" constant="-64" id="v7n-5k-U4S"/>
+                            <constraint firstItem="QoC-jG-agZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="1yz-9W-nfR"/>
+                            <constraint firstItem="1a7-W6-76a" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="4VQ-KI-lj7"/>
+                            <constraint firstItem="1a7-W6-76a" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="72" id="7KL-TO-PB8"/>
+                            <constraint firstItem="8gL-LP-nLI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Dyt-qO-rZU"/>
+                            <constraint firstItem="QoC-jG-agZ" firstAttribute="height" secondItem="PLq-k7-4KN" secondAttribute="height" id="RE7-oV-N11"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PLq-k7-4KN" secondAttribute="trailing" constant="16" id="UlV-0Q-zPH"/>
+                            <constraint firstItem="QoC-jG-agZ" firstAttribute="width" secondItem="PLq-k7-4KN" secondAttribute="width" id="V4g-dX-sB5"/>
+                            <constraint firstItem="8gL-LP-nLI" firstAttribute="top" secondItem="1a7-W6-76a" secondAttribute="bottom" constant="24" id="Zez-cs-jP6"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="8gL-LP-nLI" secondAttribute="trailing" constant="16" id="aXh-h3-ZAA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1a7-W6-76a" secondAttribute="trailing" constant="24" id="haZ-tc-nZo"/>
+                            <constraint firstItem="QoC-jG-agZ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="mwk-AZ-NzE"/>
+                            <constraint firstItem="PLq-k7-4KN" firstAttribute="leading" secondItem="QoC-jG-agZ" secondAttribute="trailing" constant="32" id="pNT-D1-1ZQ"/>
+                            <constraint firstItem="PLq-k7-4KN" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="rOE-hE-1ot"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="latitudeLabel" destination="4Yx-OW-AsY" id="hzG-13-Uge"/>
-                        <outlet property="longitudeLabel" destination="5iy-Ju-A9Q" id="aqE-VN-rDu"/>
-                        <outlet property="mapView" destination="2Od-Wl-qjv" id="WbZ-Pk-Gxh"/>
+                        <outlet property="loginButton" destination="QoC-jG-agZ" id="I4k-rR-JdP"/>
+                        <outlet property="signupButton" destination="PLq-k7-4KN" id="Dkw-h0-N9Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="106.47321428571428"/>
         </scene>
+        <!--LogIn-->
+        <scene sceneID="tev-hN-9Lz">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="LogIn" storyboardName="LogIn" id="2D6-Wl-noO" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P8L-6o-6X4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="691" y="-26"/>
+        </scene>
+        <!--SignUp-->
+        <scene sceneID="s3g-b0-M70">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="SignUp" storyboardName="SignUp" id="WWp-RT-Nz0" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0a8-ow-k2k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="691" y="144"/>
+        </scene>
     </scenes>
-    <resources>
-        <image name="locateMe" width="25" height="25"/>
-    </resources>
 </document>

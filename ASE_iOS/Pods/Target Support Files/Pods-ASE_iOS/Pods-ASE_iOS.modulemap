@@ -1,0 +1,6 @@
+framework module Pods_ASE_iOS {
+  umbrella header "Pods-ASE_iOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
