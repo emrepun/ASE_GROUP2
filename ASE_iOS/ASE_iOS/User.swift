@@ -9,11 +9,15 @@
 import Foundation
 
 class User {
+    var username: String
+    var password: String
     var latitude: Double
     var longitude: Double
     
-    init(latitude: Double, longitude: Double) {
+    init(username: String, password: String,latitude: Double, longitude: Double) {
         self.latitude = latitude
         self.longitude = longitude
+        self.username = username
+        self.password = password
     }
 }

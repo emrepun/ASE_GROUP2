@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ryK-qS-Lfb">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Sign Up View Controller-->
+        <scene sceneID="d8g-zP-4TL">
+            <objects>
+                <viewController storyboardIdentifier="SignUp" id="ryK-qS-Lfb" customClass="SignUpViewController" customModule="ASE_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BPe-bU-PEC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ffS-sz-gEI">
+                                <rect key="frame" x="165" y="113" width="85" height="150"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="91N-Oh-Mo1">
+                                        <rect key="frame" x="0.0" y="0.0" width="85" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sgz-Ah-bXw">
+                                                <rect key="frame" x="0.0" y="0.0" width="85" height="30"/>
+                                                <state key="normal" title="Back"/>
+                                                <connections>
+                                                    <action selector="backButton:" destination="ryK-qS-Lfb" eventType="touchUpInside" id="v1f-w4-baG"/>
+                                                    <segue destination="MLC-qb-D5A" kind="show" identifier="signUpMain" id="e1R-Re-UV3"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="email" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sff-RP-8aT">
+                                        <rect key="frame" x="0.0" y="30" width="85" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="username" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YCc-vI-DVX">
+                                        <rect key="frame" x="0.0" y="60" width="85" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="password" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6ja-3R-C4O">
+                                        <rect key="frame" x="0.0" y="90" width="85" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fFY-pY-OhX">
+                                        <rect key="frame" x="0.0" y="120" width="85" height="30"/>
+                                        <state key="normal" title="SIGN UP"/>
+                                        <connections>
+                                            <action selector="signUpButton:" destination="ryK-qS-Lfb" eventType="touchUpInside" id="SWd-vR-Wq7"/>
+                                            <segue destination="UA2-m4-Y3z" kind="show" identifier="SignUp" id="EZr-4i-Nfa"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="dqE-2B-4GM"/>
+                    </view>
+                    <connections>
+                        <outlet property="email" destination="sff-RP-8aT" id="Ozi-RH-7Y4"/>
+                        <outlet property="password" destination="6ja-3R-C4O" id="piC-LM-9BO"/>
+                        <outlet property="username" destination="YCc-vI-DVX" id="VFy-c4-o6Z"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5zH-77-fL9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="66.666666666666671" y="109.82142857142857"/>
+        </scene>
+        <!--Main-->
+        <scene sceneID="LPO-wf-n6u">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" id="MLC-qb-D5A" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3fW-QL-ECn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="743" y="49"/>
+        </scene>
+        <!--Map-->
+        <scene sceneID="PGK-kK-sZx">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="Map" storyboardName="Map" id="UA2-m4-Y3z" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8J8-ji-RfG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="700" y="159"/>
+        </scene>
+    </scenes>
+</document>

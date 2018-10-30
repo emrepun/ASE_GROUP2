@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		393D4C9330485504721540FA /* Pods_ASE_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D812B3E38C30908B7B490F33 /* Pods_ASE_iOS.framework */; };
+		A96D15E0218714EB00CF96A2 /* SignUp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A96D15DF218714EB00CF96A2 /* SignUp.storyboard */; };
+		A96D15E22187151100CF96A2 /* LogIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A96D15E12187151100CF96A2 /* LogIn.storyboard */; };
+		A9CE617B218757EF003120EF /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9CE617A218757EF003120EF /* Welcome.storyboard */; };
+		A9CE617F2187D14F003120EF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE617E2187D14F003120EF /* MapViewController.swift */; };
+		A9CE61812187D19B003120EF /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE61802187D19B003120EF /* LogInViewController.swift */; };
+		A9CE61832187D1AD003120EF /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE61822187D1AD003120EF /* SignUpViewController.swift */; };
 		FB6BCD5D21712ABB00778AC4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5C21712ABB00778AC4 /* User.swift */; };
 		FB6BCD5F21712B7D00778AC4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5E21712B7D00778AC4 /* Extensions.swift */; };
 		FB77E0D921833139008A9448 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB77E0D821833139008A9448 /* GoogleService-Info.plist */; };
@@ -18,6 +25,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		76156A0F5791993D2FA8BB8F /* Pods-ASE_iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASE_iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		90C521729CB937294CF3C987 /* Pods-ASE_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASE_iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS.release.xcconfig"; sourceTree = "<group>"; };
+		A96D15DF218714EB00CF96A2 /* SignUp.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignUp.storyboard; sourceTree = "<group>"; };
+		A96D15E12187151100CF96A2 /* LogIn.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LogIn.storyboard; sourceTree = "<group>"; };
+		A9CE617A218757EF003120EF /* Welcome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
+		A9CE617D21875AD1003120EF /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Map.storyboard; path = /Users/jf/Documents/masters/advanced_software_engineering/ASE_GROUP2/ASE_iOS/ASE_iOS/Map.storyboard; sourceTree = "<absolute>"; };
+		A9CE617E2187D14F003120EF /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		A9CE61802187D19B003120EF /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		A9CE61822187D1AD003120EF /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		D812B3E38C30908B7B490F33 /* Pods_ASE_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASE_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB6BCD5C21712ABB00778AC4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FB6BCD5E21712B7D00778AC4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		FB77E0D821833139008A9448 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -35,17 +52,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				393D4C9330485504721540FA /* Pods_ASE_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		56818594E7A84EDC0E53875D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D812B3E38C30908B7B490F33 /* Pods_ASE_iOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D21FD0DB0B98D2F5A23C0BE3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				76156A0F5791993D2FA8BB8F /* Pods-ASE_iOS.debug.xcconfig */,
+				90C521729CB937294CF3C987 /* Pods-ASE_iOS.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		FBCB4592216FBD5E00089508 = {
 			isa = PBXGroup;
 			children = (
 				FBCB459D216FBD5F00089508 /* ASE_iOS */,
 				FBCB459C216FBD5F00089508 /* Products */,
+				D21FD0DB0B98D2F5A23C0BE3 /* Pods */,
+				56818594E7A84EDC0E53875D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -65,6 +102,13 @@
 				FB6BCD5C21712ABB00778AC4 /* User.swift */,
 				FB6BCD5E21712B7D00778AC4 /* Extensions.swift */,
 				FBCB45A2216FBD5F00089508 /* Main.storyboard */,
+				A9CE617D21875AD1003120EF /* Map.storyboard */,
+				A9CE617E2187D14F003120EF /* MapViewController.swift */,
+				A9CE617A218757EF003120EF /* Welcome.storyboard */,
+				A96D15E12187151100CF96A2 /* LogIn.storyboard */,
+				A9CE61802187D19B003120EF /* LogInViewController.swift */,
+				A9CE61822187D1AD003120EF /* SignUpViewController.swift */,
+				A96D15DF218714EB00CF96A2 /* SignUp.storyboard */,
 				FBCB45A5216FBD6100089508 /* Assets.xcassets */,
 				FBCB45A7216FBD6100089508 /* LaunchScreen.storyboard */,
 				FB77E0D821833139008A9448 /* GoogleService-Info.plist */,
@@ -80,9 +124,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FBCB45AD216FBD6100089508 /* Build configuration list for PBXNativeTarget "ASE_iOS" */;
 			buildPhases = (
+				9AC55C10598819885C5CF42B /* [CP] Check Pods Manifest.lock */,
 				FBCB4597216FBD5F00089508 /* Sources */,
 				FBCB4598216FBD5F00089508 /* Frameworks */,
 				FBCB4599216FBD5F00089508 /* Resources */,
+				39A14C11F68D8D4A831E3F73 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -135,10 +181,64 @@
 				FB77E0D921833139008A9448 /* GoogleService-Info.plist in Resources */,
 				FBCB45A6216FBD6100089508 /* Assets.xcassets in Resources */,
 				FBCB45A4216FBD5F00089508 /* Main.storyboard in Resources */,
+				A96D15E22187151100CF96A2 /* LogIn.storyboard in Resources */,
+				A96D15E0218714EB00CF96A2 /* SignUp.storyboard in Resources */,
+				A9CE617B218757EF003120EF /* Welcome.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		39A14C11F68D8D4A831E3F73 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9AC55C10598819885C5CF42B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ASE_iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FBCB4597216FBD5F00089508 /* Sources */ = {
@@ -146,8 +246,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBCB45A1216FBD5F00089508 /* ViewController.swift in Sources */,
+				A9CE61832187D1AD003120EF /* SignUpViewController.swift in Sources */,
 				FBCB459F216FBD5F00089508 /* AppDelegate.swift in Sources */,
+				A9CE61812187D19B003120EF /* LogInViewController.swift in Sources */,
 				FB6BCD5D21712ABB00778AC4 /* User.swift in Sources */,
+				A9CE617F2187D14F003120EF /* MapViewController.swift in Sources */,
 				FB6BCD5F21712B7D00778AC4 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -292,6 +395,7 @@
 		};
 		FBCB45AE216FBD6100089508 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 76156A0F5791993D2FA8BB8F /* Pods-ASE_iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -311,6 +415,7 @@
 		};
 		FBCB45AF216FBD6100089508 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 90C521729CB937294CF3C987 /* Pods-ASE_iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

@@ -18,79 +18,69 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2Od-Wl-qjv">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                            </mapView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="FSe-mr-aHB">
-                                <rect key="frame" x="64.5" y="750" width="285" height="82"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9bQ-c3-QYa">
+                                <rect key="frame" x="96" y="291" width="267" height="71"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="64" translatesAutoresizingMaskIntoConstraints="NO" id="Iye-VX-KdV">
-                                        <rect key="frame" x="0.0" y="0.0" width="285" height="33"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WELCOME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1a7-W6-76a">
+                                        <rect key="frame" x="0.0" y="0.0" width="267" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please log in or sign up to continue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8gL-LP-nLI">
+                                        <rect key="frame" x="0.0" y="20.5" width="267" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MU0-pz-Xve">
+                                        <rect key="frame" x="0.0" y="41" width="267" height="30"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Latitude:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6v-dc-Em3">
-                                                <rect key="frame" x="0.0" y="0.0" width="120.5" height="33"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="24"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="unknown" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Yx-OW-AsY">
-                                                <rect key="frame" x="184.5" y="2" width="100.5" height="29"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="64" translatesAutoresizingMaskIntoConstraints="NO" id="O43-rS-gui">
-                                        <rect key="frame" x="0.0" y="49" width="285" height="33"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Longitude:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rY5-hm-iBd">
-                                                <rect key="frame" x="0.0" y="0.0" width="120.5" height="33"/>
-                                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="24"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="unknown" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5iy-Ju-A9Q">
-                                                <rect key="frame" x="184.5" y="0.0" width="100.5" height="33"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QoC-jG-agZ">
+                                                <rect key="frame" x="0.0" y="0.0" width="207" height="30"/>
+                                                <state key="normal" title="LOG IN"/>
+                                                <connections>
+                                                    <action selector="logInButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="h6h-7V-U36"/>
+                                                    <segue destination="2D6-Wl-noO" kind="show" identifier="logIn" id="r3M-Bs-ugt"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PLq-k7-4KN">
+                                                <rect key="frame" x="207" y="0.0" width="60" height="30"/>
+                                                <state key="normal" title="SIGN UP"/>
+                                                <connections>
+                                                    <action selector="signUpButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YBd-GU-26g"/>
+                                                    <segue destination="WWp-RT-Nz0" kind="show" identifier="signUp" id="BuR-2G-Ysh"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YIg-np-1tM">
-                                <rect key="frame" x="32" y="76" width="25" height="25"/>
-                                <state key="normal" image="locateMe"/>
-                                <connections>
-                                    <action selector="locateMeButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ei0-v5-9Ws"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="YIg-np-1tM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="5Cr-bT-bzk"/>
-                            <constraint firstItem="2Od-Wl-qjv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="JSI-Sc-1wt"/>
-                            <constraint firstItem="YIg-np-1tM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="32" id="VGq-4B-bKn"/>
-                            <constraint firstItem="FSe-mr-aHB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ww3-l5-dAj"/>
-                            <constraint firstItem="2Od-Wl-qjv" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="cQL-O3-FOu"/>
-                            <constraint firstItem="2Od-Wl-qjv" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="fC6-bw-DwH"/>
-                            <constraint firstAttribute="bottom" secondItem="2Od-Wl-qjv" secondAttribute="bottom" id="hSp-Lh-bqu"/>
-                            <constraint firstItem="FSe-mr-aHB" firstAttribute="bottom" secondItem="2Od-Wl-qjv" secondAttribute="bottom" constant="-64" id="v7n-5k-U4S"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <connections>
-                        <outlet property="latitudeLabel" destination="4Yx-OW-AsY" id="hzG-13-Uge"/>
-                        <outlet property="longitudeLabel" destination="5iy-Ju-A9Q" id="aqE-VN-rDu"/>
-                        <outlet property="mapView" destination="2Od-Wl-qjv" id="WbZ-Pk-Gxh"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="106.47321428571428"/>
         </scene>
+        <!--LogIn-->
+        <scene sceneID="tev-hN-9Lz">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="LogIn" storyboardName="LogIn" id="2D6-Wl-noO" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P8L-6o-6X4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="691" y="-26"/>
+        </scene>
+        <!--SignUp-->
+        <scene sceneID="s3g-b0-M70">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="SignUp" storyboardName="SignUp" id="WWp-RT-Nz0" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0a8-ow-k2k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="691" y="144"/>
+        </scene>
     </scenes>
-    <resources>
-        <image name="locateMe" width="25" height="25"/>
-    </resources>
 </document>
