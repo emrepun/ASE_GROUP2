@@ -9,12 +9,10 @@
 import Foundation
 
 class User {
-    var uid: String
     var latitude: Double
     var longitude: Double
     
-    init(uid: String, latitude: Double, longitude: Double) {
-        self.uid = uid
+    init(latitude: Double, longitude: Double) {
         self.latitude = latitude
         self.longitude = longitude
     }

@@ -19,14 +19,24 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     var authorizationStatus = CLLocationManager.authorizationStatus()
     var ref: DatabaseReference!
-    var user = User(uid:"test",latitude: 0.0, longitude: 0.0)
+    var user = User(latitude: 0.0, longitude: 0.0)
+    var postTimer: Timer!
+    var home: CLLocation!
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         checkForAuthorization()
+        postTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action:"handleTap:")
+        gestureRecognizer.delegate = (self as! UIGestureRecognizerDelegate)
+        mapView.addGestureRecognizer(gestureRecognizer)
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        postTimer.invalidate()
     }
     
     fileprivate func locationSettings() {
@@ -47,41 +57,45 @@ class MapViewController: UIViewController {
         }
     }
     
-    fileprivate func writeInitialLocationData() {
+    //Added to conform to design documentation but given Martin's reply I feel writeLocationData could just be mapped to a button or function 'contact home' that then provides feedback to user that location data has been sent
+    @objc
+    fileprivate func handleTap(gestureReconizer: UILongPressGestureRecognizer) {
         
-        /**let userID = Auth.auth().currentUser?.uid
+        let location = gestureReconizer.location(in:mapView)
+        let coordinate = mapView.convert(location,toCoordinateFrom: mapView)
         
-        ref = Database.database().reference()
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        mapView.addAnnotation(annotation)
+    }
+    
+    @objc
+    fileprivate func writeLocationData() {
         
-        self.ref.child("users").child(userID).setValue([])*/
+        locationManager.startMonitoringSignificantLocationChanges()
         
-        //Auth.auth().signIn(withEmail: email.text!, password: password.text!) { (user, error) in
-          //  if error == nil {
+        let innerUser = Auth.auth().currentUser
                 
-                let innerUser = Auth.auth().currentUser
+        let timeStamp = String(Date().ticks)
                 
-                let timeStamp = String(Date().ticks)
+        let ref = Database.database().reference().child("gpsdata").child(innerUser!.uid).child(timeStamp)
                 
-                let ref = Database.database().reference().child("gpsdata").child(innerUser!.uid).child(timeStamp)
-                
-                let dogObject = [
-                    "Latitude": user.latitude,
-                    "Longitude": user.longitude
-                ] as [String: Any]
+        let dogObject = [
+            "Latitude": user.latitude,
+            "Longitude": user.longitude
+        ] as [String: Any]
                 
                 
-                ref.setValue(dogObject) { (error, ref) in
-                    if error == nil {
-                        print("chill")
-                    } else {
-                        print("error")
-                    }
-                }
+        ref.setValue(dogObject) { (error, ref) in
+            if error == nil {
+                print("chill")
+            } else {
+                print("error")
             }
-            
-        //}
+        }
         
-
+        locationManager.stopMonitoringSignificantLocationChanges()
+    }
     
     
     @IBAction func locateMeButtonTapped(_ sender: Any) {
@@ -95,9 +109,7 @@ class MapViewController: UIViewController {
             mapView.setRegion(region, animated: true)
         }
     }
-    
-//}
-
+}
     // MARK: Location Delegate Methods
     extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
         func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -108,13 +120,12 @@ class MapViewController: UIViewController {
             }
         }
     }
-    
-    extension Date {
-        var ticks: UInt64 {
-            return UInt64((self.timeIntervalSince1970 + 62_135_596_800) * 10_000_000)
-        }
+
+extension Date {
+    var ticks: UInt64 {
+        return UInt64((self.timeIntervalSince1970 + 62_135_596_800) * 10_000_000)
     }
-    
+}
     
     
 
@@ -127,5 +138,3 @@ class MapViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
-}
