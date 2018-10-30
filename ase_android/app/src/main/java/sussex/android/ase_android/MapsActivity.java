@@ -26,6 +26,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -82,12 +83,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         enableMyLocation();
 
-        LocationManager service = (LocationManager)
+        final LocationManager service = (LocationManager)
 
                 getSystemService(LOCATION_SERVICE);
         Criteria criteria = new Criteria();
-        String provider = service.getBestProvider(criteria, false);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        assert service != null;
+        final String provider = service.getBestProvider(criteria, false);
+
+
+
+        handler.post(new Runnable(){
+            Marker marker;
+            public void run(){
+        if (ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Location location = service.getLastKnownLocation(provider);
             if(location!=null){
                 LatLng myLocation = new LatLng(location.getLatitude(),
@@ -95,24 +104,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 loc.put("latitude", location.getLatitude());
                 loc.put("longitude", location.getLongitude());
 
-                handler.postDelayed(new Runnable(){
-                    public void run(){
-                        sendCoords(loc, user.getUid());
-                        handler.postDelayed(this, delay);
-                    }
-                }, delay);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,
                         14));
-                mMap.addMarker(new MarkerOptions()
+                if (marker!=null)
+                    marker.remove();
+
+                marker=mMap.addMarker(new MarkerOptions()
                         .position(myLocation)
-                        .icon(bitmapDescriptorFromVector(this, R.drawable.ic_marker))
-                        .title("Initial position")
+                        .icon(bitmapDescriptorFromVector(MapsActivity.this, R.drawable.ic_marker))
+                        .title("Last known position")
                         .snippet("Lat/Lng: " +String.format(Locale.UK,"%.6f", myLocation.latitude) + " / " +  String.format(Locale.UK,"%.6f", myLocation.longitude)));;
+                sendCoords(loc, user.getUid());
+                handler.postDelayed(this, delay);
             }
         }else{
-            LatLng germany = new LatLng(48, 11);
-            mMap.animateCamera(CameraUpdateFactory.newLatLng(germany));
-        }
+            Toast.makeText(MapsActivity.this, "no location permission", Toast.LENGTH_SHORT).show();
+        }}});
     }
 
     public void enableMyLocation() {
