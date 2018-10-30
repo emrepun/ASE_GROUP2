@@ -19,6 +19,7 @@ public class SignUpActivity extends AppCompatActivity implements
 
     private EditText mEmailField;
     private EditText mPasswordField;
+    private EditText mPasswordField2;
 
     private FirebaseAuth mAuth;
 
@@ -30,14 +31,21 @@ public class SignUpActivity extends AppCompatActivity implements
         mAuth = FirebaseAuth.getInstance();
         mEmailField = findViewById(R.id.signupEmail);
         mPasswordField = findViewById(R.id.signupPassword);
+        mPasswordField2 = findViewById(R.id.signupPassword2);
+
 
     }
 
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.signupButton) {
-            createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+        if (i == R.id.signupButton ){
+            if(mPasswordField.getText().toString().equals(mPasswordField2.getText().toString())) {
+                    createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+                }else{
+                    Toast.makeText(SignUpActivity.this, "Passwords do not match.",
+                            Toast.LENGTH_SHORT).show();
+                }
         }
     }
 
