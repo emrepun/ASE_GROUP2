@@ -1,34 +1,39 @@
 //
-//  ViewController.swift
+//  MapViewController.swift
 //  ASE_iOS
 //
-//  Created by Emre HAVAN on 11.10.2018.
+//  Created by Work on 29/10/2018.
 //  Copyright © 2018 Emre HAVAN. All rights reserved.
 //
 
 import UIKit
 import CoreLocation
 import MapKit
+import FirebaseAuth
+import FirebaseDatabase
 
-class ViewController: UIViewController {
+class MapViewController: UIViewController {
     
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var latitudeLabel: UILabel!
     @IBOutlet var longitudeLabel: UILabel!
     
+    
+    
     let locationManager = CLLocationManager()
     var authorizationStatus = CLLocationManager.authorizationStatus()
-    
     var user = User(latitude: 0.0, longitude: 0.0)
-
+    var postTimer: Timer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         locationSettings()
+        checkForAuthorization()
+        postTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        checkForAuthorization()
+    override func viewDidDisappear(_ animated: Bool) {
+        postTimer.invalidate()
     }
     
     fileprivate func locationSettings() {
@@ -49,6 +54,37 @@ class ViewController: UIViewController {
         }
     }
     
+    @objc
+    fileprivate func writeLocationData() {
+        locationManager.startMonitoringSignificantLocationChanges()
+        
+        let innerUser = Auth.auth().currentUser
+        
+        let currentDate = getCurrentMillis()
+        
+        let timeStamp = String(currentDate)
+                
+        let ref = Database.database().reference().child("gpsdata").child(innerUser!.uid).child(timeStamp)
+                
+        let locationObject = [
+            "latitude": user.latitude,
+            "longitude": user.longitude
+        ] as [String: Any]
+        
+        latitudeLabel.text = "Latitude: \(user.latitude)"
+        longitudeLabel.text = "Longitude: \(user.longitude)"
+        
+        ref.setValue(locationObject) { (error, ref) in
+            if error == nil {
+                print("chill")
+            } else {
+                print("error")
+            }
+        }
+        
+        locationManager.stopMonitoringSignificantLocationChanges()
+    }
+    
     
     @IBAction func locateMeButtonTapped(_ sender: Any) {
         let authStat = CLLocationManager.authorizationStatus()
@@ -62,22 +98,20 @@ class ViewController: UIViewController {
         }
     }
     
+    func getCurrentMillis()->Int64 {
+        return Int64(Date().timeIntervalSince1970 * 1000)
+    }
 }
-
-// MARK: Location Delegate Methods
-extension ViewController: CLLocationManagerDelegate, MKMapViewDelegate {
+    // MARK: Location Delegate Methods
+extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             user.latitude = (location.coordinate.latitude).round(digit: 6)
             user.longitude = location.coordinate.longitude.round(digit: 6)
-            
-            updateCoordinateLabels()
+            latitudeLabel.text = "Latitude: \(user.latitude)"
+            longitudeLabel.text = "Longitude: \(user.longitude)"
         }
     }
-    
-    fileprivate func updateCoordinateLabels() {
-        latitudeLabel.text = String(user.latitude)
-        longitudeLabel.text = String(user.longitude)
-    }
 }
+
 
