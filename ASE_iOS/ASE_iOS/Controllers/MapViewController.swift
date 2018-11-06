@@ -11,6 +11,7 @@ import CoreLocation
 import MapKit
 import FirebaseAuth
 import FirebaseDatabase
+import GoogleMaps
 
 class MapViewController: UIViewController {
     
@@ -30,6 +31,9 @@ class MapViewController: UIViewController {
         locationSettings()
         checkForAuthorization()
         postTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)
+        
+        
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {

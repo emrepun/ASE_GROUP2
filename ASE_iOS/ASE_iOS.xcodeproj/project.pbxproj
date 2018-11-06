@@ -146,6 +146,7 @@
 				FBCB4598216FBD5F00089508 /* Frameworks */,
 				FBCB4599216FBD5F00089508 /* Resources */,
 				39A14C11F68D8D4A831E3F73 /* [CP] Embed Pods Frameworks */,
+				7936A0FC30789D0EA2E113CF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -233,6 +234,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7936A0FC30789D0EA2E113CF /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9AC55C10598819885C5CF42B /* [CP] Check Pods Manifest.lock */ = {
