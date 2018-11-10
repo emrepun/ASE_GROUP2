@@ -13,10 +13,12 @@ import android.location.LocationManager;
 import android.os.Handler;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -36,12 +38,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private DatabaseReference mDatabase;
     private FirebaseUser user;
     private GoogleMap mMap;
     final int LOCATION_PERMISSION_REQUEST_CODE = 1532;
+    private BottomSheetBehavior mBottomSheetBehavior1;
+    View bottomSheet;
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
         vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
@@ -63,6 +67,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        bottomSheet = findViewById(R.id.pullUp_bottom_sheet);
+        mBottomSheetBehavior1 = BottomSheetBehavior.from(bottomSheet);
+        mBottomSheetBehavior1.setPeekHeight(250);
+        mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     /**
@@ -116,11 +124,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .snippet("Lat/Lng: " +String.format(Locale.UK,"%.6f", myLocation.latitude) + " / " +  String.format(Locale.UK,"%.6f", myLocation.longitude)));;
                 sendCoords(loc, user.getUid());
                 handler.postDelayed(this, delay);
+
             }
         }else{
             Toast.makeText(MapsActivity.this, "no location permission", Toast.LENGTH_SHORT).show();
         }}});
     }
+
+    /*@Override
+                    public void onMarkerClick(Marker marker) {
+                        PullUpBottomSheetDialog bottomSheetDialog = new PullUpBottomSheetDialog();
+                        bottomSheetDialog.show(getSupportFragmentManager(), "");
+                    }*/
 
     public void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -154,5 +169,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private String getUnixTime(){
         return Long.toString(System.currentTimeMillis());
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        return false;
     }
 }
