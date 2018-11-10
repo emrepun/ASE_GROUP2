@@ -18,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -38,7 +39,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private DatabaseReference mDatabase;
     private FirebaseUser user;
@@ -67,10 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        bottomSheet = findViewById(R.id.pullUp_bottom_sheet);
-        mBottomSheetBehavior1 = BottomSheetBehavior.from(bottomSheet);
-        mBottomSheetBehavior1.setPeekHeight(250);
-        mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
     }
 
     /**
@@ -117,6 +115,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (marker!=null)
                     marker.remove();
 
+                mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(MapsActivity.this));
+
                 marker=mMap.addMarker(new MarkerOptions()
                         .position(myLocation)
                         .icon(bitmapDescriptorFromVector(MapsActivity.this, R.drawable.ic_marker))
@@ -125,17 +125,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 sendCoords(loc, user.getUid());
                 handler.postDelayed(this, delay);
 
+                bottomSheet = findViewById(R.id.pullUp_bottom_sheet);
+                mBottomSheetBehavior1 = BottomSheetBehavior.from(bottomSheet);
+                mBottomSheetBehavior1.setHideable(true);
+                mBottomSheetBehavior1.setPeekHeight(250);
+                mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        return false;
+                    }
+                });
+
+                mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                    @Override
+                    public void onMapClick(LatLng latLng) {
+                        mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+                    }
+                });
             }
         }else{
             Toast.makeText(MapsActivity.this, "no location permission", Toast.LENGTH_SHORT).show();
         }}});
     }
-
-    /*@Override
-                    public void onMarkerClick(Marker marker) {
-                        PullUpBottomSheetDialog bottomSheetDialog = new PullUpBottomSheetDialog();
-                        bottomSheetDialog.show(getSupportFragmentManager(), "");
-                    }*/
 
     public void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -171,8 +185,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return Long.toString(System.currentTimeMillis());
     }
 
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        return false;
-    }
 }
