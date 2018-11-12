@@ -15,45 +15,57 @@ import GoogleMaps
 
 class MapViewController: UIViewController {
     
-    @IBOutlet var mapView: MKMapView!
-    @IBOutlet var latitudeLabel: UILabel!
-    @IBOutlet var longitudeLabel: UILabel!
-    
-    
+    @IBOutlet var mapView: GMSMapView!
     
     let locationManager = CLLocationManager()
-    var authorizationStatus = CLLocationManager.authorizationStatus()
+    //var authorizationStatus = CLLocationManager.authorizationStatus()
     var user = User(latitude: 0.0, longitude: 0.0)
-    var postTimer: Timer!
+    //var postTimer: Timer!
+    
+    var postCodes = [PostCode]()
+    
+    let postCodeDecoder = JSONDecoder()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.delegate = self
         locationSettings()
-        checkForAuthorization()
-        postTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)
+        fetchData()
+        
+        postCodeDecoder.keyDecodingStrategy = .convertFromSnakeCase
+        
+        
+        
+        //checkForAuthorization()
+        //postTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        postTimer.invalidate()
+        //postTimer.invalidate()
     }
     
     fileprivate func locationSettings() {
-        mapView.delegate = self
-        mapView.showsUserLocation = true
-        mapView.userTrackingMode = .follow
-        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+        //locationManager.startUpdatingLocation()
     }
     
-    fileprivate func checkForAuthorization() {
-        if authorizationStatus == .denied || authorizationStatus == .restricted {
-            print("big")
-            showAlert(title: "Location Services Disabled", message: "Please enable Location Services in Settings to view your location on map")
+    func fetchData() {
+        postCodes = try! postCodeDecoder.decode([PostCode].self, from: MockJson.json)
+        
+        for postCode in postCodes {
+            let marker = PlaceMarker(postCode: postCode)
+            marker.map = self.mapView
         }
     }
+    
+//    fileprivate func checkForAuthorization() {
+//        if authorizationStatus == .denied || authorizationStatus == .restricted {
+//            print("big")
+//            showAlert(title: "Location Services Disabled", message: "Please enable Location Services in Settings to view your location on map")
+//        }
+//    }
     
     @objc
     fileprivate func writeLocationData() {
@@ -72,9 +84,6 @@ class MapViewController: UIViewController {
             "longitude": user.longitude
         ] as [String: Any]
         
-        latitudeLabel.text = "Latitude: \(user.latitude)"
-        longitudeLabel.text = "Longitude: \(user.longitude)"
-        
         ref.setValue(locationObject) { (error, ref) in
             if error == nil {
                 print("chill")
@@ -87,32 +96,53 @@ class MapViewController: UIViewController {
     }
     
     
-    @IBAction func locateMeButtonTapped(_ sender: Any) {
-        let authStat = CLLocationManager.authorizationStatus()
-        
-        if authStat == .denied || authStat == .restricted || authStat == .notDetermined {
-            showAlert(title: "Location Services Disabled", message: "Please enable Location Services in Settings to locate yourself!")
-        } else {
-            let distance: CLLocationDistance = 500
-            let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, latitudinalMeters: distance, longitudinalMeters: distance)
-            mapView.setRegion(region, animated: true)
-        }
-    }
+//    @IBAction func locateMeButtonTapped(_ sender: Any) {
+//        let authStat = CLLocationManager.authorizationStatus()
+//        
+//        if authStat == .denied || authStat == .restricted || authStat == .notDetermined {
+//            showAlert(title: "Location Services Disabled", message: "Please enable Location Services in Settings to locate yourself!")
+//        } else {
+//            let distance: CLLocationDistance = 500
+//            let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, latitudinalMeters: distance, longitudinalMeters: distance)
+//            mapView.setRegion(region, animated: true)
+//        }
+//    }
     
     func getCurrentMillis()->Int64 {
         return Int64(Date().timeIntervalSince1970 * 1000)
     }
 }
     // MARK: Location Delegate Methods
-extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
+extension MapViewController: CLLocationManagerDelegate {
+    
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        guard status == .authorizedWhenInUse else {
+            return
+        }
+        
+        locationManager.startUpdatingLocation()
+        
+        mapView.isMyLocationEnabled = true
+        mapView.settings.myLocationButton = true
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             user.latitude = (location.coordinate.latitude).round(digit: 6)
             user.longitude = location.coordinate.longitude.round(digit: 6)
-            latitudeLabel.text = "Latitude: \(user.latitude)"
-            longitudeLabel.text = "Longitude: \(user.longitude)"
         }
+        
+        guard let camLocation = locations.first else { return }
+        
+        mapView.camera = GMSCameraPosition(target: camLocation.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+        
+        locationManager.stopUpdatingLocation()
     }
+}
+
+extension MapViewController: GMSMapViewDelegate {
+    
 }
 
 

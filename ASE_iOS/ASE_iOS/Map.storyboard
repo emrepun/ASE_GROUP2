@@ -18,54 +18,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="s67-Mi-hD9">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJ7-CS-8aJ" customClass="GMSMapView">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                            </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VKw-c6-x0F">
-                                <rect key="frame" x="25" y="69" width="40" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="dQF-Z1-lcm"/>
-                                    <constraint firstAttribute="width" constant="40" id="hCz-2E-HBj"/>
-                                </constraints>
-                                <state key="normal" image="locateMe"/>
-                                <connections>
-                                    <action selector="locateMeButtonTapped:" destination="NZU-Xh-nlQ" eventType="touchUpInside" id="V6L-Xi-tSt"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Latitude: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5z-wR-UZ5" userLabel="Latitude:">
-                                <rect key="frame" x="16" y="660" width="382" height="29"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Longitude: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pfc-OT-RZH">
-                                <rect key="frame" x="16" y="705" width="382" height="29"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="qBJ-j1-K9d" firstAttribute="trailing" secondItem="Pfc-OT-RZH" secondAttribute="trailing" constant="16" id="AbT-iN-4pJ"/>
-                            <constraint firstItem="s67-Mi-hD9" firstAttribute="top" secondItem="0jC-TT-DJG" secondAttribute="top" id="Apa-ws-4zM"/>
-                            <constraint firstItem="VKw-c6-x0F" firstAttribute="leading" secondItem="qBJ-j1-K9d" secondAttribute="leading" constant="25" id="DZj-yn-dss"/>
-                            <constraint firstItem="A5z-wR-UZ5" firstAttribute="leading" secondItem="qBJ-j1-K9d" secondAttribute="leading" constant="16" id="GNM-A2-U6R"/>
-                            <constraint firstItem="Pfc-OT-RZH" firstAttribute="leading" secondItem="qBJ-j1-K9d" secondAttribute="leading" constant="16" id="LTf-QB-2ao"/>
-                            <constraint firstItem="qBJ-j1-K9d" firstAttribute="trailing" secondItem="A5z-wR-UZ5" secondAttribute="trailing" constant="16" id="SeO-lx-8tc"/>
-                            <constraint firstItem="VKw-c6-x0F" firstAttribute="top" secondItem="qBJ-j1-K9d" secondAttribute="top" constant="25" id="ceX-eW-hL0"/>
-                            <constraint firstItem="qBJ-j1-K9d" firstAttribute="bottom" secondItem="Pfc-OT-RZH" secondAttribute="bottom" constant="128" id="i6R-ed-tia"/>
-                            <constraint firstAttribute="bottom" secondItem="s67-Mi-hD9" secondAttribute="bottom" id="kbH-l4-IJF"/>
-                            <constraint firstItem="s67-Mi-hD9" firstAttribute="leading" secondItem="qBJ-j1-K9d" secondAttribute="leading" id="oKz-Ic-dN3"/>
-                            <constraint firstItem="qBJ-j1-K9d" firstAttribute="trailing" secondItem="s67-Mi-hD9" secondAttribute="trailing" id="u8f-qk-IGf"/>
-                            <constraint firstItem="Pfc-OT-RZH" firstAttribute="top" secondItem="A5z-wR-UZ5" secondAttribute="bottom" constant="16" id="veW-1Q-9kE"/>
+                            <constraint firstAttribute="bottom" secondItem="KJ7-CS-8aJ" secondAttribute="bottom" id="GhX-85-p69"/>
+                            <constraint firstItem="qBJ-j1-K9d" firstAttribute="trailing" secondItem="KJ7-CS-8aJ" secondAttribute="trailing" id="MaM-6W-KqX"/>
+                            <constraint firstItem="KJ7-CS-8aJ" firstAttribute="top" secondItem="0jC-TT-DJG" secondAttribute="top" id="gZc-kQ-nJx"/>
+                            <constraint firstItem="KJ7-CS-8aJ" firstAttribute="leading" secondItem="qBJ-j1-K9d" secondAttribute="leading" id="jjf-2H-hoO"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qBJ-j1-K9d"/>
                     </view>
                     <connections>
-                        <outlet property="latitudeLabel" destination="A5z-wR-UZ5" id="Mnd-cd-A4R"/>
-                        <outlet property="longitudeLabel" destination="Pfc-OT-RZH" id="P7F-IB-SmU"/>
-                        <outlet property="mapView" destination="s67-Mi-hD9" id="jEv-8C-LFO"/>
+                        <outlet property="mapView" destination="KJ7-CS-8aJ" id="VFt-Sj-7Q6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nMc-s1-IQN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -73,7 +41,4 @@
             <point key="canvasLocation" x="76.811594202898561" y="123.88392857142857"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="locateMe" width="25" height="25"/>
-    </resources>
 </document>

@@ -14,6 +14,11 @@
 		A9CE61812187D19B003120EF /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE61802187D19B003120EF /* LogInViewController.swift */; };
 		A9CE61832187D1AD003120EF /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE61822187D1AD003120EF /* SignUpViewController.swift */; };
 		A9CE618521886F59003120EF /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9CE618421886F59003120EF /* Map.storyboard */; };
+		A9F9FECE2199CC50008FCE0C /* MockJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9FECD2199CC50008FCE0C /* MockJson.swift */; };
+		A9F9FED02199D097008FCE0C /* PostCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9FECF2199D097008FCE0C /* PostCode.swift */; };
+		A9F9FED22199D4EF008FCE0C /* PlaceMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9FED12199D4EF008FCE0C /* PlaceMarker.swift */; };
+		A9F9FED42199D66F008FCE0C /* MarkerInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9F9FED32199D66F008FCE0C /* MarkerInfoView.xib */; };
+		A9F9FED62199D692008FCE0C /* MarkerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9FED52199D692008FCE0C /* MarkerInfoView.swift */; };
 		FB38D780218923DD00DE884A /* ColorSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB38D77F218923DD00DE884A /* ColorSingleton.swift */; };
 		FB6BCD5D21712ABB00778AC4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5C21712ABB00778AC4 /* User.swift */; };
 		FB6BCD5F21712B7D00778AC4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5E21712B7D00778AC4 /* Extensions.swift */; };
@@ -34,6 +39,11 @@
 		A9CE61802187D19B003120EF /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		A9CE61822187D1AD003120EF /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		A9CE618421886F59003120EF /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
+		A9F9FECD2199CC50008FCE0C /* MockJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockJson.swift; sourceTree = "<group>"; };
+		A9F9FECF2199D097008FCE0C /* PostCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCode.swift; sourceTree = "<group>"; };
+		A9F9FED12199D4EF008FCE0C /* PlaceMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMarker.swift; sourceTree = "<group>"; };
+		A9F9FED32199D66F008FCE0C /* MarkerInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkerInfoView.xib; sourceTree = "<group>"; };
+		A9F9FED52199D692008FCE0C /* MarkerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfoView.swift; sourceTree = "<group>"; };
 		D812B3E38C30908B7B490F33 /* Pods_ASE_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASE_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB38D77F218923DD00DE884A /* ColorSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSingleton.swift; sourceTree = "<group>"; };
 		FB6BCD5C21712ABB00778AC4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -130,6 +140,11 @@
 				FB77E0D821833139008A9448 /* GoogleService-Info.plist */,
 				FBCB45AA216FBD6100089508 /* Info.plist */,
 				FB38D77F218923DD00DE884A /* ColorSingleton.swift */,
+				A9F9FECD2199CC50008FCE0C /* MockJson.swift */,
+				A9F9FECF2199D097008FCE0C /* PostCode.swift */,
+				A9F9FED12199D4EF008FCE0C /* PlaceMarker.swift */,
+				A9F9FED32199D66F008FCE0C /* MarkerInfoView.xib */,
+				A9F9FED52199D692008FCE0C /* MarkerInfoView.swift */,
 			);
 			path = ASE_iOS;
 			sourceTree = "<group>";
@@ -199,6 +214,7 @@
 				A9CE618521886F59003120EF /* Map.storyboard in Resources */,
 				FB77E0D921833139008A9448 /* GoogleService-Info.plist in Resources */,
 				FBCB45A6216FBD6100089508 /* Assets.xcassets in Resources */,
+				A9F9FED42199D66F008FCE0C /* MarkerInfoView.xib in Resources */,
 				FBCB45A4216FBD5F00089508 /* Main.storyboard in Resources */,
 				A96D15E22187151100CF96A2 /* LogIn.storyboard in Resources */,
 				A96D15E0218714EB00CF96A2 /* SignUp.storyboard in Resources */,
@@ -287,7 +303,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9F9FECE2199CC50008FCE0C /* MockJson.swift in Sources */,
 				FBCB45A1216FBD5F00089508 /* ViewController.swift in Sources */,
+				A9F9FED22199D4EF008FCE0C /* PlaceMarker.swift in Sources */,
+				A9F9FED02199D097008FCE0C /* PostCode.swift in Sources */,
+				A9F9FED62199D692008FCE0C /* MarkerInfoView.swift in Sources */,
 				FB38D780218923DD00DE884A /* ColorSingleton.swift in Sources */,
 				A9CE61832187D1AD003120EF /* SignUpViewController.swift in Sources */,
 				FBCB459F216FBD5F00089508 /* AppDelegate.swift in Sources */,
@@ -442,7 +462,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 56D56RFRE4;
+				DEVELOPMENT_TEAM = 4B2BNJ6DL6;
 				INFOPLIST_FILE = ASE_iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -462,7 +482,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 56D56RFRE4;
+				DEVELOPMENT_TEAM = 4B2BNJ6DL6;
 				INFOPLIST_FILE = ASE_iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10;
 				LD_RUNPATH_SEARCH_PATHS = (
