@@ -44,7 +44,23 @@ module.exports.getAllFromPostcode = async postcode => {
     }
   }
 
-  console.log('received price data')
+  console.log(`Received price data for ${postcode}`);
 
   return props;
 };
+
+
+module.exports.getAverageAtPostcode = async postcode => {
+  console.log(`Getting prices at ${postcode}`)
+  var data = await module.exports.getAllFromPostcode(postcode);
+  var allPrices = []
+  for(datum of data) {
+    allPrices.push(datum.pricePaid);
+  }
+  var sum = 0;
+  for (price of allPrices) {
+    sum += price;
+  }
+  var avg = sum/allPrices.length;
+  return(parseFloat(Math.round(avg * 100) / 100).toFixed(2));
+}
