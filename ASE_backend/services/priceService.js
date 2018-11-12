@@ -44,7 +44,7 @@ module.exports.getAllFromPostcode = async postcode => {
     }
   }
 
-  console.log('received price data');
+  console.log(`Received price data for ${postcode}`);
 
   return props;
 };

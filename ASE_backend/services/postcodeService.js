@@ -1,5 +1,22 @@
-const request = require("request");
+const request = require("request-promise-native");
 const csv = require("csvtojson");
+
+module.exports.getPostcodeDetails = async postcode => {
+  postcode = postcode.toUpperCase();
+  var options = {
+    method: "GET",
+    url: "https://www.doogal.co.uk/GetPostcode.ashx",
+    qs: { postcode }
+  };
+  var res = await request(options);
+  res = res.toString().split('\t');
+  var data = {
+    _id: res[0],
+    Latitude: res[1],
+    Longitude: res[2]
+  }
+  return data;
+};
 
 //returns list of postcodes in order of distance
 

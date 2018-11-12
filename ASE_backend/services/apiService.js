@@ -11,6 +11,11 @@ exports.print_data = function(info) {
   console.log(info);
 }
 
+exports.getAveragePrice = async function(postcode){
+  return await priceService.getAverageAtPostcode(postcode);
+}
+
+
 exports.getPricesAtAround = async function(lat, long, radius){
   postcodes = await postcodeService.getPostcodesNearAround(lat, long, radius);
   postcodeData = [];
