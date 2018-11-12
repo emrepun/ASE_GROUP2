@@ -10,5 +10,6 @@ import Foundation
 import UIKit
 
 class MarkerInfoView: UIView {
+    @IBOutlet var priceLabel: UILabel!
     
 }

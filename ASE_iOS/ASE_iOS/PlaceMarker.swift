@@ -20,7 +20,9 @@ class PlaceMarker: GMSMarker {
             position = coordinate
         }
         
-        let view: UIView = Bundle.main.loadNibNamed("MarkerInfoView", owner: nil, options: nil)?.first as! UIView
+        let view = Bundle.main.loadNibNamed("MarkerInfoView", owner: nil, options: nil)?.first as! MarkerInfoView
+        view.priceLabel.text = postCode.price!
+        
         iconView = view
         appearAnimation = .pop
     }

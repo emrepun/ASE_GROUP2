@@ -143,6 +143,13 @@ extension MapViewController: CLLocationManagerDelegate {
 
 extension MapViewController: GMSMapViewDelegate {
     
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        // FIXME: Fix
+        // TODO: Open Post Code Specific house prices list.
+        print("diid")
+        return false
+    }
+    
 }
 
 
