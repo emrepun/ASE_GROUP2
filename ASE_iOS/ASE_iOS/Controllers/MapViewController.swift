@@ -12,6 +12,8 @@ import MapKit
 import FirebaseAuth
 import FirebaseDatabase
 
+
+
 class MapViewController: UIViewController {
     
     @IBOutlet var mapView: MKMapView!
@@ -30,6 +32,7 @@ class MapViewController: UIViewController {
         locationSettings()
         checkForAuthorization()
         postTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -101,6 +104,21 @@ class MapViewController: UIViewController {
     func getCurrentMillis()->Int64 {
         return Int64(Date().timeIntervalSince1970 * 1000)
     }
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?
+    {
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "AnnotationIdentifier")
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "AnnotationIdentifier")
+        }
+        
+        annotationView?.image = UIImage(named: "homemarker")
+        annotationView?.canShowCallout = true
+        
+        return annotationView
+    }
+    
 }
     // MARK: Location Delegate Methods
 extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
@@ -110,8 +128,12 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
             user.longitude = location.coordinate.longitude.round(digit: 6)
             latitudeLabel.text = "Latitude: \(user.latitude)"
             longitudeLabel.text = "Longitude: \(user.longitude)"
-        }
+            
+            let marker = MKPointAnnotation()
+            marker.coordinate = CLLocationCoordinate2DMake(user.latitude, user.longitude)
+            marker.title = "last location"
+            marker.subtitle = "\(user.latitude), \(user.longitude)"
+            mapView.addAnnotation(marker)        }
     }
 }
-
 
