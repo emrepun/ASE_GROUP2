@@ -32,7 +32,7 @@ public class BottomSheetView implements BottomSheetContract.View{
 
     @Override
     public void collapseBottomSheet() {
-        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     @Override
