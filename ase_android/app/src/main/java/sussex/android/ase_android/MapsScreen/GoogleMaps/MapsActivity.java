@@ -16,7 +16,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import sussex.android.ase_android.CustomInfoWindowAdapter;
 import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetContract;
 import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetView;
 import sussex.android.ase_android.R;
@@ -85,6 +87,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 bottomSheetView.hideBottomSheet();
             }
         });
+        mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(this));
+        mapsPresenter.initialize();
     }
 
     public void enableMyLocation() {
@@ -118,5 +122,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public Activity getActivity() {
         return this;
+    }
+
+    @Override
+    public Marker addMarker(MarkerOptions marker) {
+        return mMap.addMarker(marker);
     }
 }

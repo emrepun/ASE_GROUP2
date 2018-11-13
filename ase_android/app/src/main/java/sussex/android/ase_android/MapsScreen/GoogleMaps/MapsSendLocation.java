@@ -38,7 +38,7 @@ import sussex.android.ase_android.R;
 
 import static android.content.Context.LOCATION_SERVICE;
 
-public class MapsSendLocation implements MapsContract.Presenter {
+public class MapsSendLocation {
 
 
     //send location feature
