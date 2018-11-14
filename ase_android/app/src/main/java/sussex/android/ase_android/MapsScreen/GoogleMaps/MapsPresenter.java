@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -31,13 +32,12 @@ public class MapsPresenter implements MapsContract.Presenter {
 
     public MapsPresenter(MapsContract.View view) {
         this.view = view;
-        jsonparser=new JSONparser(view.getActivity(), this);
+        jsonparser=new JSONparser(view.getActivity());
     }
 
 
 
     public void initialize() {
-        jsonparser.jsonParse();
     }
 
     @Override
@@ -52,6 +52,7 @@ public class MapsPresenter implements MapsContract.Presenter {
 
     @Override
     public void displayMarkers() {
+        view.clearMap();
         for (MarkerOptions options: markers) {
             view.addMarker(options);
         }
@@ -90,5 +91,13 @@ public class MapsPresenter implements MapsContract.Presenter {
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
 
+    }
+
+    public void cameraPosChanged(CameraPosition cameraPosition) {
+        jsonparser.markerJsonParse(this, cameraPosition.target.latitude, cameraPosition.target.longitude);
+    }
+
+    public JSONparser getJsonParser(){
+        return jsonparser;
     }
 }

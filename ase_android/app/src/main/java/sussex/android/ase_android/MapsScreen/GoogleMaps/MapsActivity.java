@@ -3,6 +3,9 @@ package sussex.android.ase_android.MapsScreen.GoogleMaps;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -11,9 +14,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -76,7 +81,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                bottomSheetView.collapseBottomSheet();
+                bottomSheetView.displayBottomSheet(marker.getTitle(), marker.getSnippet());
                 return false;
             }
         });
@@ -88,6 +93,37 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(this));
+
+        final CameraPosition[] mPreviousCameraPosition = {null};
+        mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+            @Override
+            public void onCameraIdle() {
+                CameraPosition position = mMap.getCameraPosition();
+                if(mPreviousCameraPosition[0] == null || !mPreviousCameraPosition[0].equals(position)) {
+                    //position changed
+                    mPreviousCameraPosition[0] = mMap.getCameraPosition();
+                    mapsPresenter.cameraPosChanged(mPreviousCameraPosition[0]);
+                }
+            }
+        });
+
+
+        final LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        assert service != null;
+        final String provider = service.getBestProvider(criteria, false);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Location location = service.getLastKnownLocation(provider);
+            if (location != null) {
+                LatLng myLocation = new LatLng(location.getLatitude(),
+                        location.getLongitude());
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,
+                        14));
+            }
+        }
+
+
         mapsPresenter.initialize();
     }
 
@@ -127,5 +163,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public Marker addMarker(MarkerOptions marker) {
         return mMap.addMarker(marker);
+    }
+
+    public LatLng getViewLoc(){
+        return mMap.getCameraPosition().target;
+    }
+
+    public void clearMap(){
+        mMap.clear();
     }
 }

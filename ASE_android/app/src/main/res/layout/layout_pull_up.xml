@@ -73,7 +73,7 @@
         app:layout_constraintVertical_bias="0.002"
         app:srcCompat="@drawable/ic_arrowdown" />
 
-    <ListView
+    <TextView
         android:id="@+id/houseList"
         android:layout_width="330dp"
         android:layout_height="406dp"
@@ -83,6 +83,8 @@
         android:fontFamily="@font/montserrat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/black"
+        />
 
 </android.support.constraint.ConstraintLayout>

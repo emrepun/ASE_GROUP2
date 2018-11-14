@@ -4,15 +4,19 @@ import android.app.Activity;
 import android.support.design.widget.BottomSheetBehavior;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
+import sussex.android.ase_android.R;
 
 public class BottomSheetView implements BottomSheetContract.View{
+    private BottomSheetContract.Presenter sheetPresenter;
     private BottomSheetBehavior mBottomSheetBehavior;
     private int peekHeight = 250;
 
 
-    Activity activity;
+    private Activity activity;
     public BottomSheetView(View bottomSheet, MapsContract.Presenter mapsPresenter, Activity activity){
 
 
@@ -22,7 +26,7 @@ public class BottomSheetView implements BottomSheetContract.View{
         mBottomSheetBehavior.setPeekHeight(peekHeight);
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
-
+        sheetPresenter=new BottomSheetPresenter(this, mapsPresenter);
 
     }
 
@@ -31,13 +35,20 @@ public class BottomSheetView implements BottomSheetContract.View{
     }
 
     @Override
-    public void collapseBottomSheet() {
+    public void displayBottomSheet(String postcode, String average) {
+        ((TextView)activity.findViewById(R.id.postcode_big)).setText(postcode);
+        ((TextView)activity.findViewById(R.id.avgprice_big)).setText(average);
+        sheetPresenter.displayAddresses(postcode);
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     @Override
     public void hideBottomSheet() {
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+    }
+
+    public void displayAddresses(String json){
+        ((TextView)activity.findViewById(R.id.houseList)).setText(json);
     }
 
     /**
