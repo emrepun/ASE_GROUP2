@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		393D4C9330485504721540FA /* Pods_ASE_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D812B3E38C30908B7B490F33 /* Pods_ASE_iOS.framework */; };
+		A934756C219DCE2600B28051 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A934756B219DCE2600B28051 /* TableViewController.swift */; };
 		A93B0733219CD88000B4F212 /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = A93B0732219CD88000B4F212 /* style.json */; };
 		A93B0737219D8DB500B4F212 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93B0736219D8DB500B4F212 /* Constants.swift */; };
 		A96D15E0218714EB00CF96A2 /* SignUp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A96D15DF218714EB00CF96A2 /* SignUp.storyboard */; };
@@ -35,6 +36,7 @@
 /* Begin PBXFileReference section */
 		76156A0F5791993D2FA8BB8F /* Pods-ASE_iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASE_iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		90C521729CB937294CF3C987 /* Pods-ASE_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASE_iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS.release.xcconfig"; sourceTree = "<group>"; };
+		A934756B219DCE2600B28051 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		A93B0732219CD88000B4F212 /* style.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		A93B0736219D8DB500B4F212 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A96D15DF218714EB00CF96A2 /* SignUp.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignUp.storyboard; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				A9CE617E2187D14F003120EF /* MapViewController.swift */,
 				A9CE61802187D19B003120EF /* LogInViewController.swift */,
 				A9CE61822187D1AD003120EF /* SignUpViewController.swift */,
+				A934756B219DCE2600B28051 /* TableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9F9FECE2199CC50008FCE0C /* MockJson.swift in Sources */,
+				A934756C219DCE2600B28051 /* TableViewController.swift in Sources */,
 				FBCB45A1216FBD5F00089508 /* ViewController.swift in Sources */,
 				A9F9FED22199D4EF008FCE0C /* PlaceMarker.swift in Sources */,
 				A9F9FED02199D097008FCE0C /* PostCode.swift in Sources */,

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NZU-Xh-nlQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8wJ-ba-OpK">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -32,11 +32,49 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qBJ-j1-K9d"/>
                     </view>
+                    <navigationItem key="navigationItem" id="vJM-uO-X7o"/>
                     <connections>
                         <outlet property="mapView" destination="KJ7-CS-8aJ" id="VFt-Sj-7Q6"/>
+                        <segue destination="H1g-9R-PGY" kind="show" identifier="SegueTableViewController" id="aTz-xj-9dX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nMc-s1-IQN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="986.95652173913049" y="123.88392857142857"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="zHi-he-vPn">
+            <objects>
+                <tableViewController id="H1g-9R-PGY" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="6eR-sC-GHf">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <connections>
+                            <outlet property="dataSource" destination="H1g-9R-PGY" id="oWB-bp-hYZ"/>
+                            <outlet property="delegate" destination="H1g-9R-PGY" id="5xN-n6-7Eh"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Pn-VO-FDf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1958" y="124"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="p9W-9q-w28">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8wJ-ba-OpK" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="kbO-Ie-7Wb">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="NZU-Xh-nlQ" kind="relationship" relationship="rootViewController" id="Bnj-eR-PEu"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rP2-Vr-qiY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="76.811594202898561" y="123.88392857142857"/>
         </scene>
