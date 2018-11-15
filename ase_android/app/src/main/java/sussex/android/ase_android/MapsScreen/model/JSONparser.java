@@ -15,8 +15,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetContract;
-import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetPresenter;
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
 
 public class JSONparser {
@@ -30,8 +31,8 @@ public class JSONparser {
 
     public void markerJsonParse(final MapsContract.Presenter presenter, double lat, double lon) {
         mQueue.cancelAll("marker");
-        String url = "https://d42fd882.ngrok.io/api/pcprices/"+lat+"/"+lon+"/0.1";
-        //String url = "https://www.dropbox.com/s/5us526t69r99irl/test.json?dl=1";
+        /*String url = "https://fa5eff00.ngrok.io/api/pcprices/"+lat+"/"+lon+"/0.1";*/
+        String url = "https://api.myjson.com/bins/siz6a"; //temp json
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -68,7 +69,8 @@ public class JSONparser {
 
     public void postcodeJsonParse(String postcode, final BottomSheetContract.Presenter sheetPresenter) {
         mQueue.cancelAll("address");
-        String url = "https://d42fd882.ngrok.io/api/addresses/"+postcode;
+        /*String url = "https://fa5eff00.ngrok.io/api/addresses/"+postcode;*/
+        String url = "https://api.myjson.com/bins/b9emq"; //temp json in case the link is down
         RequestQueue mQueue = Volley.newRequestQueue(context);
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
@@ -77,6 +79,8 @@ public class JSONparser {
                     public void onResponse(JSONArray response) {
                         try {
                             String json="";
+                            String price = "";
+                            String houseAddress="";
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject postcodeData = response.getJSONObject(i);
                                 double pricePaid = postcodeData.getDouble("pricePaid");
@@ -86,11 +90,14 @@ public class JSONparser {
                                 String address = propAddrObject.getString("paon")+" "
                                         + propAddrObject.getString("street");
 
-                                json=json+address+"\n"+pricePaid+"\n";
+                                json=json+address+"\n";
+                                price=price+"£" + String.format(Locale.UK,"%,.2f", pricePaid)+"\n";
+
+                                /*json=json+address+"\n"+pricePaid+"\n";*/
 
 
                             }
-                            sheetPresenter.displayInfo(json);
+                            sheetPresenter.displayInfo(json, price);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
