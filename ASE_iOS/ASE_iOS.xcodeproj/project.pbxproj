@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		393D4C9330485504721540FA /* Pods_ASE_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D812B3E38C30908B7B490F33 /* Pods_ASE_iOS.framework */; };
+		A93B0733219CD88000B4F212 /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = A93B0732219CD88000B4F212 /* style.json */; };
+		A93B0737219D8DB500B4F212 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93B0736219D8DB500B4F212 /* Constants.swift */; };
 		A96D15E0218714EB00CF96A2 /* SignUp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A96D15DF218714EB00CF96A2 /* SignUp.storyboard */; };
 		A96D15E22187151100CF96A2 /* LogIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A96D15E12187151100CF96A2 /* LogIn.storyboard */; };
 		A9CE617F2187D14F003120EF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE617E2187D14F003120EF /* MapViewController.swift */; };
@@ -33,6 +35,8 @@
 /* Begin PBXFileReference section */
 		76156A0F5791993D2FA8BB8F /* Pods-ASE_iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASE_iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		90C521729CB937294CF3C987 /* Pods-ASE_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASE_iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS.release.xcconfig"; sourceTree = "<group>"; };
+		A93B0732219CD88000B4F212 /* style.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
+		A93B0736219D8DB500B4F212 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A96D15DF218714EB00CF96A2 /* SignUp.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignUp.storyboard; sourceTree = "<group>"; };
 		A96D15E12187151100CF96A2 /* LogIn.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LogIn.storyboard; sourceTree = "<group>"; };
 		A9CE617E2187D14F003120EF /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -130,8 +134,8 @@
 				FB38D77D2188F47500DE884A /* Controllers */,
 				FB38D77E2188F48400DE884A /* Storyboards */,
 				FB6BCD5C21712ABB00778AC4 /* User.swift */,
-				FBCB45A2216FBD5F00089508 /* Main.storyboard */,
 				A96D15E12187151100CF96A2 /* LogIn.storyboard */,
+				FBCB45A2216FBD5F00089508 /* Main.storyboard */,
 				A9CE618421886F59003120EF /* Map.storyboard */,
 				FBCB45A7216FBD6100089508 /* LaunchScreen.storyboard */,
 				A96D15DF218714EB00CF96A2 /* SignUp.storyboard */,
@@ -145,6 +149,8 @@
 				A9F9FED12199D4EF008FCE0C /* PlaceMarker.swift */,
 				A9F9FED32199D66F008FCE0C /* MarkerInfoView.xib */,
 				A9F9FED52199D692008FCE0C /* MarkerInfoView.swift */,
+				A93B0732219CD88000B4F212 /* style.json */,
+				A93B0736219D8DB500B4F212 /* Constants.swift */,
 			);
 			path = ASE_iOS;
 			sourceTree = "<group>";
@@ -210,6 +216,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A93B0733219CD88000B4F212 /* style.json in Resources */,
 				FBCB45A9216FBD6100089508 /* LaunchScreen.storyboard in Resources */,
 				A9CE618521886F59003120EF /* Map.storyboard in Resources */,
 				FB77E0D921833139008A9448 /* GoogleService-Info.plist in Resources */,
@@ -310,6 +317,7 @@
 				A9F9FED62199D692008FCE0C /* MarkerInfoView.swift in Sources */,
 				FB38D780218923DD00DE884A /* ColorSingleton.swift in Sources */,
 				A9CE61832187D1AD003120EF /* SignUpViewController.swift in Sources */,
+				A93B0737219D8DB500B4F212 /* Constants.swift in Sources */,
 				FBCB459F216FBD5F00089508 /* AppDelegate.swift in Sources */,
 				A9CE61812187D19B003120EF /* LogInViewController.swift in Sources */,
 				FB6BCD5D21712ABB00778AC4 /* User.swift in Sources */,
