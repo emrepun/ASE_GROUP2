@@ -12,8 +12,12 @@ import UIKit
 
 class PlaceMarker: GMSMarker {
     
+    var postCodeName: String?
+    
     init(postCode: PostCode) {
         super.init()
+        
+        self.postCodeName = postCode.postcode
         
         if let lat: CLLocationDegrees = CLLocationDegrees(postCode.latitude!), let long: CLLocationDegrees = CLLocationDegrees(postCode.longitude!) {
             let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)

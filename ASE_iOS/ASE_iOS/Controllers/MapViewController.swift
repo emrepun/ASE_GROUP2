@@ -45,15 +45,18 @@ class MapViewController: UIViewController {
             NSLog("One or more of the map styles failed to load. \(error)")
         }
         
-        //self.view = mapView
-        
-        
         //checkForAuthorization()
         //postTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        //postTimer.invalidate()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     fileprivate func locationSettings() {
@@ -151,6 +154,17 @@ extension MapViewController: CLLocationManagerDelegate {
         
         locationManager.stopUpdatingLocation()
     }
+    
+    // MARK: Segue settings
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showListPrices" {
+            let markerSender = sender as! PlaceMarker
+            let destinationVC = segue.destination as! TableViewController
+            if let postCode = markerSender.postCodeName {
+                destinationVC.postCode = postCode
+            }
+        }
+    }
 }
 
 extension MapViewController: GMSMapViewDelegate {
@@ -158,8 +172,7 @@ extension MapViewController: GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         // FIXME: Fix
         // TODO: Open Post Code Specific house prices list.
-        performSegue(withIdentifier: "SegueTableViewController", sender: self)
-        print("diid")
+        performSegue(withIdentifier: "showListPrices", sender: marker)
         return true
     }
     
