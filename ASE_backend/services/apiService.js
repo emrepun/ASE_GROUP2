@@ -15,7 +15,7 @@ exports.print_data = function(info) {
 exports.getAveragePrice = async function(postcode) {
     console.log(`getting data for ${postcode} from db`);
     var pcData = await dbService.getPostCode(postcode);
-    console.log(pcData);
+    console.log(`Received data for ${postcode}`);
     if (pcData == undefined) {
         return "No data";
     }
@@ -29,18 +29,17 @@ exports.getPricesAtAround = async function(lat, long, radius) {
         radius
     );
     var postcodeData = [];
-    for (let postcode of postcodes) {
-        //let price = await priceService.getAverageAtPostcode(postcode.Postcode);
-        let price = await exports.getAveragePrice(postcode.Postcode);
-        postcodeData.push({
-            price,
-            postcode: postcode.Postcode,
-            latitude: postcode.Latitude,
-            longitude: postcode.Longitude
-        });
-    }
-
-    return postcodeData;
+    var asyncPrices = postcodes.map(postcode => exports.getAveragePrice(postcode.Postcode));
+    var prices = await Promise.all(asyncPrices);
+    postcodes = postcodes.map((postcode, i) => {
+      return {
+        price: prices[i],
+        postcode: postcode.Postcode,
+        latitude: postcode.Latitude,
+        longitude: postcode.Longitude
+      }
+    })
+    return postcodes
 };
 
 exports.getPostcodes = async function(lat, long) {
