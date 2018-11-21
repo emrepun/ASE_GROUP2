@@ -33,6 +33,7 @@ exports.getPricesAtAround = async function(lat, long, radius) {
 
 exports.getPostcodes = async function(lat, long) {
     postcodes = await postcodeService.getPostcodesNear(lat, long);
+    postcodes = await postcodeService.getPostcodesNearAround(lat, long);
     return postcodes;
 };
 
