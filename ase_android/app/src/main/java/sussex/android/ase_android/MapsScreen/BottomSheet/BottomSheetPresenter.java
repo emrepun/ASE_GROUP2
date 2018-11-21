@@ -19,8 +19,8 @@ public class BottomSheetPresenter implements  BottomSheetContract.Presenter {
         jsonParser.postcodeJsonParse(postcode, this);
     }
 
-    public void displayInfo(String json, String price){
-        view.displayAddresses(json, price);
+    public void displayInfo(String address, String price, String[] keyPair){
+        view.displayAddresses(address, price, keyPair);
     }
 
     public void populateListView(String json, String price){ view.populateListView(json, price);}

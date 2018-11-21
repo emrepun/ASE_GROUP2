@@ -9,7 +9,7 @@ public interface BottomSheetContract {
                 void displayBottomSheet(String postcode, String average);
                 void hideBottomSheet();
 
-                void displayAddresses(String json, String price);
+                void displayAddresses(String address, String price, String[] keyPair);
 
                 void populateListView(String json, String price);
         }
@@ -17,6 +17,6 @@ public interface BottomSheetContract {
         interface Presenter extends BasePresenter {
 
                 void displayAddresses(String postcode);
-                void displayInfo(String json, String price);
+                void displayInfo(String address, String price, String[] keyPair);
         }
 }

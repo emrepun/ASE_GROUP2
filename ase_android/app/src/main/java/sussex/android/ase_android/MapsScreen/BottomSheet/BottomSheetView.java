@@ -55,11 +55,11 @@ public class BottomSheetView implements BottomSheetContract.View{
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 
-    public void displayAddresses(String json, String price){
+    public void displayAddresses(String address, String price, String[] keyPair){
         ListView listView = activity.findViewById(R.id.listView);
 
         HashMap<String, String> addressInfo = new HashMap<>();
-        addressInfo.put(json, price);
+        addressInfo.put(address, price);
 
         List<HashMap<String, String>> listItems = new ArrayList<>();
         SimpleAdapter adapter = new SimpleAdapter(activity, listItems, R.layout.layout_item_ist,
