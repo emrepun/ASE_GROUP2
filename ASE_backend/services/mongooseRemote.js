@@ -1,4 +1,4 @@
-var mongoose = require("mongoose");
+var mongoose = require("mongoose").set("debug", true);
 var dbCreds = require("../../auth/dbCreds.js");
 
 const DATABASE = "postcodes";
@@ -15,12 +15,12 @@ const OPTIONS = {
 mongoose.Promise = global.Promise;
 var dbRemote = mongoose.createConnection(MONGO_URI, OPTIONS);
 
-dbRemote.on('error', err => {
-  console.log(err)
-})
+dbRemote.on("error", err => {
+    console.log(err);
+});
 
-dbRemote.on('open', a =>{
-  console.log(`Connected to ${DATABASE} at ${MONGO_URI} as ${USERNAME}`);
-})
+dbRemote.on("open", a => {
+    console.log(`Connected to ${DATABASE} at ${MONGO_URI} as ${USERNAME}`);
+});
 
 module.exports = { dbRemote };
