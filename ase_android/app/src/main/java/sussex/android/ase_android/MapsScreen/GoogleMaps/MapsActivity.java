@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,6 +24,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.TileOverlay;
+import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.maps.android.heatmaps.HeatmapTileProvider;
 
 import sussex.android.ase_android.CustomInfoWindowAdapter;
 import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetContract;
@@ -40,14 +44,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private BottomSheetContract.View bottomSheetView;
 
 
-
+    private boolean heatMapEnabled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-
+        heatMapEnabled=false;
 
         //create MapsPresenter
         mapsPresenter=new MapsPresenter(this);
@@ -127,10 +131,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         14));
             }
         }
-
-
-        mapsPresenter.initialize();
-    }
+        }
 
     public void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -170,11 +171,23 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return mMap.addMarker(marker);
     }
 
-    public LatLng getViewLoc(){
-        return mMap.getCameraPosition().target;
-    }
-
     public void clearMap(){
         mMap.clear();
+    }
+
+    public TileOverlay addTileOverlay(TileOverlayOptions options){
+       return  mMap.addTileOverlay(options);
+    }
+
+    public void onClick(View view) {
+        if(heatMapEnabled){
+            heatMapEnabled=false;
+            ((Button)view).setText("Heatmap");
+        }else{
+            heatMapEnabled=true;
+            ((Button)view).setText("Markers");
+        }
+        clearMap();
+        mapsPresenter.switchHeatmap(heatMapEnabled);
     }
 }
