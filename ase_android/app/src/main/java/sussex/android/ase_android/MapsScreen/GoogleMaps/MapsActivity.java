@@ -13,6 +13,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,7 +35,7 @@ import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetContract;
 import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetView;
 import sussex.android.ase_android.R;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,MapsContract.View {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,MapsContract.View, CompoundButton.OnCheckedChangeListener {
 
 
     private GoogleMap mMap;
@@ -42,6 +44,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private MapsPresenter mapsPresenter;
     private BottomSheetContract.View bottomSheetView;
+    Switch switch1;
 
 
     private boolean heatMapEnabled;
@@ -58,7 +61,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         bottomSheet = findViewById(R.id.pullUp_bottom_sheet);
         bottomSheetView = new BottomSheetView(bottomSheet, mapsPresenter, this);
-
+        switch1 = findViewById(R.id.switch1);
+        switch1.setOnCheckedChangeListener(this);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -178,14 +182,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public TileOverlay addTileOverlay(TileOverlayOptions options){
        return  mMap.addTileOverlay(options);
     }
-
-    public void onClick(View view) {
-        if(heatMapEnabled){
-            heatMapEnabled=false;
-            ((Button)view).setText("Heatmap");
-        }else{
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        if(switch1.isChecked()){
             heatMapEnabled=true;
-            ((Button)view).setText("Markers");
+        }else{
+            heatMapEnabled=false;
         }
         clearMap();
         mapsPresenter.switchHeatmap(heatMapEnabled);
