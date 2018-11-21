@@ -51,3 +51,4 @@ exports.getPostcodeData = async function(postcode) {
     postcode = postcode.toUpperCase();
     return await priceService.getAllFromPostcode(postcode);
 };
+
