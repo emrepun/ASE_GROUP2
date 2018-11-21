@@ -7,7 +7,7 @@ import sussex.android.ase_android.MapsScreen.model.JSONparser;
 public class BottomSheetPresenter implements  BottomSheetContract.Presenter, CallbackInfoInterface {
     BottomSheetContract.View view;
     MapsContract.Presenter mapsPresenter;
-    JSONparser jsonParser;
+    MapsContract.Model jsonParser;
 
 
     public BottomSheetPresenter(BottomSheetContract.View view, MapsContract.Presenter mapsPresenter){
@@ -17,7 +17,7 @@ public class BottomSheetPresenter implements  BottomSheetContract.Presenter, Cal
     }
 
     public void displayAddresses(String postcode){
-        jsonParser.postcodeJsonParse(postcode, this);
+        jsonParser.postcodeJsonParse(this,postcode);
     }
 
     public void displayInfo(String json, String price){

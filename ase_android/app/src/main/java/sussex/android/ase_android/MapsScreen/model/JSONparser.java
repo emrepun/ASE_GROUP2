@@ -18,21 +18,22 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetContract;
+import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
 
-public class JSONparser {
+public class JSONparser implements MapsContract.Model {
     private Context context;
     private RequestQueue mQueue;
+    private String serverURL = "https://ab6a5144.ngrok.io/api/";
 
     public  JSONparser(Context context){
         this.context=context;
         mQueue=Volley.newRequestQueue(context);
     }
 
-    public void markerJsonParse(final CallbackMarkerInterface callback, double lat, double lon) {
+    public void markerJsonParse(final CallbackMarkerInterface callback, double lat, double lon, double radius) {
         mQueue.cancelAll("marker");
-        /*String url = "https://fa5eff00.ngrok.io/api/pcprices/"+lat+"/"+lon+"/0.1";*/
-        String url = "https://api.myjson.com/bins/siz6a"; //temp json
+        String url = serverURL+"pcprices/"+lat+"/"+lon+"/"+radius;
+        //String url = "https://www.dropbox.com/s/5us526t69r99irl/test.json?dl=1"; //temp json
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -41,12 +42,27 @@ public class JSONparser {
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject postcodeData = response.getJSONObject(i);
+                                double price;
+                                try {
+                                    price = postcodeData.getDouble("price");
+                                }catch (JSONException e){
+                                    price=0;
+                                }
+                                String postcode;
+                                try{
+                                    postcode = postcodeData.getString("postcode");
+                                }catch (JSONException e){
+                                    postcode="Unknown";
+                                }
+                                double lat;double lon;
+                                try {
+                                    lat = postcodeData.getDouble("latitude");
+                                    lon = postcodeData.getDouble("longitude");
+                                }catch (JSONException e){
+                                    lat=lon=0;
+                                }
+                                    markerArrayList.add(new ZipCodeMarker(lat,lon, price, postcode));
 
-                                double price = postcodeData.getDouble("price");
-                                String postcode = postcodeData.getString("postcode");
-                                double lat = postcodeData.getDouble("latitude");
-                                double lon = postcodeData.getDouble("longitude");
-                                markerArrayList.add(new ZipCodeMarker(lat,lon, price, postcode));
                             }
                             callback.displayMarkers(markerArrayList);
                         } catch (JSONException e) {
@@ -70,8 +86,8 @@ public class JSONparser {
 
     public void postcodeJsonParse(final CallbackInfoInterface callback, String postcode) {
         mQueue.cancelAll("address");
-        /*String url = "https://fa5eff00.ngrok.io/api/addresses/"+postcode;*/
-        String url = "https://api.myjson.com/bins/b9emq"; //temp json in case the link is down
+        String url = serverURL+"addresses/"+postcode;
+        //String url = "https://api.myjson.com/bins/b9emq"; //temp json in case the link is down
         RequestQueue mQueue = Volley.newRequestQueue(context);
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,

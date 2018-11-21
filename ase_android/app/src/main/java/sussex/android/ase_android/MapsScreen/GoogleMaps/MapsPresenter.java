@@ -13,6 +13,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.TileOverlay;
+import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.google.maps.android.heatmaps.WeightedLatLng;
 
 import java.io.IOException;
@@ -27,12 +30,11 @@ import sussex.android.ase_android.R;
 
 public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInterface {
 
-
-
     private MapsContract.View view;
-    private JSONparser jsonparser;
-    private ArrayList<MarkerOptions> markers=new ArrayList<>();
-    List<ZipCodeMarker> markerList = null;
+    private MapsContract.Model jsonparser;
+    private List<ZipCodeMarker> markerList = new ArrayList<>();
+
+    private boolean heatMapEnabled;
 
     public MapsPresenter(MapsContract.View view) {
         this.view = view;
@@ -45,13 +47,21 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
     @Override
     public void displayMarkers(List<ZipCodeMarker> markerList) {
         this.markerList=markerList;
+        displayMarkers();
+    }
+
+    private void displayMarkers(){
         view.clearMap();
-        for (ZipCodeMarker zipCodeMarker: markerList) {
-            view.addMarker(new MarkerOptions()
-                    .position(new LatLng(zipCodeMarker.getLat(), zipCodeMarker.getLon()))
-                    .icon(bitmapDescriptorFromVector(view.getActivity(), R.drawable.ic_marker))
-                    .title(zipCodeMarker.getPostcode())
-                    .snippet("Average price: £" + String.format(Locale.UK,"%,.2f", zipCodeMarker.getPrice())));
+        if(heatMapEnabled){
+            enableHeatMap();
+        }else {
+            for (ZipCodeMarker zipCodeMarker : markerList) {
+                view.addMarker(new MarkerOptions()
+                        .position(new LatLng(zipCodeMarker.getLat(), zipCodeMarker.getLon()))
+                        .icon(bitmapDescriptorFromVector(view.getActivity(), R.drawable.ic_marker))
+                        .title(zipCodeMarker.getPostcode())
+                        .snippet("Average price: £" + String.format(Locale.UK, "%,.2f", zipCodeMarker.getPrice())));
+            }
         }
     }
 
@@ -91,11 +101,31 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
     }
 
     public void cameraPosChanged(CameraPosition cameraPosition) {
-        jsonparser.markerJsonParse(this, cameraPosition.target.latitude, cameraPosition.target.longitude);
+        //TODO: calculate radius according to Radius Of Visible Map in Android
+            jsonparser.markerJsonParse(this, cameraPosition.target.latitude, cameraPosition.target.longitude,0.5);
     }
 
-    public JSONparser getJsonParser(){
+    public MapsContract.Model getJsonParser(){
         return jsonparser;
     }
-    
+
+    public void switchHeatmap(boolean showHeatmap){
+        this.heatMapEnabled=showHeatmap;
+        if(showHeatmap){
+            enableHeatMap();
+        }else{
+            displayMarkers();
+        }
+    }
+
+    private void enableHeatMap() {
+        List <WeightedLatLng> list = new ArrayList<>();
+        for (ZipCodeMarker marker: markerList) {
+            list.add(new WeightedLatLng(new LatLng(marker.getLat(), marker.getLon()), marker.getPrice()));
+        }
+        HeatmapTileProvider mProvider = new HeatmapTileProvider.Builder()
+                .weightedData(list)
+                .build();
+        TileOverlay OvermOverlay = view.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
+    }
 }
