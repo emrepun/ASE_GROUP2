@@ -1,9 +1,10 @@
 package sussex.android.ase_android.MapsScreen.BottomSheet;
 
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
+import sussex.android.ase_android.MapsScreen.model.CallbackInfoInterface;
 import sussex.android.ase_android.MapsScreen.model.JSONparser;
 
-public class BottomSheetPresenter implements  BottomSheetContract.Presenter {
+public class BottomSheetPresenter implements  BottomSheetContract.Presenter, CallbackInfoInterface {
     BottomSheetContract.View view;
     MapsContract.Presenter mapsPresenter;
     JSONparser jsonParser;

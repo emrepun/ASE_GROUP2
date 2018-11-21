@@ -19,11 +19,6 @@ public interface MapsContract {
     }
 
     interface Presenter extends BasePresenter {
-        void initialize();
-
-        void addMarkerToList(double lat, double lon, double price, String postcode);
-
-        void displayMarkers();
         void cameraPosChanged(CameraPosition cameraPosition);
 
         JSONparser getJsonParser();

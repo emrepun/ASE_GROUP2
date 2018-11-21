@@ -15,10 +15,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetContract;
-import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
 
 public class JSONparser {
     private Context context;
@@ -29,7 +29,7 @@ public class JSONparser {
         mQueue=Volley.newRequestQueue(context);
     }
 
-    public void markerJsonParse(final MapsContract.Presenter presenter, double lat, double lon) {
+    public void markerJsonParse(final CallbackMarkerInterface callback, double lat, double lon) {
         mQueue.cancelAll("marker");
         /*String url = "https://fa5eff00.ngrok.io/api/pcprices/"+lat+"/"+lon+"/0.1";*/
         String url = "https://api.myjson.com/bins/siz6a"; //temp json
@@ -37,6 +37,7 @@ public class JSONparser {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        ArrayList<ZipCodeMarker> markerArrayList= new ArrayList<>();
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject postcodeData = response.getJSONObject(i);
@@ -45,9 +46,9 @@ public class JSONparser {
                                 String postcode = postcodeData.getString("postcode");
                                 double lat = postcodeData.getDouble("latitude");
                                 double lon = postcodeData.getDouble("longitude");
-                                presenter.addMarkerToList(lat,lon, price, postcode);
+                                markerArrayList.add(new ZipCodeMarker(lat,lon, price, postcode));
                             }
-                            presenter.displayMarkers();
+                            callback.displayMarkers(markerArrayList);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -67,7 +68,7 @@ public class JSONparser {
 
     }
 
-    public void postcodeJsonParse(String postcode, final BottomSheetContract.Presenter sheetPresenter) {
+    public void postcodeJsonParse(final CallbackInfoInterface callback, String postcode) {
         mQueue.cancelAll("address");
         /*String url = "https://fa5eff00.ngrok.io/api/addresses/"+postcode;*/
         String url = "https://api.myjson.com/bins/b9emq"; //temp json in case the link is down
@@ -97,7 +98,7 @@ public class JSONparser {
 
 
                             }
-                            sheetPresenter.displayInfo(json, price);
+                            callback.displayInfo(json, price);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
