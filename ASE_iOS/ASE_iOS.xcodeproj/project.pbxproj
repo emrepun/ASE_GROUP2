@@ -22,7 +22,7 @@
 		A9F9FED42199D66F008FCE0C /* MarkerInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9F9FED32199D66F008FCE0C /* MarkerInfoView.xib */; };
 		A9F9FED62199D692008FCE0C /* MarkerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9FED52199D692008FCE0C /* MarkerInfoView.swift */; };
 		FB38D780218923DD00DE884A /* ColorSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB38D77F218923DD00DE884A /* ColorSingleton.swift */; };
-		FB60A4C7219F332E0026C7ED /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB60A4C6219F332E0026C7ED /* Constants.swift */; };
+		FB3D4D6821A7282C00394854 /* ApiController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3D4D6721A7282C00394854 /* ApiController.swift */; };
 		FB6BCD5D21712ABB00778AC4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5C21712ABB00778AC4 /* User.swift */; };
 		FB6BCD5F21712B7D00778AC4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5E21712B7D00778AC4 /* Extensions.swift */; };
 		FB77E0D921833139008A9448 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB77E0D821833139008A9448 /* GoogleService-Info.plist */; };
@@ -51,7 +51,7 @@
 		A9F9FED52199D692008FCE0C /* MarkerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfoView.swift; sourceTree = "<group>"; };
 		D812B3E38C30908B7B490F33 /* Pods_ASE_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASE_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB38D77F218923DD00DE884A /* ColorSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSingleton.swift; sourceTree = "<group>"; };
-		FB60A4C6219F332E0026C7ED /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		FB3D4D6721A7282C00394854 /* ApiController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiController.swift; sourceTree = "<group>"; };
 		FB6BCD5C21712ABB00778AC4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FB6BCD5E21712B7D00778AC4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		FB77E0D821833139008A9448 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -112,6 +112,14 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
+		FB3D4D6621A7281800394854 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				FB3D4D6721A7282C00394854 /* ApiController.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		FBCB4592216FBD5E00089508 = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				FBCB459E216FBD5F00089508 /* AppDelegate.swift */,
+				FB3D4D6621A7281800394854 /* Networking */,
 				FB38D77D2188F47500DE884A /* Controllers */,
 				FB38D77E2188F48400DE884A /* Storyboards */,
 				FB6BCD5C21712ABB00778AC4 /* User.swift */,
@@ -152,7 +161,6 @@
 				A9F9FED12199D4EF008FCE0C /* PlaceMarker.swift */,
 				A9F9FED32199D66F008FCE0C /* MarkerInfoView.xib */,
 				A9F9FED52199D692008FCE0C /* MarkerInfoView.swift */,
-				FB60A4C6219F332E0026C7ED /* Constants.swift */,
 				A93B0732219CD88000B4F212 /* style.json */,
 			);
 			path = ASE_iOS;
@@ -243,6 +251,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
@@ -252,6 +261,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
@@ -315,6 +325,7 @@
 			files = (
 				A9F9FECE2199CC50008FCE0C /* MockJson.swift in Sources */,
 				A934756C219DCE2600B28051 /* TableViewController.swift in Sources */,
+				FB3D4D6821A7282C00394854 /* ApiController.swift in Sources */,
 				FBCB45A1216FBD5F00089508 /* ViewController.swift in Sources */,
 				A9F9FED22199D4EF008FCE0C /* PlaceMarker.swift in Sources */,
 				A9F9FED02199D097008FCE0C /* PostCode.swift in Sources */,
@@ -324,7 +335,6 @@
 				FBCB459F216FBD5F00089508 /* AppDelegate.swift in Sources */,
 				A9CE61812187D19B003120EF /* LogInViewController.swift in Sources */,
 				FB6BCD5D21712ABB00778AC4 /* User.swift in Sources */,
-				FB60A4C7219F332E0026C7ED /* Constants.swift in Sources */,
 				A9CE617F2187D14F003120EF /* MapViewController.swift in Sources */,
 				FB6BCD5F21712B7D00778AC4 /* Extensions.swift in Sources */,
 			);

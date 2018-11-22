@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (4.7.3)
   - Firebase/Auth (5.11.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.0.4)
@@ -72,6 +73,7 @@ PODS:
   - nanopb/encode (0.3.901)
 
 DEPENDENCIES:
+  - Alamofire (~> 4.7)
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -79,6 +81,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -94,6 +97,7 @@ SPEC REPOS:
     - nanopb
 
 SPEC CHECKSUMS:
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   Firebase: b48f9e653da971ecce5b8c749684bc8bb2d26bd3
   FirebaseAnalytics: 63202d2665de4e6adcbdce189135255d8b5962ba
   FirebaseAuth: 504b198ceb3472dca5c65bb95544ea44cfc9439e
@@ -108,6 +112,6 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
 
-PODFILE CHECKSUM: 830ee16af41f1631182277d7ff3b2db68a74e3b2
+PODFILE CHECKSUM: 8bf6f98a132aea41eabfe0c0f7ede138493fc2e3
 
 COCOAPODS: 1.5.3
