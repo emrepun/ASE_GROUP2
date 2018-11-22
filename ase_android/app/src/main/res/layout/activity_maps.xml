@@ -22,7 +22,6 @@
             android:layout_height="match_parent"
             tools:context=".MapsScreen.GoogleMaps.MapsActivity" />
     </android.support.v4.widget.DrawerLayout>
-    <include layout="@layout/layout_pull_up" />
 
     <Switch
         android:id="@+id/switch1"
@@ -34,6 +33,10 @@
         android:checked="false"
         android:textColor="@color/greyText"
         />
+
+    <include layout="@layout/layout_pull_up" />
+
+
 
 
 </android.support.design.widget.CoordinatorLayout>
