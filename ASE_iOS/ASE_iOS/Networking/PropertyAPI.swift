@@ -22,10 +22,8 @@ extension PropertyAPI: EndpointType {
         switch self {
         case .postCodes(let lat, let long, let radius):
             return "/pcprices/\(lat)/\(long)/\(radius)"
-        case .postCodeSpecific(var postCode):
-            postCode = postCode.replacingOccurrences(of: " ", with: "%20")
-            postCode = postCode.lowercased()
-            return "/addresses/\(postCode)"
+        case .postCodeSpecific(let postCode):
+            return "/addresses/\(postCode.lowercased())"
         }
     }
 }

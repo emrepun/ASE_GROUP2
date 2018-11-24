@@ -8,9 +8,13 @@
 
 import UIKit
 
-class TableViewController: UITableViewController {
+class PropertyTableViewController: UITableViewController {
+    
+    private let networking = Networking()
     
     var postCode = ""
+    
+    var properties = [Property]()
     
 //    var dogCode: [String: AnyObject]!
 //
@@ -27,6 +31,20 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(postCode)
+        
+        if postCode.count > 0 {
+            getPropertyData(postCode: postCode) {
+                guard self.properties.count > 0 else { return } //show alert maybe.
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func getPropertyData(postCode: String, completion: (() -> Void)?) {
+        networking.performNetworkTask(endpoint: PropertyAPI.postCodeSpecific(postCode: postCode), type: [Property].self) { [weak self] (response) in
+            self?.properties = response
+            completion?()
+        }
     }
 
     // MARK: - Table view data source

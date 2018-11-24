@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		393D4C9330485504721540FA /* Pods_ASE_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D812B3E38C30908B7B490F33 /* Pods_ASE_iOS.framework */; };
-		A934756C219DCE2600B28051 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A934756B219DCE2600B28051 /* TableViewController.swift */; };
+		A934756C219DCE2600B28051 /* PropertyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A934756B219DCE2600B28051 /* PropertyTableViewController.swift */; };
 		A93B0733219CD88000B4F212 /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = A93B0732219CD88000B4F212 /* style.json */; };
 		A96D15E0218714EB00CF96A2 /* SignUp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A96D15DF218714EB00CF96A2 /* SignUp.storyboard */; };
 		A96D15E22187151100CF96A2 /* LogIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A96D15E12187151100CF96A2 /* LogIn.storyboard */; };
@@ -21,6 +21,7 @@
 		A9F9FED22199D4EF008FCE0C /* PlaceMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9FED12199D4EF008FCE0C /* PlaceMarker.swift */; };
 		A9F9FED42199D66F008FCE0C /* MarkerInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9F9FED32199D66F008FCE0C /* MarkerInfoView.xib */; };
 		A9F9FED62199D692008FCE0C /* MarkerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9FED52199D692008FCE0C /* MarkerInfoView.swift */; };
+		FB35127521A9F99A00E465E6 /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB35127421A9F99A00E465E6 /* Property.swift */; };
 		FB38D780218923DD00DE884A /* ColorSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB38D77F218923DD00DE884A /* ColorSingleton.swift */; };
 		FB3D4D6821A7282C00394854 /* ApiController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3D4D6721A7282C00394854 /* ApiController.swift */; };
 		FB6BCD5D21712ABB00778AC4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5C21712ABB00778AC4 /* User.swift */; };
@@ -41,7 +42,7 @@
 /* Begin PBXFileReference section */
 		76156A0F5791993D2FA8BB8F /* Pods-ASE_iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASE_iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		90C521729CB937294CF3C987 /* Pods-ASE_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASE_iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS.release.xcconfig"; sourceTree = "<group>"; };
-		A934756B219DCE2600B28051 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		A934756B219DCE2600B28051 /* PropertyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTableViewController.swift; sourceTree = "<group>"; };
 		A93B0732219CD88000B4F212 /* style.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		A96D15DF218714EB00CF96A2 /* SignUp.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignUp.storyboard; sourceTree = "<group>"; };
 		A96D15E12187151100CF96A2 /* LogIn.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LogIn.storyboard; sourceTree = "<group>"; };
@@ -55,6 +56,7 @@
 		A9F9FED32199D66F008FCE0C /* MarkerInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkerInfoView.xib; sourceTree = "<group>"; };
 		A9F9FED52199D692008FCE0C /* MarkerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfoView.swift; sourceTree = "<group>"; };
 		D812B3E38C30908B7B490F33 /* Pods_ASE_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASE_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB35127421A9F99A00E465E6 /* Property.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Property.swift; sourceTree = "<group>"; };
 		FB38D77F218923DD00DE884A /* ColorSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSingleton.swift; sourceTree = "<group>"; };
 		FB3D4D6721A7282C00394854 /* ApiController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiController.swift; sourceTree = "<group>"; };
 		FB6BCD5C21712ABB00778AC4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -132,7 +134,7 @@
 				A9CE617E2187D14F003120EF /* MapViewController.swift */,
 				A9CE61802187D19B003120EF /* LogInViewController.swift */,
 				A9CE61822187D1AD003120EF /* SignUpViewController.swift */,
-				A934756B219DCE2600B28051 /* TableViewController.swift */,
+				A934756B219DCE2600B28051 /* PropertyTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -160,6 +162,7 @@
 			children = (
 				A9F9FECF2199D097008FCE0C /* PostCode.swift */,
 				FB925BC321A7596E006BBE32 /* Response.swift */,
+				FB35127421A9F99A00E465E6 /* Property.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -365,13 +368,14 @@
 				FB925BBF21A758CD006BBE32 /* PropertyAPI.swift in Sources */,
 				A9F9FECE2199CC50008FCE0C /* MockJson.swift in Sources */,
 				FB925BC121A758DD006BBE32 /* EndpointType.swift in Sources */,
-				A934756C219DCE2600B28051 /* TableViewController.swift in Sources */,
+				A934756C219DCE2600B28051 /* PropertyTableViewController.swift in Sources */,
 				FB3D4D6821A7282C00394854 /* ApiController.swift in Sources */,
 				FB925BC421A7596E006BBE32 /* Response.swift in Sources */,
 				FB925BBD21A758AA006BBE32 /* Networking.swift in Sources */,
 				FBCB45A1216FBD5F00089508 /* ViewController.swift in Sources */,
 				A9F9FED22199D4EF008FCE0C /* PlaceMarker.swift in Sources */,
 				FBB4ED7121A742C8006D5F38 /* Constants.swift in Sources */,
+				FB35127521A9F99A00E465E6 /* Property.swift in Sources */,
 				A9F9FED02199D097008FCE0C /* PostCode.swift in Sources */,
 				A9F9FED62199D692008FCE0C /* MarkerInfoView.swift in Sources */,
 				FB38D780218923DD00DE884A /* ColorSingleton.swift in Sources */,

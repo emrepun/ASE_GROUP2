@@ -34,7 +34,6 @@ struct Networking {
             
             completion?(decoded)
         }
-        print(url.absoluteString)
         
         urlSession.resume()
     }

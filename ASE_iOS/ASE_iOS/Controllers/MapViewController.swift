@@ -12,7 +12,6 @@ import MapKit
 import FirebaseAuth
 import FirebaseDatabase
 import GoogleMaps
-//import Alamofire
 
 class MapViewController: UIViewController {
     
@@ -168,7 +167,7 @@ extension MapViewController: CLLocationManagerDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showListPrices" {
             let markerSender = sender as! PlaceMarker
-            let destinationVC = segue.destination as! TableViewController
+            let destinationVC = segue.destination as! PropertyTableViewController
             if let postCode = markerSender.postCodeName {
                 destinationVC.postCode = postCode
             }
