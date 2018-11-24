@@ -26,6 +26,11 @@
 		FB6BCD5D21712ABB00778AC4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5C21712ABB00778AC4 /* User.swift */; };
 		FB6BCD5F21712B7D00778AC4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5E21712B7D00778AC4 /* Extensions.swift */; };
 		FB77E0D921833139008A9448 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB77E0D821833139008A9448 /* GoogleService-Info.plist */; };
+		FB925BBD21A758AA006BBE32 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB925BBC21A758AA006BBE32 /* Networking.swift */; };
+		FB925BBF21A758CD006BBE32 /* PropertyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB925BBE21A758CD006BBE32 /* PropertyAPI.swift */; };
+		FB925BC121A758DD006BBE32 /* EndpointType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB925BC021A758DD006BBE32 /* EndpointType.swift */; };
+		FB925BC421A7596E006BBE32 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB925BC321A7596E006BBE32 /* Response.swift */; };
+		FBB4ED7121A742C8006D5F38 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB4ED7021A742C8006D5F38 /* Constants.swift */; };
 		FBCB459F216FBD5F00089508 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCB459E216FBD5F00089508 /* AppDelegate.swift */; };
 		FBCB45A1216FBD5F00089508 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCB45A0216FBD5F00089508 /* ViewController.swift */; };
 		FBCB45A4216FBD5F00089508 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBCB45A2216FBD5F00089508 /* Main.storyboard */; };
@@ -55,6 +60,11 @@
 		FB6BCD5C21712ABB00778AC4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FB6BCD5E21712B7D00778AC4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		FB77E0D821833139008A9448 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FB925BBC21A758AA006BBE32 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		FB925BBE21A758CD006BBE32 /* PropertyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyAPI.swift; sourceTree = "<group>"; };
+		FB925BC021A758DD006BBE32 /* EndpointType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointType.swift; sourceTree = "<group>"; };
+		FB925BC321A7596E006BBE32 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		FBB4ED7021A742C8006D5F38 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FBCB459B216FBD5F00089508 /* ASE_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASE_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBCB459E216FBD5F00089508 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBCB45A0216FBD5F00089508 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -116,8 +126,20 @@
 			isa = PBXGroup;
 			children = (
 				FB3D4D6721A7282C00394854 /* ApiController.swift */,
+				FB925BBC21A758AA006BBE32 /* Networking.swift */,
+				FB925BBE21A758CD006BBE32 /* PropertyAPI.swift */,
+				FB925BC021A758DD006BBE32 /* EndpointType.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		FB925BC221A75932006BBE32 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A9F9FECF2199D097008FCE0C /* PostCode.swift */,
+				FB925BC321A7596E006BBE32 /* Response.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		FBCB4592216FBD5E00089508 = {
@@ -143,6 +165,7 @@
 			children = (
 				FBCB459E216FBD5F00089508 /* AppDelegate.swift */,
 				FB3D4D6621A7281800394854 /* Networking */,
+				FB925BC221A75932006BBE32 /* Model */,
 				FB38D77D2188F47500DE884A /* Controllers */,
 				FB38D77E2188F48400DE884A /* Storyboards */,
 				FB6BCD5C21712ABB00778AC4 /* User.swift */,
@@ -157,10 +180,10 @@
 				FBCB45AA216FBD6100089508 /* Info.plist */,
 				FB38D77F218923DD00DE884A /* ColorSingleton.swift */,
 				A9F9FECD2199CC50008FCE0C /* MockJson.swift */,
-				A9F9FECF2199D097008FCE0C /* PostCode.swift */,
 				A9F9FED12199D4EF008FCE0C /* PlaceMarker.swift */,
 				A9F9FED32199D66F008FCE0C /* MarkerInfoView.xib */,
 				A9F9FED52199D692008FCE0C /* MarkerInfoView.swift */,
+				FBB4ED7021A742C8006D5F38 /* Constants.swift */,
 				A93B0732219CD88000B4F212 /* style.json */,
 			);
 			path = ASE_iOS;
@@ -323,11 +346,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB925BBF21A758CD006BBE32 /* PropertyAPI.swift in Sources */,
 				A9F9FECE2199CC50008FCE0C /* MockJson.swift in Sources */,
+				FB925BC121A758DD006BBE32 /* EndpointType.swift in Sources */,
 				A934756C219DCE2600B28051 /* TableViewController.swift in Sources */,
 				FB3D4D6821A7282C00394854 /* ApiController.swift in Sources */,
+				FB925BC421A7596E006BBE32 /* Response.swift in Sources */,
+				FB925BBD21A758AA006BBE32 /* Networking.swift in Sources */,
 				FBCB45A1216FBD5F00089508 /* ViewController.swift in Sources */,
 				A9F9FED22199D4EF008FCE0C /* PlaceMarker.swift in Sources */,
+				FBB4ED7121A742C8006D5F38 /* Constants.swift in Sources */,
 				A9F9FED02199D097008FCE0C /* PostCode.swift in Sources */,
 				A9F9FED62199D692008FCE0C /* MarkerInfoView.swift in Sources */,
 				FB38D780218923DD00DE884A /* ColorSingleton.swift in Sources */,

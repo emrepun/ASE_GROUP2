@@ -12,6 +12,7 @@ import MapKit
 import FirebaseAuth
 import FirebaseDatabase
 import GoogleMaps
+//import Alamofire
 
 class MapViewController: UIViewController {
     
@@ -22,18 +23,35 @@ class MapViewController: UIViewController {
     var user = User(latitude: 0.0, longitude: 0.0)
     //var postTimer: Timer!
     
-    var postCodes = [PostCode]()
+    private let networking = Networking()
     
-    let postCodeDecoder = JSONDecoder()
+    private var postCodes = [PostCode]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
         locationSettings()
-        fetchData()
         
-        postCodeDecoder.keyDecodingStrategy = .convertFromSnakeCase
+        updateMapStyle()
         
+        getPropertyData(lat: "50.828080", long: "-0.134950", radius: "0.1") {
+            for postCode in self.postCodes {
+                let marker = PlaceMarker(postCode: postCode)
+                marker.map = self.mapView
+            }
+        }
+        
+        //checkForAuthorization()
+        //postTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)
+    }
+    
+    fileprivate func locationSettings() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.requestWhenInUseAuthorization()
+    }
+    
+    fileprivate func updateMapStyle() {
         do {
             // Set the map style by passing the URL of the local file.
             if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json") {
@@ -44,9 +62,13 @@ class MapViewController: UIViewController {
         } catch {
             NSLog("One or more of the map styles failed to load. \(error)")
         }
-        
-        //checkForAuthorization()
-        //postTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)
+    }
+    
+    private func getPropertyData(lat: String, long: String, radius: String, completion: (() -> Void)?) {
+        networking.performNetworkTask(endpoint: PropertyAPI.postCodes(lat: lat, long: long, radius: radius), type: [PostCode].self) { [weak self] (response) in
+            self?.postCodes = response
+            completion?()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,21 +81,6 @@ class MapViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
-    fileprivate func locationSettings() {
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        locationManager.requestWhenInUseAuthorization()
-        //locationManager.startUpdatingLocation()
-    }
-    
-    func fetchData() {
-        postCodes = try! postCodeDecoder.decode([PostCode].self, from: MockJson.json)
-        
-        for postCode in postCodes {
-            let marker = PlaceMarker(postCode: postCode)
-            marker.map = self.mapView
-        }
-    }
     
 //    fileprivate func checkForAuthorization() {
 //        if authorizationStatus == .denied || authorizationStatus == .restricted {
