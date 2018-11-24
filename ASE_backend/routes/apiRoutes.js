@@ -20,7 +20,7 @@ router.get("/pcprices/:lat/:long/:radius", apiController.getPricesAtAround);
 /** Endpoint to receive the average price of a postcode*/
 router.get("/average/:postcode", apiController.getAveragePrice);
 
-/** Endpoint to receive the addresses of a postcode*/
+/** Endpoint to receive the transaction data of a postcode*/
 router.get("/addresses/:postcode", apiController.getPostcodeData);
 
 /** Endpoint to receive the postcodes (and nothing else) at a geo coordinate*/
