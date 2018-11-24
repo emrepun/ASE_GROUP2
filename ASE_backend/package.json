@@ -22,6 +22,12 @@
     "firebase-admin": "^6.1.0",
     "mongoose-double": "0.0.1",
     "request": "^2.88.0",
-    "request-promise-native": "^1.0.5"
+    "request-promise-native": "^1.0.5",
+    "superagent": "^4.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "nock": "^10.0.2"
   }
 }
