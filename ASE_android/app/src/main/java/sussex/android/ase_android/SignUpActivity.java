@@ -14,6 +14,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsActivity;
+
 public class SignUpActivity extends AppCompatActivity implements
         View.OnClickListener {
 
