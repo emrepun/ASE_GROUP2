@@ -24,43 +24,47 @@ import java.util.List;
 import java.util.Locale;
 
 import sussex.android.ase_android.MapsScreen.model.CallbackMarkerInterface;
-import sussex.android.ase_android.MapsScreen.model.JSONparser;
-import sussex.android.ase_android.MapsScreen.model.ZipCodeMarker;
+import sussex.android.ase_android.MapsScreen.model.ServerConnection;
+import sussex.android.ase_android.MapsScreen.model.PostCodeMarker;
 import sussex.android.ase_android.R;
 
 public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInterface {
 
     private MapsContract.View view;
     private MapsContract.Model jsonparser;
-    private List<ZipCodeMarker> markerList = new ArrayList<>();
+    private List<PostCodeMarker> markerList = new ArrayList<>();
 
     private boolean heatMapEnabled;
 
     public MapsPresenter(MapsContract.View view) {
         this.view = view;
-        jsonparser=new JSONparser(view.getActivity());
+        jsonparser=new ServerConnection(view.getActivity());
     }
 
 
-
-
+    /**
+     * @param markerList a list of PostCodeMarkers that should be saved and displayed
+     */
     @Override
-    public void displayMarkers(List<ZipCodeMarker> markerList) {
+    public void displayMarkers(List<PostCodeMarker> markerList) {
         this.markerList=markerList;
         displayMarkers();
     }
 
+    /**
+     * Displays the saved markers in markerList if the heatmap is disabled
+     */
     private void displayMarkers(){
         view.clearMap();
         if(heatMapEnabled){
             enableHeatMap();
         }else {
-            for (ZipCodeMarker zipCodeMarker : markerList) {
+            for (PostCodeMarker postCodeMarker : markerList) {
                 view.addMarker(new MarkerOptions()
-                        .position(new LatLng(zipCodeMarker.getLat(), zipCodeMarker.getLon()))
+                        .position(new LatLng(postCodeMarker.getLat(), postCodeMarker.getLon()))
                         .icon(bitmapDescriptorFromVector(view.getActivity(), R.drawable.ic_marker))
-                        .title(zipCodeMarker.getPostcode())
-                        .snippet("Average price: £" + String.format(Locale.UK, "%,.2f", zipCodeMarker.getPrice())));
+                        .title(postCodeMarker.getPostcode())
+                        .snippet("Average price: £" + String.format(Locale.UK, "%,.2f", postCodeMarker.getPrice())));
             }
         }
     }
@@ -90,6 +94,12 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
         }
     }
 
+    /**
+     * Generates a bitmap from the provided vector image
+     * @param context Context
+     * @param vectorResId id of the vector image
+     * @return Bitmap representation of the vector image at the right resolution in respect to the device
+     */
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
         vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
@@ -100,15 +110,23 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
 
     }
 
+    /**
+     * Gets called when the camera of the map changes (user/programmatically)
+     * @param cameraPosition the current/new camera position
+     */
     public void cameraPosChanged(CameraPosition cameraPosition) {
         //TODO: calculate radius according to Radius Of Visible Map in Android
             jsonparser.markerJsonParse(this, cameraPosition.target.latitude, cameraPosition.target.longitude,0.5);
     }
 
-    public MapsContract.Model getJsonParser(){
+    public MapsContract.Model getServerConnectionHandler(){
         return jsonparser;
     }
 
+    /**
+     * Switches between the heatmap and marker display
+     * @param showHeatmap true if heatmap should be displayed
+     */
     public void switchHeatmap(boolean showHeatmap){
         this.heatMapEnabled=showHeatmap;
         if(showHeatmap){
@@ -118,9 +136,12 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
         }
     }
 
+    /**
+     * Enables the heatmap with the saved data in markerList
+     */
     private void enableHeatMap() {
         List <WeightedLatLng> list = new ArrayList<>();
-        for (ZipCodeMarker marker: markerList) {
+        for (PostCodeMarker marker: markerList) {
             list.add(new WeightedLatLng(new LatLng(marker.getLat(), marker.getLon()), marker.getPrice()));
         }
         HeatmapTileProvider mProvider = new HeatmapTileProvider.Builder()

@@ -87,6 +87,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 MapStyleOptions.loadRawResourceStyle(
                         this, R.raw.style_json));
 
+        //set Listener for hiding and displaying the BottomSheet
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
@@ -103,6 +104,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(this));
 
+        //Set listener for notifying the presenter when the camera position changes
         final CameraPosition[] mPreviousCameraPosition = {null};
         mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
@@ -116,7 +118,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-
+        //zoom to the current location
         final LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         assert service != null;
@@ -133,6 +135,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         }
 
+    /**
+     * Asks for permission of location services
+     */
     public void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -144,6 +149,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    /**
+     * Callback for accepting/denying the location permission request
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -175,6 +183,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.clear();
     }
 
+    /**
+     * Adds the heatmap to the map
+     * @param options the TileOverlay options of the heatmap
+     * @return the added TileOverlayy
+     */
     public TileOverlay addTileOverlay(TileOverlayOptions options){
        return  mMap.addTileOverlay(options);
     }
