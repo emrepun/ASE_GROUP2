@@ -103,6 +103,28 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		FB35127221A9F6F000E465E6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A9F9FED12199D4EF008FCE0C /* PlaceMarker.swift */,
+				A9F9FED32199D66F008FCE0C /* MarkerInfoView.xib */,
+				A9F9FED52199D692008FCE0C /* MarkerInfoView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FB35127321A9F70700E465E6 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				FB6BCD5E21712B7D00778AC4 /* Extensions.swift */,
+				FB38D77F218923DD00DE884A /* ColorSingleton.swift */,
+				A9F9FECD2199CC50008FCE0C /* MockJson.swift */,
+				FBB4ED7021A742C8006D5F38 /* Constants.swift */,
+				A93B0732219CD88000B4F212 /* style.json */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		FB38D77D2188F47500DE884A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,25 +188,19 @@
 				FBCB459E216FBD5F00089508 /* AppDelegate.swift */,
 				FB3D4D6621A7281800394854 /* Networking */,
 				FB925BC221A75932006BBE32 /* Model */,
+				FB35127221A9F6F000E465E6 /* Views */,
 				FB38D77D2188F47500DE884A /* Controllers */,
 				FB38D77E2188F48400DE884A /* Storyboards */,
+				FB35127321A9F70700E465E6 /* Utilities */,
 				FB6BCD5C21712ABB00778AC4 /* User.swift */,
 				A96D15E12187151100CF96A2 /* LogIn.storyboard */,
 				FBCB45A2216FBD5F00089508 /* Main.storyboard */,
 				A9CE618421886F59003120EF /* Map.storyboard */,
 				FBCB45A7216FBD6100089508 /* LaunchScreen.storyboard */,
 				A96D15DF218714EB00CF96A2 /* SignUp.storyboard */,
-				FB6BCD5E21712B7D00778AC4 /* Extensions.swift */,
 				FBCB45A5216FBD6100089508 /* Assets.xcassets */,
 				FB77E0D821833139008A9448 /* GoogleService-Info.plist */,
 				FBCB45AA216FBD6100089508 /* Info.plist */,
-				FB38D77F218923DD00DE884A /* ColorSingleton.swift */,
-				A9F9FECD2199CC50008FCE0C /* MockJson.swift */,
-				A9F9FED12199D4EF008FCE0C /* PlaceMarker.swift */,
-				A9F9FED32199D66F008FCE0C /* MarkerInfoView.xib */,
-				A9F9FED52199D692008FCE0C /* MarkerInfoView.swift */,
-				FBB4ED7021A742C8006D5F38 /* Constants.swift */,
-				A93B0732219CD88000B4F212 /* style.json */,
 			);
 			path = ASE_iOS;
 			sourceTree = "<group>";

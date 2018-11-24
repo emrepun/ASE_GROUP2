@@ -35,9 +35,11 @@ class MapViewController: UIViewController {
         updateMapStyle()
         
         getPropertyData(lat: "50.828080", long: "-0.134950", radius: "0.1") {
-            for postCode in self.postCodes {
-                let marker = PlaceMarker(postCode: postCode)
-                marker.map = self.mapView
+            DispatchQueue.main.async {
+                for postCode in self.postCodes {
+                    let marker = PlaceMarker(postCode: postCode)
+                    marker.map = self.mapView
+                }
             }
         }
         
