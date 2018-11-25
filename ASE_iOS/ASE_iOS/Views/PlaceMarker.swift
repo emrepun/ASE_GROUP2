@@ -25,7 +25,20 @@ class PlaceMarker: GMSMarker {
         }
         
         let view = Bundle.main.loadNibNamed("MarkerInfoView", owner: nil, options: nil)?.first as! MarkerInfoView
-        view.priceLabel.text = postCode.price!
+        
+        if let stringPrice = postCode.price {
+            if let price = Double(stringPrice) {
+                let numberFormatter = NumberFormatter()
+                numberFormatter.numberStyle = .decimal
+                numberFormatter.groupingSeparator = "."
+                let formattedNumber = numberFormatter.string(from: NSNumber(value: price))
+                view.priceLabel.text = "\(formattedNumber ?? "") £"
+            } else {
+                view.priceLabel.text = "N/A"
+            }
+        }
+        
+        //view.priceLabel.text = postCode.price!
         
         iconView = view
         appearAnimation = .pop

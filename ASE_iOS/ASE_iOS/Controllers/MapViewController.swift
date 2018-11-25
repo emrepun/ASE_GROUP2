@@ -26,21 +26,13 @@ class MapViewController: UIViewController {
     
     private var postCodes = [PostCode]()
     
+    var isDataRequestSent = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
         locationSettings()
-        
         updateMapStyle()
-        
-        getPropertyData(lat: "50.828080", long: "-0.134950", radius: "0.1") {
-            DispatchQueue.main.async {
-                for postCode in self.postCodes {
-                    let marker = PlaceMarker(postCode: postCode)
-                    marker.map = self.mapView
-                }
-            }
-        }
         
         //checkForAuthorization()
         //postTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)
@@ -154,7 +146,21 @@ extension MapViewController: CLLocationManagerDelegate {
         if let location = locations.last {
             user.latitude = (location.coordinate.latitude).round(digit: 6)
             user.longitude = location.coordinate.longitude.round(digit: 6)
+            
+            if !isDataRequestSent {
+                isDataRequestSent = true
+                getPropertyData(lat: String(location.coordinate.latitude), long: String(location.coordinate.longitude), radius: "0.1") {
+                    DispatchQueue.main.async {
+                        for postCode in self.postCodes {
+                            let marker = PlaceMarker(postCode: postCode)
+                            marker.map = self.mapView
+                        }
+                    }
+                }
+            }
         }
+        
+        
         
         guard let camLocation = locations.first else { return }
         

@@ -15,18 +15,6 @@ class PropertyTableViewController: UITableViewController {
     var postCode = ""
     
     var properties = [Property]()
-    
-//    var dogCode: [String: AnyObject]!
-//
-//    var addresses: [AnyObject] {
-//        get {
-//            if (dogCode["Addresses"] as? [AnyObject]) != nil {
-//                return self.addresses
-//            } else {
-//                return [AnyObject]()
-//            }
-//        }
-//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
