@@ -6,4 +6,5 @@
     <color name="white">#ffffff</color>
     <color name="whiteOverlay_40">#64ffffff</color>
     <color name="whiteOverlay_20">#32ffffff</color>
+    <color name="greyText">#aaaaaa</color>
 </resources>

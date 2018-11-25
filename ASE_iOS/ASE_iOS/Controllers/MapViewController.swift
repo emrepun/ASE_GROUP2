@@ -13,6 +13,8 @@ import FirebaseAuth
 import FirebaseDatabase
 import GoogleMaps
 
+
+
 class MapViewController: UIViewController {
     
     @IBOutlet var mapView: GMSMapView!
@@ -35,8 +37,9 @@ class MapViewController: UIViewController {
         updateMapStyle()
         
         //checkForAuthorization()
-        //postTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)
+        //postTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)     
     }
+    
     
     fileprivate func locationSettings() {
         locationManager.delegate = self
@@ -126,6 +129,21 @@ class MapViewController: UIViewController {
     func getCurrentMillis()->Int64 {
         return Int64(Date().timeIntervalSince1970 * 1000)
     }
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?
+    {
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "AnnotationIdentifier")
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "AnnotationIdentifier")
+        }
+        
+        annotationView?.image = UIImage(named: "homemarker")
+        annotationView?.canShowCallout = true
+        
+        return annotationView
+    }
+    
 }
     // MARK: Location Delegate Methods
 extension MapViewController: CLLocationManagerDelegate {
@@ -146,6 +164,7 @@ extension MapViewController: CLLocationManagerDelegate {
         if let location = locations.last {
             user.latitude = (location.coordinate.latitude).round(digit: 6)
             user.longitude = location.coordinate.longitude.round(digit: 6)
+
             
             if !isDataRequestSent {
                 isDataRequestSent = true
@@ -191,5 +210,4 @@ extension MapViewController: GMSMapViewDelegate {
     }
     
 }
-
 
