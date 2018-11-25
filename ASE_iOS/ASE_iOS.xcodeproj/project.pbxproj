@@ -22,6 +22,7 @@
 		A9F9FED42199D66F008FCE0C /* MarkerInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9F9FED32199D66F008FCE0C /* MarkerInfoView.xib */; };
 		A9F9FED62199D692008FCE0C /* MarkerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9FED52199D692008FCE0C /* MarkerInfoView.swift */; };
 		FB35127521A9F99A00E465E6 /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB35127421A9F99A00E465E6 /* Property.swift */; };
+		FB35127721AA21D800E465E6 /* PropertyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB35127621AA21D800E465E6 /* PropertyTableViewCell.swift */; };
 		FB38D780218923DD00DE884A /* ColorSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB38D77F218923DD00DE884A /* ColorSingleton.swift */; };
 		FB3D4D6821A7282C00394854 /* ApiController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3D4D6721A7282C00394854 /* ApiController.swift */; };
 		FB6BCD5D21712ABB00778AC4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5C21712ABB00778AC4 /* User.swift */; };
@@ -57,6 +58,7 @@
 		A9F9FED52199D692008FCE0C /* MarkerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfoView.swift; sourceTree = "<group>"; };
 		D812B3E38C30908B7B490F33 /* Pods_ASE_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASE_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB35127421A9F99A00E465E6 /* Property.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Property.swift; sourceTree = "<group>"; };
+		FB35127621AA21D800E465E6 /* PropertyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTableViewCell.swift; sourceTree = "<group>"; };
 		FB38D77F218923DD00DE884A /* ColorSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSingleton.swift; sourceTree = "<group>"; };
 		FB3D4D6721A7282C00394854 /* ApiController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiController.swift; sourceTree = "<group>"; };
 		FB6BCD5C21712ABB00778AC4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				A9F9FED12199D4EF008FCE0C /* PlaceMarker.swift */,
 				A9F9FED32199D66F008FCE0C /* MarkerInfoView.xib */,
 				A9F9FED52199D692008FCE0C /* MarkerInfoView.swift */,
+				FB35127621AA21D800E465E6 /* PropertyTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 				A9F9FED02199D097008FCE0C /* PostCode.swift in Sources */,
 				A9F9FED62199D692008FCE0C /* MarkerInfoView.swift in Sources */,
 				FB38D780218923DD00DE884A /* ColorSingleton.swift in Sources */,
+				FB35127721AA21D800E465E6 /* PropertyTableViewCell.swift in Sources */,
 				A9CE61832187D1AD003120EF /* SignUpViewController.swift in Sources */,
 				FBCB459F216FBD5F00089508 /* AppDelegate.swift in Sources */,
 				A9CE61812187D19B003120EF /* LogInViewController.swift in Sources */,

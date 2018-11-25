@@ -22,8 +22,11 @@ class PropertyTableViewController: UITableViewController {
         
         if postCode.count > 0 {
             getPropertyData(postCode: postCode) {
-                guard self.properties.count > 0 else { return } //show alert maybe.
-                self.tableView.reloadData()
+                //guard self.properties.count > 0 else { return } //show alert maybe.
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                
             }
         }
     }
@@ -44,6 +47,19 @@ class PropertyTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return properties.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "propertyCell", for: indexPath) as! PropertyTableViewCell
+        let address = properties[indexPath.row].propertyAddress
+        let price = properties[indexPath.row].pricePaid
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.groupingSeparator = "."
+        let formattedPrice = numberFormatter.string(from: NSNumber(value: price ?? -1))
+        cell.addressLabel.text = "\(address?.paon ?? "") - \(address?.street ?? "")"
+        cell.priceLabel.text = "\(formattedPrice ?? "") £"
+        return cell
     }
 }
