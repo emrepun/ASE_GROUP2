@@ -18,15 +18,15 @@ matrix:
                                   - android-25
                                   - build-tools-25.0.3
                   before_script:
-                          - cd ASE_android
+                          - cd ASE_android/app
                   script:
                           - ./gradlew build connectedCheck
 
                 - language: objective-c
-                  os: osxi
+                  os: osx
                   osx_image: xcode8.3
                   before_script:
-                          - cd ASE_iOS
+                          - cd ASE_iOS/ASE_iOS
                   script:
                           - xcodebuild -workspace ASE_iOS.xcworkspace -scheme ASE_iOS
                           - destination 'platform=iOS Simulator,name=iPHone XS Max,OS=10.3' build test
