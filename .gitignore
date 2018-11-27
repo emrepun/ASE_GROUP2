@@ -3,3 +3,5 @@ auth/
 ASE_iOS/ASE_iOS.xcodeproj/project.xcworkspace/xcuserdata/emrehavan.xcuserdatad/UserInterfaceState.xcuserstate
 .vscode/
 .idea/
+ASE_iOS/ASE_iOS/Constants.swift
+
