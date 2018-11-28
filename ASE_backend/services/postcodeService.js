@@ -1,7 +1,12 @@
 const request = require("request-promise-native");
 const csv = require("csvtojson");
 
-module.exports.getPostcodeDetails = async postcode => {
+/**
+ * Get geographical data of a postcode from doogal.co.uk
+ * @param {string} postcode
+ * @returns {Object} json of data regarding the postcode
+ */
+var getPostcodeDetails = async postcode => {
     postcode = postcode.toUpperCase();
     var options = {
         method: "GET",
@@ -18,9 +23,13 @@ module.exports.getPostcodeDetails = async postcode => {
     return data;
 };
 
-//returns list of postcodes in order of distance
-
-module.exports.getPostcodesNearAround = async (lat, lng, radius) => {
+/**
+ * @param {number} lat - latitude
+ * @param {number} lng - longitude
+ * @param {number} radius - radius in km, can be decimal
+ * @returns {Array} Array of postcodes and their geocoordinates
+ */
+var getPostcodesNearAround = async (lat, lng, radius) => {
     var all = [];
     var url = "";
     if (radius) {
@@ -50,4 +59,9 @@ module.exports.getPostcodesNearAround = async (lat, lng, radius) => {
         };
     });
     return all;
+};
+
+module.exports = {
+    getPostcodeDetails,
+    getPostcodesNearAround
 };
