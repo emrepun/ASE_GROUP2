@@ -34,6 +34,7 @@
 		FB925BC121A758DD006BBE32 /* EndpointType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB925BC021A758DD006BBE32 /* EndpointType.swift */; };
 		FB925BC421A7596E006BBE32 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB925BC321A7596E006BBE32 /* Response.swift */; };
 		FBB4ED7121A742C8006D5F38 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB4ED7021A742C8006D5F38 /* Constants.swift */; };
+		FBBAE89721AF5E78001FD6C1 /* JSONParse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBAE89621AF5E78001FD6C1 /* JSONParse.swift */; };
 		FBC4819A21AC8D650016CFD1 /* GMUClusterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC4815121AC8D650016CFD1 /* GMUClusterManager.m */; };
 		FBC4819B21AC8D650016CFD1 /* GMUGridBasedClusterAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC4815521AC8D650016CFD1 /* GMUGridBasedClusterAlgorithm.m */; };
 		FBC4819C21AC8D650016CFD1 /* GMUWrappingDictionaryKey.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC4815821AC8D650016CFD1 /* GMUWrappingDictionaryKey.m */; };
@@ -110,6 +111,7 @@
 		FB925BC021A758DD006BBE32 /* EndpointType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointType.swift; sourceTree = "<group>"; };
 		FB925BC321A7596E006BBE32 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		FBB4ED7021A742C8006D5F38 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		FBBAE89621AF5E78001FD6C1 /* JSONParse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParse.swift; sourceTree = "<group>"; };
 		FBC4815121AC8D650016CFD1 /* GMUClusterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMUClusterManager.m; sourceTree = "<group>"; };
 		FBC4815221AC8D650016CFD1 /* GMUStaticCluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMUStaticCluster.h; sourceTree = "<group>"; };
 		FBC4815321AC8D650016CFD1 /* GMUMarkerClustering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMUMarkerClustering.h; sourceTree = "<group>"; };
@@ -476,6 +478,7 @@
 			isa = PBXGroup;
 			children = (
 				FBF5356321AF505800E14023 /* ASE_iOSTests.swift */,
+				FBBAE89621AF5E78001FD6C1 /* JSONParse.swift */,
 				FBF5356521AF505800E14023 /* Info.plist */,
 			);
 			path = ASE_iOSTests;
@@ -800,6 +803,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBF5356421AF505800E14023 /* ASE_iOSTests.swift in Sources */,
+				FBBAE89721AF5E78001FD6C1 /* JSONParse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
