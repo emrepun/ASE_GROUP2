@@ -801,6 +801,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pun.ASE-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = ASE_iOS/GoogleMapsBridge.h;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

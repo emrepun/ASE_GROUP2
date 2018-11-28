@@ -30,11 +30,22 @@ class MapViewController: UIViewController {
     
     var isDataRequestSent = false
     
+    private var heatmapLayer: GMUHeatmapTileLayer!
+    private var gradientColors = [UIColor.green, UIColor.red]
+    private var gradientStartPoints = [0.6, 1.0] as [NSNumber]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
         locationSettings()
         updateMapStyle()
+        
+        heatmapLayer = GMUHeatmapTileLayer()
+        heatmapLayer.radius = 80
+        heatmapLayer.opacity = 0.8
+//        heatmapLayer.gradient = GMUGradient(colors: gradientColors,
+//                                            startPoints: gradientStartPoints,
+//                                            colorMapSize: 256)
         
         //checkForAuthorization()
         //postTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)     
@@ -168,12 +179,50 @@ extension MapViewController: CLLocationManagerDelegate {
             
             if !isDataRequestSent {
                 isDataRequestSent = true
-                getPropertyData(lat: String(location.coordinate.latitude), long: String(location.coordinate.longitude), radius: "0.1") {
+                getPropertyData(lat: String(location.coordinate.latitude), long: String(location.coordinate.longitude), radius: "0.5") {
                     DispatchQueue.main.async {
+                        var list = [GMUWeightedLatLng]()
+                        
                         for postCode in self.postCodes {
-                            let marker = PlaceMarker(postCode: postCode)
-                            marker.map = self.mapView
+                            //let marker = PlaceMarker(postCode: postCode)
+                            //marker.map = self.mapView
+                            
+                            var intPrice = 0
+                            
+                            if let latitude = postCode.latitude,
+                                let lat = Double(latitude),
+                                let longitude = postCode.longitude,
+                                let long = Double(longitude),
+                                let priceString = postCode.price,
+                                let price = Float(priceString) {
+                                let coords = GMUWeightedLatLng(coordinate: CLLocationCoordinate2DMake(lat , long ), intensity: price.truncatingRemainder(dividingBy: 10))
+                                //price.truncatingRemainder(dividingBy: 10)
+                                intPrice = Int(price)
+                                print(intPrice)
+//                                if intPrice < 100000 {
+//                                    for _ in 0...30 {
+//                                        list.append(coords)
+//                                    }
+//                                } else if intPrice < 300000 {
+//                                    for _ in 0...90 {
+//                                        list.append(coords)
+//                                    }
+//                                } else if intPrice < 999999 {
+//                                    for _ in 0...150 {
+//                                        list.append(coords)
+//                                    }
+//                                } else {
+//                                    for _ in 0...3000 {
+//                                        list.append(coords)
+//                                    }
+//                                }
+                                
+                                list.append(coords)
+                            }
                         }
+                        // Add the lat lngs to the heatmap layer.
+                        self.heatmapLayer.weightedData = list
+                        self.addHeatMap()
                     }
                 }
             }
@@ -186,6 +235,10 @@ extension MapViewController: CLLocationManagerDelegate {
         mapView.camera = GMSCameraPosition(target: camLocation.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
         
         locationManager.stopUpdatingLocation()
+    }
+    
+    func addHeatMap() {
+        heatmapLayer.map = mapView
     }
     
     // MARK: Segue settings
