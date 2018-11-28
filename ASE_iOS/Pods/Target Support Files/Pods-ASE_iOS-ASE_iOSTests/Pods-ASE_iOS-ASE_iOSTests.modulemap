@@ -1,0 +1,6 @@
+framework module Pods_ASE_iOS_ASE_iOSTests {
+  umbrella header "Pods-ASE_iOS-ASE_iOSTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

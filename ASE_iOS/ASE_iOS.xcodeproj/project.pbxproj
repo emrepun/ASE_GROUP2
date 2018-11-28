@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		393D4C9330485504721540FA /* Pods_ASE_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D812B3E38C30908B7B490F33 /* Pods_ASE_iOS.framework */; };
+		A457CD691653A78329D4BF0E /* Pods_ASE_iOS_ASE_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872E705E00C607BBCE64F2BD /* Pods_ASE_iOS_ASE_iOSTests.framework */; };
 		A934756C219DCE2600B28051 /* PropertyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A934756B219DCE2600B28051 /* PropertyTableViewController.swift */; };
 		A93B0733219CD88000B4F212 /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = A93B0732219CD88000B4F212 /* style.json */; };
 		A96D15E0218714EB00CF96A2 /* SignUp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A96D15DF218714EB00CF96A2 /* SignUp.storyboard */; };
@@ -64,10 +65,24 @@
 		FBCB45A4216FBD5F00089508 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBCB45A2216FBD5F00089508 /* Main.storyboard */; };
 		FBCB45A6216FBD6100089508 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBCB45A5216FBD6100089508 /* Assets.xcassets */; };
 		FBCB45A9216FBD6100089508 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBCB45A7216FBD6100089508 /* LaunchScreen.storyboard */; };
+		FBF5356421AF505800E14023 /* ASE_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF5356321AF505800E14023 /* ASE_iOSTests.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		FBF5356621AF505800E14023 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBCB4593216FBD5E00089508 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FBCB459A216FBD5F00089508;
+			remoteInfo = ASE_iOS;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		1AD1BC345DEC84422DE91E61 /* Pods-ASE_iOS-ASE_iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASE_iOS-ASE_iOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ASE_iOS-ASE_iOSTests/Pods-ASE_iOS-ASE_iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6C1A5E0083BDBDE43051552C /* Pods-ASE_iOS-ASE_iOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASE_iOS-ASE_iOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ASE_iOS-ASE_iOSTests/Pods-ASE_iOS-ASE_iOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		76156A0F5791993D2FA8BB8F /* Pods-ASE_iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASE_iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		872E705E00C607BBCE64F2BD /* Pods_ASE_iOS_ASE_iOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASE_iOS_ASE_iOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90C521729CB937294CF3C987 /* Pods-ASE_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASE_iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS.release.xcconfig"; sourceTree = "<group>"; };
 		A934756B219DCE2600B28051 /* PropertyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTableViewController.swift; sourceTree = "<group>"; };
 		A93B0732219CD88000B4F212 /* style.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
@@ -170,6 +185,9 @@
 		FBCB45A5216FBD6100089508 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBCB45A8216FBD6100089508 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FBCB45AA216FBD6100089508 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FBF5356121AF505800E14023 /* ASE_iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ASE_iOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FBF5356321AF505800E14023 /* ASE_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASE_iOSTests.swift; sourceTree = "<group>"; };
+		FBF5356521AF505800E14023 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +199,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FBF5355E21AF505800E14023 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A457CD691653A78329D4BF0E /* Pods_ASE_iOS_ASE_iOSTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -188,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				D812B3E38C30908B7B490F33 /* Pods_ASE_iOS.framework */,
+				872E705E00C607BBCE64F2BD /* Pods_ASE_iOS_ASE_iOSTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -197,6 +224,8 @@
 			children = (
 				76156A0F5791993D2FA8BB8F /* Pods-ASE_iOS.debug.xcconfig */,
 				90C521729CB937294CF3C987 /* Pods-ASE_iOS.release.xcconfig */,
+				1AD1BC345DEC84422DE91E61 /* Pods-ASE_iOS-ASE_iOSTests.debug.xcconfig */,
+				6C1A5E0083BDBDE43051552C /* Pods-ASE_iOS-ASE_iOSTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -402,6 +431,7 @@
 			isa = PBXGroup;
 			children = (
 				FBCB459D216FBD5F00089508 /* ASE_iOS */,
+				FBF5356221AF505800E14023 /* ASE_iOSTests */,
 				FBCB459C216FBD5F00089508 /* Products */,
 				D21FD0DB0B98D2F5A23C0BE3 /* Pods */,
 				56818594E7A84EDC0E53875D /* Frameworks */,
@@ -412,6 +442,7 @@
 			isa = PBXGroup;
 			children = (
 				FBCB459B216FBD5F00089508 /* ASE_iOS.app */,
+				FBF5356121AF505800E14023 /* ASE_iOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -441,6 +472,15 @@
 			path = ASE_iOS;
 			sourceTree = "<group>";
 		};
+		FBF5356221AF505800E14023 /* ASE_iOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				FBF5356321AF505800E14023 /* ASE_iOSTests.swift */,
+				FBF5356521AF505800E14023 /* Info.plist */,
+			);
+			path = ASE_iOSTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -464,18 +504,43 @@
 			productReference = FBCB459B216FBD5F00089508 /* ASE_iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		FBF5356021AF505800E14023 /* ASE_iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FBF5356A21AF505800E14023 /* Build configuration list for PBXNativeTarget "ASE_iOSTests" */;
+			buildPhases = (
+				C1B877C2B0FB09886103EC96 /* [CP] Check Pods Manifest.lock */,
+				FBF5355D21AF505800E14023 /* Sources */,
+				FBF5355E21AF505800E14023 /* Frameworks */,
+				FBF5355F21AF505800E14023 /* Resources */,
+				84E203452AC021B197DA9995 /* [CP] Embed Pods Frameworks */,
+				C825D4AA182513116E37ABFA /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FBF5356721AF505800E14023 /* PBXTargetDependency */,
+			);
+			name = ASE_iOSTests;
+			productName = ASE_iOSTests;
+			productReference = FBF5356121AF505800E14023 /* ASE_iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		FBCB4593216FBD5E00089508 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1000;
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Emre HAVAN";
 				TargetAttributes = {
 					FBCB459A216FBD5F00089508 = {
 						CreatedOnToolsVersion = 10.0;
+					};
+					FBF5356021AF505800E14023 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = FBCB459A216FBD5F00089508;
 					};
 				};
 			};
@@ -493,6 +558,7 @@
 			projectRoot = "";
 			targets = (
 				FBCB459A216FBD5F00089508 /* ASE_iOS */,
+				FBF5356021AF505800E14023 /* ASE_iOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -511,6 +577,13 @@
 				FBCB45A4216FBD5F00089508 /* Main.storyboard in Resources */,
 				A96D15E22187151100CF96A2 /* LogIn.storyboard in Resources */,
 				A96D15E0218714EB00CF96A2 /* SignUp.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FBF5355F21AF505800E14023 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,6 +642,36 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ASE_iOS/Pods-ASE_iOS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		84E203452AC021B197DA9995 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ASE_iOS-ASE_iOSTests/Pods-ASE_iOS-ASE_iOSTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ASE_iOS-ASE_iOSTests/Pods-ASE_iOS-ASE_iOSTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9AC55C10598819885C5CF42B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -589,6 +692,50 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C1B877C2B0FB09886103EC96 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ASE_iOS-ASE_iOSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C825D4AA182513116E37ABFA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ASE_iOS-ASE_iOSTests/Pods-ASE_iOS-ASE_iOSTests-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ASE_iOS-ASE_iOSTests/Pods-ASE_iOS-ASE_iOSTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -648,7 +795,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FBF5355D21AF505800E14023 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FBF5356421AF505800E14023 /* ASE_iOSTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FBF5356721AF505800E14023 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FBCB459A216FBD5F00089508 /* ASE_iOS */;
+			targetProxy = FBF5356621AF505800E14023 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		FBCB45A2216FBD5F00089508 /* Main.storyboard */ = {
@@ -826,6 +989,50 @@
 			};
 			name = Release;
 		};
+		FBF5356821AF505800E14023 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AD1BC345DEC84422DE91E61 /* Pods-ASE_iOS-ASE_iOSTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 56D56RFRE4;
+				INFOPLIST_FILE = ASE_iOSTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pun.ASE-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ASE_iOS.app/ASE_iOS";
+			};
+			name = Debug;
+		};
+		FBF5356921AF505800E14023 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6C1A5E0083BDBDE43051552C /* Pods-ASE_iOS-ASE_iOSTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 56D56RFRE4;
+				INFOPLIST_FILE = ASE_iOSTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pun.ASE-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ASE_iOS.app/ASE_iOS";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -843,6 +1050,15 @@
 			buildConfigurations = (
 				FBCB45AE216FBD6100089508 /* Debug */,
 				FBCB45AF216FBD6100089508 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FBF5356A21AF505800E14023 /* Build configuration list for PBXNativeTarget "ASE_iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FBF5356821AF505800E14023 /* Debug */,
+				FBF5356921AF505800E14023 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

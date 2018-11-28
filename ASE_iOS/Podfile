@@ -16,4 +16,10 @@ pod 'GoogleMaps'
 # Networking
 pod 'Alamofire', '~> 4.7'
 
+#Tests
+
+target 'ASE_iOSTests' do
+inherit! :complete 	
+end
+
 end
