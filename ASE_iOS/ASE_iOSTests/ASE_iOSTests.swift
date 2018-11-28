@@ -11,8 +11,21 @@ import XCTest
 
 class ASE_iOSTests: XCTestCase {
 
+    var apiEndPoint = PropertyAPI.postCodes(lat: "", long: "", radius: "")
+    var latitude = ""
+    var longitude = ""
+    var radius = ""
+    var apiPath = ""
+    var apiBaseUrl = ""
+    
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        latitude = "50.831792"
+        longitude = "-0.135262"
+        radius = "0.5"
+        apiPath.append("/pcprices/\(latitude)/\(longitude)/\(radius)")
+        apiBaseUrl.append("https://6746a94d.ngrok.io/api")
+        apiEndPoint = PropertyAPI.postCodes(lat: latitude, long: longitude, radius: radius)
     }
 
     override func tearDown() {
@@ -22,6 +35,14 @@ class ASE_iOSTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+    }
+    
+    func testApiEndpointPath() {
+        XCTAssert(apiEndPoint.path == apiPath)
+    }
+    
+    func testApiBaseUrl() {
+        XCTAssert(apiEndPoint.baseURL.absoluteString == apiBaseUrl)
     }
 
     func testPerformanceExample() {
