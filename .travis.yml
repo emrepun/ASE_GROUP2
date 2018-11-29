@@ -21,7 +21,7 @@ matrix:
                           - cd ASE_android
                           - chmod +x ./gradlew
                   script:
-                          - ./gradlew build connecteedCheck
+                          - ./gradlew build connectedCheck
 
                 - language: objective-c
                   os: osx
