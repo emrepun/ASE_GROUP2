@@ -18,13 +18,17 @@ matrix:
                                   - android-25
                                   - build-tools-25.0.3
                   before_script:
+                          - chmod +x gradlew
                           - cd ASE_android
                   script:
-                          - ./gradlew build
+                          - ./gradlew build connecteedCheck
 
                 - language: objective-c
                   os: osx
                   osx_image: xcode8.3
+                  xcode_project: ASE_iOS.xcodeproj
+                  xcode_scheme: ASE_iOS
+                  xcode_destination: platform=iOS Simulator,OS=10.3,name=iPhone XS Max
                   before_script:
                           - cd ASE_iOS
                   script:
