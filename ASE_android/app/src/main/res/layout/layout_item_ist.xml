@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/addressList"
+            android:layout_width="226dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:text="address"
+            android:textColor="@color/greyText"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/priceList"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:textSize="16sp"
+            android:text="price"
+            android:textColor="@color/colorAccent" />
+
+    </TableRow>
+
+
+</TableLayout>

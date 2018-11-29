@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 var request = require("request-promise-native");
 
 //return array of data from the land registry, more specifically in this format:
@@ -15,7 +16,12 @@ var request = require("request-promise-native");
 //   transactionDate: 'Wed, 08 May 2013'
 // }
 
-module.exports.getAllFromPostcode = async postcode => {
+/**
+ * Receives all data from the government API for a certain postcode
+ * @param {string} postcode
+ * @returns {Array} An array of the properties for each transaction at a postcode
+ */
+var getAllFromPostcode = async postcode => {
     postcode = postcode.toUpperCase();
     var options = {
         method: "GET",
@@ -34,11 +40,11 @@ module.exports.getAllFromPostcode = async postcode => {
         if (items.length == 0) {
             break;
         }
-        for (item of items) {
-            pricePaid = item.pricePaid;
-            propertyAddress = item.propertyAddress;
-            transactionDate = item.transactionDate;
-            newItem = { pricePaid, propertyAddress, transactionDate };
+        for (var item of items) {
+            var pricePaid = item.pricePaid;
+            var propertyAddress = item.propertyAddress;
+            var transactionDate = item.transactionDate;
+            var newItem = { pricePaid, propertyAddress, transactionDate };
             props.push(newItem);
         }
     }
@@ -48,33 +54,28 @@ module.exports.getAllFromPostcode = async postcode => {
     return props;
 };
 
-module.exports.getAverageAtPostcode = async postcode => {
+/**
+ * [DEPRECATED]
+ * Use as a backup if database is unavailable
+ * Calculates average transaction price at each postcode
+ * @param {string} postcode
+ */
+var getAverageAtPostcode = async postcode => {
     console.log(`Getting prices at ${postcode}`);
-    var data = await module.exports.getAllFromPostcode(postcode);
+    var data = await getAllFromPostcode(postcode);
     var allPrices = [];
-    for (datum of data) {
+    for (var datum of data) {
         allPrices.push(datum.pricePaid);
     }
     var sum = 0;
-    for (price of allPrices) {
+    for (var price of allPrices) {
         sum += price;
     }
     var avg = sum / allPrices.length;
     return parseFloat(Math.round(avg * 100) / 100).toFixed(2);
 };
 
-
-module.exports.getAverageAtPostcode = async postcode => {
-  console.log(`Getting prices at ${postcode}`)
-  var data = await module.exports.getAllFromPostcode(postcode);
-  var allPrices = []
-  for(datum of data) {
-    allPrices.push(datum.pricePaid);
-  }
-  var sum = 0;
-  for (price of allPrices) {
-    sum += price;
-  }
-  var avg = sum/allPrices.length;
-  return(parseFloat(Math.round(avg * 100) / 100).toFixed(2));
-}
+module.exports = {
+    getAllFromPostcode,
+    getAverageAtPostcode
+};

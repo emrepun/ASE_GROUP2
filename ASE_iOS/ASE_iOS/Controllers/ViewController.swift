@@ -31,8 +31,6 @@ class ViewController: UIViewController {
     
     let locationManager = CLLocationManager()
     var authorizationStatus = CLLocationManager.authorizationStatus()
-    
-    //var user = User(latitude: 0.0, longitude: 0.0)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,14 +41,6 @@ class ViewController: UIViewController {
         signupButton.layer.borderWidth = 1
         signupButton.layer.borderColor = borderColor.cgColor
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
-    
-   
-    
 }
 
 // MARK: Location Delegate Methods

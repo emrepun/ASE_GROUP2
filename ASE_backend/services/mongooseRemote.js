@@ -1,5 +1,6 @@
+/* eslint-disable no-console */
 var mongoose = require("mongoose").set("debug", true);
-var dbCreds = require("../../auth/dbCreds.js");
+var dbCreds = require("../auth/dbCreds.js");
 
 const DATABASE = "postcodes";
 const URL = dbCreds.remoteURL;
@@ -19,7 +20,7 @@ dbRemote.on("error", err => {
     console.log(err);
 });
 
-dbRemote.on("open", a => {
+dbRemote.on("open", () => {
     console.log(`Connected to ${DATABASE} at ${MONGO_URI} as ${USERNAME}`);
 });
 

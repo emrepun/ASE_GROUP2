@@ -22,8 +22,6 @@ class SignUpViewController: UIViewController {
         signUpButton.layer.borderWidth = 1
         signUpButton.layer.borderColor = borderColor.cgColor
         signUpButton.layer.cornerRadius = 14
-        
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func backButton(_ sender: UIButton) {
@@ -43,10 +41,6 @@ class SignUpViewController: UIViewController {
                 alertController.addAction(defaultAction)
                 self.present(alertController, animated: true, completion: nil)
             }
-            guard let user = authResult?.user else { return }
         }
-        
-        
-        
     }
 }

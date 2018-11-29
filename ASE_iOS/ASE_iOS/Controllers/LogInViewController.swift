@@ -17,6 +17,13 @@ class LogInViewController: UIViewController {
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loginButton.layer.borderWidth = 1
+        loginButton.layer.borderColor = borderColor.cgColor
+        loginButton.layer.cornerRadius = 14
+    }
+    
     @IBAction func backButton(_ sender: Any) {
        
         performSegue(withIdentifier: "logInMain", sender: self)
@@ -37,38 +44,4 @@ class LogInViewController: UIViewController {
             }
         }
     }
-    
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        loginButton.layer.borderWidth = 1
-        loginButton.layer.borderColor = borderColor.cgColor
-        loginButton.layer.cornerRadius = 14
-
-        // Do any additional setup after loading the view.
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
-    
-    /*override func viewWillAppear(_ animated: Bool) {
-        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
-            // ...
-        }
-    } */
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
