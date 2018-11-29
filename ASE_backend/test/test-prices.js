@@ -1,5 +1,4 @@
 const priceService =  require('../services/priceService.js');
-var nock = require('nock');
 var expect  = require('chai').expect;
 var request = require('request');
 
@@ -9,6 +8,5 @@ describe('Average Prices', function() {
         priceService.getAverageAtPostcode('BN1 7JJ').then(avg => {
             expect(avg).to.equal('157661.39')
         });
-
     });
   });
