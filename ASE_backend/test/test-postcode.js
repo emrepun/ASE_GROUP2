@@ -13,3 +13,14 @@ describe('Postcode details', function(){
     });
   });
 });
+
+
+describe('Postcodes near around', function(){
+  it('returns postcodes within an area', function() {
+  postcodeService.getPostcodesNearAround('50.845112','-0.132927').then(details => {
+    expect(Array.isArray(details)).to.equal(true);
+    expect(details).to.have.length.above(1);
+
+  });
+  });
+});

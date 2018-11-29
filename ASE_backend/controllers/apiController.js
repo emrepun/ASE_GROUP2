@@ -20,6 +20,7 @@ exports.print_data = function(req, res) {
  * @param {Express response} res
  */
 exports.getPricesAtAround = async function(req, res) {
+    console.log(req.params)
     if (req.params.lat == undefined || req.params.long == undefined) {
         res.status(400);
         res.send("Lat or long arguments missing");
