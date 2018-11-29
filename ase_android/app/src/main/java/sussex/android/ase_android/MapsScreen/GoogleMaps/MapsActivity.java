@@ -26,7 +26,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
-import com.google.maps.android.heatmaps.HeatmapTileProvider;
+import com.google.android.gms.maps.model.VisibleRegion;
 
 import sussex.android.ase_android.CustomInfoWindowAdapter;
 import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetContract;
@@ -77,7 +77,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * installed Google Play services and returned to the app.
      */
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {
 
         mMap = googleMap;
 
@@ -113,8 +113,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if(mPreviousCameraPosition[0] == null || !mPreviousCameraPosition[0].equals(position)) {
                     //position changed
                     mPreviousCameraPosition[0] = mMap.getCameraPosition();
-                    mapsPresenter.cameraPosChanged(mPreviousCameraPosition[0]);
-                }
+
+                    float radius_meter = calcVisibleRadius();
+
+                    mapsPresenter.cameraPosChanged(mPreviousCameraPosition[0].target,radius_meter);
+                    }
             }
         });
 
@@ -134,6 +137,44 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
         }
+
+    private float calcVisibleRadius() {
+        VisibleRegion visibleRegion = mMap.getProjection().getVisibleRegion();
+
+        LatLng farRight = visibleRegion.farRight; //top right
+        LatLng farLeft = visibleRegion.farLeft; //top left
+        LatLng nearRight = visibleRegion.nearRight; //bottom right
+        LatLng nearLeft = visibleRegion.nearLeft; //bottom left
+
+        float[] radiusWidth = new float[2];
+        Location.distanceBetween(
+                (farRight.latitude+nearRight.latitude)/2,
+                (farRight.longitude+nearRight.longitude)/2,
+                (farLeft.latitude+nearLeft.latitude)/2,
+                (farLeft.longitude+nearLeft.longitude)/2,
+                radiusWidth
+        );
+
+
+        float[] distanceHeight = new float[2];
+        Location.distanceBetween(
+                (farRight.latitude+nearRight.latitude)/2,
+                (farRight.longitude+nearRight.longitude)/2,
+                (farLeft.latitude+nearLeft.latitude)/2,
+                (farLeft.longitude+nearLeft.longitude)/2,
+                distanceHeight
+        );
+
+        float radius_meter;
+
+        if (radiusWidth[0]>distanceHeight[0]){
+            radius_meter = radiusWidth[0];
+        } else {
+            radius_meter = distanceHeight[0];
+        }
+
+        return radius_meter;
+    }
 
     /**
      * Asks for permission of location services

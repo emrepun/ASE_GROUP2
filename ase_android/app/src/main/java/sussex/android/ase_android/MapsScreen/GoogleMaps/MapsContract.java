@@ -2,7 +2,7 @@ package sussex.android.ase_android.MapsScreen.GoogleMaps;
 
 import android.app.Activity;
 
-import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
@@ -21,7 +21,7 @@ public interface MapsContract {
     }
 
     interface Presenter extends BasePresenter {
-        void cameraPosChanged(CameraPosition cameraPosition);
+        void cameraPosChanged(LatLng target, float radius_meter);
         void switchHeatmap(boolean showHeatmap);
         Model getServerConnectionHandler();
     }

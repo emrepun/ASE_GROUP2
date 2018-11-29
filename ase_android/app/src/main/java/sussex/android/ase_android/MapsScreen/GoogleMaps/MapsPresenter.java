@@ -10,7 +10,6 @@ import android.support.v4.content.ContextCompat;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
@@ -24,8 +23,8 @@ import java.util.List;
 import java.util.Locale;
 
 import sussex.android.ase_android.MapsScreen.model.CallbackMarkerInterface;
-import sussex.android.ase_android.MapsScreen.model.ServerConnection;
 import sussex.android.ase_android.MapsScreen.model.PostCodeMarker;
+import sussex.android.ase_android.MapsScreen.model.ServerConnection;
 import sussex.android.ase_android.R;
 
 public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInterface {
@@ -71,30 +70,6 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
 
 
     /**
-     * @param strAddress Address as String
-     * @return Latitude and Longitude of first result of Directions API
-     */
-    private LatLng getLatLngFromAddress(String strAddress, Context context) {
-
-        Geocoder geocoder = new Geocoder(context);
-        try {
-            List<Address> address = geocoder.getFromLocationName(strAddress, 1);
-            if (address == null || address.size() == 0) {
-                return null;
-            }
-            Address location = address.get(0);
-
-            LatLng p1 = new LatLng((double) (location.getLatitude()),
-                    (double) (location.getLongitude()));
-
-            return p1;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
      * Generates a bitmap from the provided vector image
      * @param context Context
      * @param vectorResId id of the vector image
@@ -110,14 +85,6 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
 
     }
 
-    /**
-     * Gets called when the camera of the map changes (user/programmatically)
-     * @param cameraPosition the current/new camera position
-     */
-    public void cameraPosChanged(CameraPosition cameraPosition) {
-        //TODO: calculate radius according to Radius Of Visible Map in Android
-            jsonparser.markerJsonParse(this, cameraPosition.target.latitude, cameraPosition.target.longitude,0.5);
-    }
 
     public MapsContract.Model getServerConnectionHandler(){
         return jsonparser;
@@ -148,5 +115,14 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
                 .weightedData(list)
                 .build();
         TileOverlay OvermOverlay = view.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
+    }
+
+    /**
+     * Gets called when the camera of the map changes (user/programmatically)
+     * @param target the current/new camera position
+     * @param radius_meter radius of the current visible region in meters
+     */
+    public void cameraPosChanged(LatLng target, float radius_meter) {
+        jsonparser.markerJsonParse(this,target.latitude, target.longitude,radius_meter/1000);
     }
 }
