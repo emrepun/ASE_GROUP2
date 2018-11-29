@@ -18,7 +18,7 @@ matrix:
                                   - android-25
                                   - build-tools-25.0.3
                   before_install:
-                          - chmod +x gradlew
+                          - chmod +x ./gradlew
                   before_script:
                           - cd ASE_android
                   script:
