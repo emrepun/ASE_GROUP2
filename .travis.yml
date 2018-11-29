@@ -1,4 +1,4 @@
-sudo: enabled
+usudo: enabled
 
 before_cache:
         - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -17,10 +17,9 @@ matrix:
                                   - tools
                                   - android-25
                                   - build-tools-25.0.3
-                  before_install:
-                          - chmod +x ./gradlew
                   before_script:
                           - cd ASE_android
+                          - chmod +x ./gradlew
                   script:
                           - ./gradlew build connecteedCheck
 
