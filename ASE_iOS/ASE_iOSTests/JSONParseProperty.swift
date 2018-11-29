@@ -1,5 +1,5 @@
 //
-//  JSONParse.swift
+//  JSONParseProperty.swift
 //  ASE_iOSTests
 //
 //  Created by Emre HAVAN on 28.11.2018.
@@ -9,24 +9,23 @@
 import XCTest
 @testable import ASE_iOS
 
-class JSONParse: XCTestCase {
+class JSONParseProperty: XCTestCase {
     
-    var mockJsonPostcode = Data()
+    var mockJsonProperty = Data()
     let jsonDecoder = JSONDecoder()
-    var postCode: PostCode!
-    let latitude = "50.83692"
-    let longitude = "-0.124377"
+    var property: Property!
+    let pricePaid = 40000
+    let street = "London Rd."
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        mockJsonPostcode = """
-        
+        mockJsonProperty = """
             {
-                "price": "239380.09",
-                "postcode": "BN2 3QB",
-                "latitude": "50.83692",
-                "longitude": "-0.124377"
+                "pricePaid": 40000,
+                "propertyAddress": {
+                    "street": "London Rd.",
+                    "paon": "24"
+                }
             }
         
     """.data(using: .utf8)!
@@ -41,21 +40,21 @@ class JSONParse: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
-    func testPostCodeLatitudeJSONParser() {
+    func testPropertyPricePaidJSONParser() {
         do {
-            postCode = try jsonDecoder.decode(PostCode.self, from: mockJsonPostcode)
-            XCTAssert(postCode.latitude! == self.latitude)
+            property = try jsonDecoder.decode(Property.self, from: mockJsonProperty)
+            XCTAssert(property.pricePaid! == self.pricePaid)
         } catch _ {
-            assertionFailure()
+            XCTAssert(false)
         }
     }
     
-    func testPostCodeLongitudeJSONParser() {
+    func testPropertyStreetNameJSONParser() {
         do {
-            postCode = try jsonDecoder.decode(PostCode.self, from: mockJsonPostcode)
-            XCTAssert(postCode.longitude! == self.longitude)
+            property = try jsonDecoder.decode(Property.self, from: mockJsonProperty)
+            XCTAssert(property.propertyAddress?.street! == self.street)
         } catch _ {
-            assertionFailure()
+            XCTAssert(false)
         }
     }
 
