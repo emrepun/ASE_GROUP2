@@ -27,12 +27,15 @@ class MapViewController: UIViewController {
     private let networking = Networking()
     
     private var postCodes = [PostCode]()
+    var list = [GMUWeightedLatLng]()
     
     var isDataRequestSent = false
     
     private var heatmapLayer: GMUHeatmapTileLayer!
     private var gradientColors = [UIColor.green, UIColor.red]
     private var gradientStartPoints = [0.6, 1.0] as [NSNumber]
+    
+    var isHeatmap = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,13 +104,10 @@ class MapViewController: UIViewController {
         locationManager.startMonitoringSignificantLocationChanges()
         
         let innerUser = Auth.auth().currentUser
-        
         let currentDate = getCurrentMillis()
-        
         let timeStamp = String(currentDate)
-                
         let ref = Database.database().reference().child("gpsdata").child(innerUser!.uid).child(timeStamp)
-                
+
         let locationObject = [
             "latitude": user.latitude,
             "longitude": user.longitude
@@ -141,6 +141,38 @@ class MapViewController: UIViewController {
         return Int64(Date().timeIntervalSince1970 * 1000)
     }
     
+    @IBAction func toggleViewTapped(_ sender: Any) {
+        if !isHeatmap {
+            isHeatmap = !isHeatmap
+            heatmapLayer.map = nil
+            guard postCodes.count > 0 else { return }
+            
+            DispatchQueue.main.async {
+                for postCode in self.postCodes {
+                    let marker = PlaceMarker(postCode: postCode)
+                    marker.map = self.mapView
+                }
+            }
+            
+        } else {
+            guard list.count > 0 else { return }
+            
+            isHeatmap = !isHeatmap
+            mapView.clear()
+
+            let heatLayer = GMUHeatmapTileLayer()
+            heatLayer.radius = 80
+            heatLayer.opacity = 0.8
+            heatLayer.gradient = GMUGradient(colors: gradientColors,
+                                             startPoints: gradientStartPoints,
+                                             colorMapSize: 256)
+            heatLayer.weightedData = list
+            heatLayer.map = mapView
+            heatmapLayer = heatLayer
+            heatmapLayer.map = mapView
+        }
+    }
+    
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?
     {
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "AnnotationIdentifier")
@@ -171,64 +203,41 @@ extension MapViewController: CLLocationManagerDelegate {
         mapView.settings.myLocationButton = true
     }
     
+    fileprivate func getMarkerAndHeatmapAfterCompletion() {
+        for postCode in self.postCodes {
+            let marker = PlaceMarker(postCode: postCode)
+            marker.map = self.mapView
+            
+            if let latitude = postCode.latitude,
+                let lat = Double(latitude),
+                let longitude = postCode.longitude,
+                let long = Double(longitude),
+                let priceString = postCode.price {
+                let price = Float(priceString) ?? 0.0
+                let coords = GMUWeightedLatLng(coordinate: CLLocationCoordinate2DMake(lat , long ), intensity: price.truncatingRemainder(dividingBy: 10))
+                
+                self.list.append(coords)
+            }
+        }
+        // Add the lat lngs to the heatmap layer.
+        //self.heatmapLayer.weightedData = self.list
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             user.latitude = (location.coordinate.latitude).round(digit: 6)
             user.longitude = location.coordinate.longitude.round(digit: 6)
-
             
             if !isDataRequestSent {
                 isDataRequestSent = true
                 getPropertyData(lat: String(location.coordinate.latitude), long: String(location.coordinate.longitude), radius: "0.5") {
                     DispatchQueue.main.async {
-                        var list = [GMUWeightedLatLng]()
-                        
-                        for postCode in self.postCodes {
-                            //let marker = PlaceMarker(postCode: postCode)
-                            //marker.map = self.mapView
-                            
-                            var intPrice = 0
-                            
-                            if let latitude = postCode.latitude,
-                                let lat = Double(latitude),
-                                let longitude = postCode.longitude,
-                                let long = Double(longitude),
-                                let priceString = postCode.price,
-                                let price = Float(priceString) {
-                                let coords = GMUWeightedLatLng(coordinate: CLLocationCoordinate2DMake(lat , long ), intensity: price.truncatingRemainder(dividingBy: 10))
-                                //price.truncatingRemainder(dividingBy: 10)
-                                intPrice = Int(price)
-                                print(intPrice)
-//                                if intPrice < 100000 {
-//                                    for _ in 0...30 {
-//                                        list.append(coords)
-//                                    }
-//                                } else if intPrice < 300000 {
-//                                    for _ in 0...90 {
-//                                        list.append(coords)
-//                                    }
-//                                } else if intPrice < 999999 {
-//                                    for _ in 0...150 {
-//                                        list.append(coords)
-//                                    }
-//                                } else {
-//                                    for _ in 0...3000 {
-//                                        list.append(coords)
-//                                    }
-//                                }
-                                
-                                list.append(coords)
-                            }
-                        }
-                        // Add the lat lngs to the heatmap layer.
-                        self.heatmapLayer.weightedData = list
-                        self.addHeatMap()
+                        self.getMarkerAndHeatmapAfterCompletion()
+                        //self.addHeatMap()
                     }
                 }
             }
         }
-        
-        
         
         guard let camLocation = locations.first else { return }
         
@@ -260,6 +269,24 @@ extension MapViewController: GMSMapViewDelegate {
         // TODO: Open Post Code Specific house prices list.
         performSegue(withIdentifier: "showListPrices", sender: marker)
         return true
+    }
+    
+    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
+        isHeatmap = false
+        heatmapLayer.map = nil
+        postCodes.removeAll()
+        list.removeAll()
+        
+        let centerCoordinate = mapView.getCenterCoordinate()
+        let radius = mapView.getRadius()
+        
+        let strRadius = String(radius)
+        let latitude = String(centerCoordinate.latitude)
+        let longitude = String(centerCoordinate.longitude)
+        
+        getPropertyData(lat: latitude, long: longitude, radius: strRadius) {
+            self.getMarkerAndHeatmapAfterCompletion()
+        }
     }
     
 }

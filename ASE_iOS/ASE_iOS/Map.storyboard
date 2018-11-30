@@ -20,7 +20,20 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJ7-CS-8aJ" customClass="GMSMapView">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fe7-x7-mcS">
+                                        <rect key="frame" x="335" y="816" width="63" height="30"/>
+                                        <state key="normal" title="Heatmap"/>
+                                        <connections>
+                                            <action selector="toggleViewTapped:" destination="NZU-Xh-nlQ" eventType="touchUpInside" id="Tdl-JU-yg0"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="Fe7-x7-mcS" secondAttribute="bottom" constant="50" id="QTR-jz-R7W"/>
+                                    <constraint firstAttribute="trailing" secondItem="Fe7-x7-mcS" secondAttribute="trailing" constant="16" id="TIl-EF-JwM"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
