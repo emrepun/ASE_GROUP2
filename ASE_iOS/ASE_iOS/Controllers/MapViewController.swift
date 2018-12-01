@@ -213,8 +213,8 @@ class MapViewController: UIViewController {
     
     func emptyArrays(completion: @escaping (_ success: Bool) -> Void) {
         DispatchQueue.main.async {
-            //self.postCodes.removeAll()
-            //self.list.removeAll()
+            self.postCodes.removeAll()
+            self.list.removeAll()
             self.mapView.clear()
             
             completion(true)
