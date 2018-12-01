@@ -19,10 +19,14 @@ class PlaceMarker: GMSMarker {
         
         self.postCodeName = postCode.postcode
         
-        if let lat: CLLocationDegrees = CLLocationDegrees(postCode.latitude!), let long: CLLocationDegrees = CLLocationDegrees(postCode.longitude!) {
-            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-            position = coordinate
+        if let latitude = postCode.latitude, let longitude = postCode.longitude {
+            if let lat: CLLocationDegrees = CLLocationDegrees(latitude), let long: CLLocationDegrees = CLLocationDegrees(longitude) {
+                let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                position = coordinate
+            }
         }
+        
+        
         
         let view = Bundle.main.loadNibNamed("MarkerInfoView", owner: nil, options: nil)?.first as! MarkerInfoView
         

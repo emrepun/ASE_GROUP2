@@ -23,7 +23,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fe7-x7-mcS">
-                                <rect key="frame" x="16" y="739" width="120" height="41"/>
+                                <rect key="frame" x="16" y="721" width="120" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="w7f-OU-XNa"/>
                                 </constraints>
@@ -49,14 +49,43 @@
                                     <action selector="toggleViewTapped:" destination="NZU-Xh-nlQ" eventType="touchUpInside" id="Tdl-JU-yg0"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sz0-Ev-6zW">
+                                <rect key="frame" x="278" y="721" width="120" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="Ibq-TB-GrZ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Refresh">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                        <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="refreshTapped:" destination="NZU-Xh-nlQ" eventType="touchUpInside" id="WL7-qD-281"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Fe7-x7-mcS" firstAttribute="leading" secondItem="qBJ-j1-K9d" secondAttribute="leading" constant="16" id="807-oY-1bH"/>
-                            <constraint firstItem="qBJ-j1-K9d" firstAttribute="bottom" secondItem="Fe7-x7-mcS" secondAttribute="bottom" constant="82" id="CIJ-N9-pfD"/>
+                            <constraint firstItem="qBJ-j1-K9d" firstAttribute="bottom" secondItem="Fe7-x7-mcS" secondAttribute="bottom" constant="100" id="CIJ-N9-pfD"/>
                             <constraint firstAttribute="bottom" secondItem="KJ7-CS-8aJ" secondAttribute="bottom" id="GhX-85-p69"/>
                             <constraint firstItem="qBJ-j1-K9d" firstAttribute="trailing" secondItem="KJ7-CS-8aJ" secondAttribute="trailing" id="MaM-6W-KqX"/>
+                            <constraint firstItem="qBJ-j1-K9d" firstAttribute="trailing" secondItem="sz0-Ev-6zW" secondAttribute="trailing" constant="16" id="Vs1-RG-uYI"/>
                             <constraint firstItem="KJ7-CS-8aJ" firstAttribute="top" secondItem="0jC-TT-DJG" secondAttribute="top" id="gZc-kQ-nJx"/>
+                            <constraint firstItem="qBJ-j1-K9d" firstAttribute="bottom" secondItem="sz0-Ev-6zW" secondAttribute="bottom" constant="100" id="hcW-mf-ZKQ"/>
                             <constraint firstItem="KJ7-CS-8aJ" firstAttribute="leading" secondItem="qBJ-j1-K9d" secondAttribute="leading" id="jjf-2H-hoO"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qBJ-j1-K9d"/>

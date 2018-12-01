@@ -21,6 +21,7 @@ class MapViewController: UIViewController {
     
     @IBOutlet var toggleButton: UIButton!
     
+    let activityIndicator = UIActivityIndicatorView()
     
     let locationManager = CLLocationManager()
     //var authorizationStatus = CLLocationManager.authorizationStatus()
@@ -43,6 +44,11 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator.style = .gray
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
         mapView.delegate = self
         locationSettings()
         updateMapStyle()
@@ -146,6 +152,7 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func toggleViewTapped(_ sender: Any) {
+        activityIndicator.startAnimating()
         if isHeatmap {
             isHeatmap = !isHeatmap
             toggleButton.setTitle("Heatmap", for: .normal)
@@ -176,7 +183,45 @@ class MapViewController: UIViewController {
             heatmapLayer = heatLayer
             heatmapLayer.map = mapView
         }
+        activityIndicator.stopAnimating()
     }
+    
+    @IBAction func refreshTapped(_ sender: Any) {
+        activityIndicator.startAnimating()
+        let centerCoordinate = mapView.getCenterCoordinate()
+        let radius = mapView.getRadius() / 1000
+        print(radius)
+        
+        let strRadius = String(radius)
+        let latitude = String(centerCoordinate.latitude)
+        let longitude = String(centerCoordinate.longitude)
+        
+        isHeatmap = false
+        toggleButton.setTitle("Heatmap", for: .normal)
+        heatmapLayer.map = nil
+        
+        emptyArrays { (success) in
+            if success {
+                self.getPropertyData(lat: latitude, long: longitude, radius: strRadius) {
+                    DispatchQueue.main.async {
+                        self.getMarkerAndHeatmapAfterCompletion()
+                    }
+                }
+            }
+        }
+    }
+    
+    func emptyArrays(completion: @escaping (_ success: Bool) -> Void) {
+        DispatchQueue.main.async {
+            //self.postCodes.removeAll()
+            //self.list.removeAll()
+            self.mapView.clear()
+            
+            completion(true)
+        }
+        
+    }
+    
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?
     {
@@ -209,23 +254,29 @@ extension MapViewController: CLLocationManagerDelegate {
     }
     
     fileprivate func getMarkerAndHeatmapAfterCompletion() {
-        for postCode in self.postCodes {
-            let marker = PlaceMarker(postCode: postCode)
-            marker.map = self.mapView
-            
-            if let latitude = postCode.latitude,
-                let lat = Double(latitude),
-                let longitude = postCode.longitude,
-                let long = Double(longitude),
-                let priceString = postCode.price {
-                let price = Float(priceString) ?? 0.0
-                let coords = GMUWeightedLatLng(coordinate: CLLocationCoordinate2DMake(lat , long ), intensity: price.truncatingRemainder(dividingBy: 10))
+        DispatchQueue.main.async {
+            for postCode in self.postCodes {
+                let marker = PlaceMarker(postCode: postCode)
+                marker.map = self.mapView
                 
-                self.list.append(coords)
+                if let latitude = postCode.latitude,
+                    let lat = Double(latitude),
+                    let longitude = postCode.longitude,
+                    let long = Double(longitude),
+                    let priceString = postCode.price {
+                    let price = Float(priceString) ?? 0.0
+                    let coords = GMUWeightedLatLng(coordinate: CLLocationCoordinate2DMake(lat,long), intensity: price.truncatingRemainder(dividingBy: 10))
+                    
+                    self.list.append(coords)
+                }
             }
+            
+            self.activityIndicator.stopAnimating()
+            // Add the lat lngs to the heatmap layer.
+            self.heatmapLayer.weightedData = self.list
+            //heatmapLayer.map = mapView
         }
-        // Add the lat lngs to the heatmap layer.
-        //self.heatmapLayer.weightedData = self.list
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -235,7 +286,9 @@ extension MapViewController: CLLocationManagerDelegate {
             
             if !isDataRequestSent {
                 isDataRequestSent = true
-                getPropertyData(lat: String(location.coordinate.latitude), long: String(location.coordinate.longitude), radius: "0.5") {
+                print(location.coordinate.latitude)
+                print(location.coordinate.longitude)
+                getPropertyData(lat: String(location.coordinate.latitude), long: String(location.coordinate.longitude), radius: "0.1") {
                     DispatchQueue.main.async {
                         self.getMarkerAndHeatmapAfterCompletion()
                         //self.addHeatMap()
@@ -277,24 +330,25 @@ extension MapViewController: GMSMapViewDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
-        isHeatmap = false
-        heatmapLayer.map = nil
-        postCodes.removeAll()
-        list.removeAll()
-        
-        let centerCoordinate = mapView.getCenterCoordinate()
-        let radius = mapView.getRadius() / 1000
-        print(radius)
-        let strRadius = String(radius)
-        let latitude = String(centerCoordinate.latitude)
-        let longitude = String(centerCoordinate.longitude)
-        
-        if radius != currentRadius {
-            currentRadius = radius
-            getPropertyData(lat: latitude, long: longitude, radius: strRadius) {
-                self.getMarkerAndHeatmapAfterCompletion()
-            }
-        }
+//        let centerCoordinate = mapView.getCenterCoordinate()
+//        let radius = mapView.getRadius() / 1000
+//        print(radius)
+//        let strRadius = String(radius)
+//        let latitude = String(centerCoordinate.latitude)
+//        let longitude = String(centerCoordinate.longitude)
+//
+//        if radius != currentRadius {
+//            isHeatmap = false
+//            toggleButton.setTitle("Heatmap", for: .normal)
+//            heatmapLayer.map = nil
+//            self.postCodes.removeAll()
+//            self.list.removeAll()
+//
+//            currentRadius = radius
+//            getPropertyData(lat: latitude, long: longitude, radius: strRadius) {
+//                self.getMarkerAndHeatmapAfterCompletion()
+//            }
+//        }
     }
     
 }

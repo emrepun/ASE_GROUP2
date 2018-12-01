@@ -15,6 +15,8 @@ struct Networking {
         let url = endpoint.baseURL.appendingPathComponent(endpoint.path)
         let urlRequest = URLRequest(url: url)
         
+        print(url)
+        
         let urlSession = URLSession.shared.dataTask(with: urlRequest) { (data, urlResponse, error) in
             
             if let _ = error {
