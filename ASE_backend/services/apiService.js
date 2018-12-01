@@ -40,23 +40,32 @@ var getAveragePrice = async function(postcode) {
  * @returns {Array} Array of postcode objects, with each a postcode, latitude and longitude properties
  */
 var getPricesAtAround = async function(lat, long, radius) {
-    var postcodes = await postcodeService.getPostcodesNearAround(
-        lat,
-        long,
-        radius
-    );
-    var asyncPrices = postcodes.map(postcode =>
-        getAveragePrice(postcode.Postcode)
-    );
-    var prices = await Promise.all(asyncPrices);
-    postcodes = postcodes.map((postcode, i) => {
-        return {
-            price: prices[i],
-            postcode: postcode.Postcode,
-            latitude: postcode.Latitude,
-            longitude: postcode.Longitude
-        };
-    });
+    var postcodes = [];
+    if (radius < 0.5 || radius == undefined) {
+        postcodes = await postcodeService.getPostcodesNearAround(
+            lat,
+            long,
+            radius
+        );
+        var asyncPrices = postcodes.map(postcode =>
+            getAveragePrice(postcode.Postcode)
+        );
+        var prices = await Promise.all(asyncPrices);
+        postcodes = postcodes.map((postcode, i) => {
+            return {
+                price: prices[i],
+                postcode: postcode.Postcode,
+                latitude: postcode.Latitude,
+                longitude: postcode.Longitude
+            };
+        });
+    } else if (radius > 90) {
+        postcodes = await dbService.getAreas(lat, long, radius);
+    } else if (radius > 40) {
+        postcodes = await dbService.getDistricts(lat, long, radius);
+    } else {
+        postcodes = await dbService.getSectors(lat, long, radius);
+    }
     return postcodes;
 };
 
