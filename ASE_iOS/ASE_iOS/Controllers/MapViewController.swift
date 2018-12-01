@@ -19,6 +19,9 @@ class MapViewController: UIViewController {
     
     @IBOutlet var mapView: GMSMapView!
     
+    @IBOutlet var toggleButton: UIButton!
+    
+    
     let locationManager = CLLocationManager()
     //var authorizationStatus = CLLocationManager.authorizationStatus()
     var user = User(latitude: 0.0, longitude: 0.0)
@@ -142,8 +145,9 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func toggleViewTapped(_ sender: Any) {
-        if !isHeatmap {
+        if isHeatmap {
             isHeatmap = !isHeatmap
+            toggleButton.setTitle("Heatmap", for: .normal)
             heatmapLayer.map = nil
             guard postCodes.count > 0 else { return }
             
@@ -155,9 +159,9 @@ class MapViewController: UIViewController {
             }
             
         } else {
-            guard list.count > 0 else { return }
-            
             isHeatmap = !isHeatmap
+            toggleButton.setTitle("Markers", for: .normal)
+            guard list.count > 0 else { return }
             mapView.clear()
 
             let heatLayer = GMUHeatmapTileLayer()
@@ -278,8 +282,8 @@ extension MapViewController: GMSMapViewDelegate {
         list.removeAll()
         
         let centerCoordinate = mapView.getCenterCoordinate()
-        let radius = mapView.getRadius()
-        
+        let radius = mapView.getRadius() / 1000
+        print(radius)
         let strRadius = String(radius)
         let latitude = String(centerCoordinate.latitude)
         let longitude = String(centerCoordinate.longitude)
