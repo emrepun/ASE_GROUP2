@@ -15,7 +15,14 @@ district = connection.model("district", district.schema);
 var { sector } = require("../models/sector");
 sector = connection.model("sector", sector.schema);
 
-exports.getAreas = async (lat, long, radius) => {
+/**
+ * @param lat Latitude
+ * @param long Longitude
+ * @param radius Radius in km
+ * Converts lat and long with radius to a lat/long bracket and searches the db for
+ * areas in that range
+ */
+module.exports.getAreas = async (lat, long, radius) => {
     lat = parseFloat(lat);
     long = parseFloat(long);
     var latdiff = radius / 110.574;
@@ -28,6 +35,13 @@ exports.getAreas = async (lat, long, radius) => {
     return data;
 };
 
+/**
+ * @param lat Latitude
+ * @param long Longitude
+ * @param radius Radius in km
+ * Converts lat and long with radius to a lat/long bracket and searches the db for
+ * districts in that range
+ */
 exports.getDistricts = async (lat, long, radius) => {
     lat = parseFloat(lat);
     long = parseFloat(long);
@@ -41,6 +55,13 @@ exports.getDistricts = async (lat, long, radius) => {
     return data;
 };
 
+/**
+ * @param lat Latitude
+ * @param long Longitude
+ * @param radius Radius in km
+ * Converts lat and long with radius to a lat/long bracket and searches the db for
+ * sectors in that range
+ */
 exports.getSectors = async (lat, long, radius) => {
     lat = parseFloat(lat);
     long = parseFloat(long);
