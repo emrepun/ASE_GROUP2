@@ -33,6 +33,7 @@ class MapViewController: UIViewController {
     var list = [GMUWeightedLatLng]()
     
     var isDataRequestSent = false
+    var currentRadius = 0.0
     
     private var heatmapLayer: GMUHeatmapTileLayer!
     private var gradientColors = [UIColor.green, UIColor.red]
@@ -288,8 +289,11 @@ extension MapViewController: GMSMapViewDelegate {
         let latitude = String(centerCoordinate.latitude)
         let longitude = String(centerCoordinate.longitude)
         
-        getPropertyData(lat: latitude, long: longitude, radius: strRadius) {
-            self.getMarkerAndHeatmapAfterCompletion()
+        if radius != currentRadius {
+            currentRadius = radius
+            getPropertyData(lat: latitude, long: longitude, radius: strRadius) {
+                self.getMarkerAndHeatmapAfterCompletion()
+            }
         }
     }
     
