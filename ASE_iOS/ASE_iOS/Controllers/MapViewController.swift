@@ -11,51 +11,79 @@ import CoreLocation
 import MapKit
 import FirebaseAuth
 import FirebaseDatabase
+import GoogleMaps
 
 
 
 class MapViewController: UIViewController {
     
-    @IBOutlet var mapView: MKMapView!
-    @IBOutlet var latitudeLabel: UILabel!
-    @IBOutlet var longitudeLabel: UILabel!
-    
-    
+    @IBOutlet var mapView: GMSMapView!
     
     let locationManager = CLLocationManager()
-    var authorizationStatus = CLLocationManager.authorizationStatus()
+    //var authorizationStatus = CLLocationManager.authorizationStatus()
     var user = User(latitude: 0.0, longitude: 0.0)
-    var postTimer: Timer!
+    //var postTimer: Timer!
+    
+    private let networking = Networking()
+    
+    private var postCodes = [PostCode]()
+    
+    var isDataRequestSent = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.delegate = self
         locationSettings()
-        checkForAuthorization()
-        postTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)
+        updateMapStyle()
         
+        //checkForAuthorization()
+        //postTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)     
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        postTimer.invalidate()
-    }
     
     fileprivate func locationSettings() {
-        mapView.delegate = self
-        mapView.showsUserLocation = true
-        mapView.userTrackingMode = .follow
-        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
     }
     
-    fileprivate func checkForAuthorization() {
-        if authorizationStatus == .denied || authorizationStatus == .restricted {
-            print("big")
-            showAlert(title: "Location Services Disabled", message: "Please enable Location Services in Settings to view your location on map")
+    fileprivate func updateMapStyle() {
+        do {
+            // Set the map style by passing the URL of the local file.
+            if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json") {
+                mapView.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
+            } else {
+                NSLog("Unable to find style.json")
+            }
+        } catch {
+            NSLog("One or more of the map styles failed to load. \(error)")
         }
     }
+    
+    private func getPropertyData(lat: String, long: String, radius: String, completion: (() -> Void)?) {
+        networking.performNetworkTask(endpoint: PropertyAPI.postCodes(lat: lat, long: long, radius: radius), type: [PostCode].self) { [weak self] (response) in
+            self?.postCodes = response
+            completion?()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    
+//    fileprivate func checkForAuthorization() {
+//        if authorizationStatus == .denied || authorizationStatus == .restricted {
+//            print("big")
+//            showAlert(title: "Location Services Disabled", message: "Please enable Location Services in Settings to view your location on map")
+//        }
+//    }
     
     @objc
     fileprivate func writeLocationData() {
@@ -74,9 +102,6 @@ class MapViewController: UIViewController {
             "longitude": user.longitude
         ] as [String: Any]
         
-        latitudeLabel.text = "Latitude: \(user.latitude)"
-        longitudeLabel.text = "Longitude: \(user.longitude)"
-        
         ref.setValue(locationObject) { (error, ref) in
             if error == nil {
                 print("chill")
@@ -89,17 +114,17 @@ class MapViewController: UIViewController {
     }
     
     
-    @IBAction func locateMeButtonTapped(_ sender: Any) {
-        let authStat = CLLocationManager.authorizationStatus()
-        
-        if authStat == .denied || authStat == .restricted || authStat == .notDetermined {
-            showAlert(title: "Location Services Disabled", message: "Please enable Location Services in Settings to locate yourself!")
-        } else {
-            let distance: CLLocationDistance = 500
-            let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, latitudinalMeters: distance, longitudinalMeters: distance)
-            mapView.setRegion(region, animated: true)
-        }
-    }
+//    @IBAction func locateMeButtonTapped(_ sender: Any) {
+//        let authStat = CLLocationManager.authorizationStatus()
+//        
+//        if authStat == .denied || authStat == .restricted || authStat == .notDetermined {
+//            showAlert(title: "Location Services Disabled", message: "Please enable Location Services in Settings to locate yourself!")
+//        } else {
+//            let distance: CLLocationDistance = 500
+//            let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, latitudinalMeters: distance, longitudinalMeters: distance)
+//            mapView.setRegion(region, animated: true)
+//        }
+//    }
     
     func getCurrentMillis()->Int64 {
         return Int64(Date().timeIntervalSince1970 * 1000)
@@ -121,19 +146,68 @@ class MapViewController: UIViewController {
     
 }
     // MARK: Location Delegate Methods
-extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
+extension MapViewController: CLLocationManagerDelegate {
+    
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        guard status == .authorizedWhenInUse else {
+            return
+        }
+        
+        locationManager.startUpdatingLocation()
+        
+        mapView.isMyLocationEnabled = true
+        mapView.settings.myLocationButton = true
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             user.latitude = (location.coordinate.latitude).round(digit: 6)
             user.longitude = location.coordinate.longitude.round(digit: 6)
-            latitudeLabel.text = "Latitude: \(user.latitude)"
-            longitudeLabel.text = "Longitude: \(user.longitude)"
+
             
-            let marker = MKPointAnnotation()
-            marker.coordinate = CLLocationCoordinate2DMake(user.latitude, user.longitude)
-            marker.title = "last location"
-            marker.subtitle = "\(user.latitude), \(user.longitude)"
-            mapView.addAnnotation(marker)        }
+            if !isDataRequestSent {
+                isDataRequestSent = true
+                getPropertyData(lat: String(location.coordinate.latitude), long: String(location.coordinate.longitude), radius: "0.1") {
+                    DispatchQueue.main.async {
+                        for postCode in self.postCodes {
+                            let marker = PlaceMarker(postCode: postCode)
+                            marker.map = self.mapView
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        
+        guard let camLocation = locations.first else { return }
+        
+        mapView.camera = GMSCameraPosition(target: camLocation.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+        
+        locationManager.stopUpdatingLocation()
     }
+    
+    // MARK: Segue settings
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showListPrices" {
+            let markerSender = sender as! PlaceMarker
+            let destinationVC = segue.destination as! PropertyTableViewController
+            if let postCode = markerSender.postCodeName {
+                destinationVC.postCode = postCode
+            }
+        }
+    }
+}
+
+extension MapViewController: GMSMapViewDelegate {
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        // FIXME: Fix
+        // TODO: Open Post Code Specific house prices list.
+        performSegue(withIdentifier: "showListPrices", sender: marker)
+        return true
+    }
+    
 }
 

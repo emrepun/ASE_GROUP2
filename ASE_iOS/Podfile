@@ -7,8 +7,11 @@ target 'ASE_iOS' do
 
   # Pods for ASE_iOS
 
+# Google Maps
 pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
+pod 'GoogleMaps'
+
 
 end

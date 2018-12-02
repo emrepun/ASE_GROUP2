@@ -7,10 +7,10 @@ import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
@@ -24,72 +24,58 @@ import java.util.List;
 import java.util.Locale;
 
 import sussex.android.ase_android.MapsScreen.model.CallbackMarkerInterface;
-import sussex.android.ase_android.MapsScreen.model.JSONparser;
-import sussex.android.ase_android.MapsScreen.model.ZipCodeMarker;
+import sussex.android.ase_android.MapsScreen.model.PostCodeMarker;
+import sussex.android.ase_android.MapsScreen.model.ServerConnection;
 import sussex.android.ase_android.R;
 
 public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInterface {
 
     private MapsContract.View view;
     private MapsContract.Model jsonparser;
-    private List<ZipCodeMarker> markerList = new ArrayList<>();
+    private List<PostCodeMarker> markerList = new ArrayList<>();
 
     private boolean heatMapEnabled;
 
     public MapsPresenter(MapsContract.View view) {
         this.view = view;
-        jsonparser=new JSONparser(view.getActivity());
+        jsonparser=new ServerConnection(view.getActivity());
     }
 
 
-
-
+    /**
+     * @param markerList a list of PostCodeMarkers that should be saved and displayed
+     */
     @Override
-    public void displayMarkers(List<ZipCodeMarker> markerList) {
+    public void displayMarkers(List<PostCodeMarker> markerList) {
         this.markerList=markerList;
         displayMarkers();
     }
 
+    /**
+     * Displays the saved markers in markerList if the heatmap is disabled
+     */
     private void displayMarkers(){
         view.clearMap();
         if(heatMapEnabled){
             enableHeatMap();
         }else {
-            for (ZipCodeMarker zipCodeMarker : markerList) {
+            for (PostCodeMarker postCodeMarker : markerList) {
                 view.addMarker(new MarkerOptions()
-                        .position(new LatLng(zipCodeMarker.getLat(), zipCodeMarker.getLon()))
+                        .position(new LatLng(postCodeMarker.getLat(), postCodeMarker.getLon()))
                         .icon(bitmapDescriptorFromVector(view.getActivity(), R.drawable.ic_marker))
-                        .title(zipCodeMarker.getPostcode())
-                        .snippet("Average price: £" + String.format(Locale.UK, "%,.2f", zipCodeMarker.getPrice())));
+                        .title(postCodeMarker.getPostcode())
+                        .snippet("Average price: £" + String.format(Locale.UK, "%,.2f", postCodeMarker.getPrice())));
             }
         }
     }
 
 
     /**
-     * @param strAddress Address as String
-     * @return Latitude and Longitude of first result of Directions API
+     * Generates a bitmap from the provided vector image
+     * @param context Context
+     * @param vectorResId id of the vector image
+     * @return Bitmap representation of the vector image at the right resolution in respect to the device
      */
-    private LatLng getLatLngFromAddress(String strAddress, Context context) {
-
-        Geocoder geocoder = new Geocoder(context);
-        try {
-            List<Address> address = geocoder.getFromLocationName(strAddress, 1);
-            if (address == null || address.size() == 0) {
-                return null;
-            }
-            Address location = address.get(0);
-
-            LatLng p1 = new LatLng((double) (location.getLatitude()),
-                    (double) (location.getLongitude()));
-
-            return p1;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
         vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
@@ -100,15 +86,15 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
 
     }
 
-    public void cameraPosChanged(CameraPosition cameraPosition) {
-        //TODO: calculate radius according to Radius Of Visible Map in Android
-            jsonparser.markerJsonParse(this, cameraPosition.target.latitude, cameraPosition.target.longitude,0.5);
-    }
 
-    public MapsContract.Model getJsonParser(){
+    public MapsContract.Model getServerConnectionHandler(){
         return jsonparser;
     }
 
+    /**
+     * Switches between the heatmap and marker display
+     * @param showHeatmap true if heatmap should be displayed
+     */
     public void switchHeatmap(boolean showHeatmap){
         this.heatMapEnabled=showHeatmap;
         if(showHeatmap){
@@ -118,14 +104,31 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
         }
     }
 
+    /**
+     * Enables the heatmap with the saved data in markerList
+     */
     private void enableHeatMap() {
         List <WeightedLatLng> list = new ArrayList<>();
-        for (ZipCodeMarker marker: markerList) {
+        for (PostCodeMarker marker: markerList) {
             list.add(new WeightedLatLng(new LatLng(marker.getLat(), marker.getLon()), marker.getPrice()));
         }
-        HeatmapTileProvider mProvider = new HeatmapTileProvider.Builder()
-                .weightedData(list)
-                .build();
-        TileOverlay OvermOverlay = view.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
+        if(list.isEmpty()){
+            Log.d("heamap","heatmap list is empty");
+        }else {
+            HeatmapTileProvider mProvider = new HeatmapTileProvider.Builder()
+                    .weightedData(list)
+                    .radius(50)
+                    .build();
+            TileOverlay OvermOverlay = view.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
+        }
+    }
+
+    /**
+     * Gets called when the camera of the map changes (user/programmatically)
+     * @param target the current/new camera position
+     * @param radius_meter radius of the current visible region in meters
+     */
+    public void cameraPosChanged(LatLng target, float radius_meter) {
+        jsonparser.markerJsonParse(this,target.latitude, target.longitude,radius_meter/1000);
     }
 }
