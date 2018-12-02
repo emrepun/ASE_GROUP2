@@ -24,7 +24,7 @@ matrix:
 
                           - google-gdk-license-.+
                   before_script:
-                          - cd ASE_Android
+                          - cd ase_android
                           - ls
                           - chmod +x gradlew
                   script:
