@@ -43,6 +43,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MapsPresenter mapsPresenter;
     private BottomSheetContract.View bottomSheetView;
 
+    boolean enableInfoWindow =true;
+
 
     private boolean heatMapEnabled;
 
@@ -91,7 +93,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                bottomSheetView.displayBottomSheet(marker.getTitle(), marker.getSnippet());
+                if(enableInfoWindow) {
+                    bottomSheetView.displayBottomSheet(marker.getTitle(), marker.getSnippet());
+                }
                 return false;
             }
         });
@@ -115,6 +119,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     mPreviousCameraPosition[0] = mMap.getCameraPosition();
 
                     float radius_meter = calcVisibleRadius();
+                    enableInfoWindow = radius_meter < 1000;
 
                     mapsPresenter.cameraPosChanged(mPreviousCameraPosition[0].target,radius_meter);
                     }
