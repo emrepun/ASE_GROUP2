@@ -391,13 +391,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		FBA5662721B41B7100027FD3 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		FBCB4592216FBD5E00089508 = {
 			isa = PBXGroup;
 			children = (
@@ -405,7 +398,6 @@
 				FBCB459C216FBD5F00089508 /* Products */,
 				D21FD0DB0B98D2F5A23C0BE3 /* Pods */,
 				56818594E7A84EDC0E53875D /* Frameworks */,
-				FBA5662721B41B7100027FD3 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
