@@ -66,8 +66,8 @@ var getPricesAtAround = async function(lat, long, radius) {
             return {
                 price: postcode.Average_price,
                 postcode: postcode._id,
-                latitude: postcode.Latitude,
-                longitude: postcode.Longitude
+                latitude: postcode.Latitude + "",
+                longitude: postcode.Longitude + ""
             };
         });
     } else if (radius > 40) {
@@ -76,8 +76,8 @@ var getPricesAtAround = async function(lat, long, radius) {
             return {
                 price: postcode.Average_price,
                 postcode: postcode._id,
-                latitude: postcode.Latitude,
-                longitude: postcode.Longitude
+                latitude: postcode.Latitude + "",
+                longitude: postcode.Longitude + ""
             };
         });
     } else {
@@ -86,8 +86,8 @@ var getPricesAtAround = async function(lat, long, radius) {
             return {
                 price: postcode.Average_price,
                 postcode: postcode._id,
-                latitude: postcode.Latitude,
-                longitude: postcode.Longitude
+                latitude: postcode.Latitude + "",
+                longitude: postcode.Longitude + ""
             };
         });
     }

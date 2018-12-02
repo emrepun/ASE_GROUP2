@@ -63,6 +63,7 @@ exports.getDistricts = async (lat, long, radius) => {
  * sectors in that range
  */
 exports.getSectors = async (lat, long, radius) => {
+    radius *= 1.5;
     lat = parseFloat(lat);
     long = parseFloat(long);
     var latdiff = radius / 110.574;
