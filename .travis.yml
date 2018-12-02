@@ -22,7 +22,7 @@ matrix:
                           - ls
                           - chmod +x ./gradlew
                   script:
-                          - ./gradlew build connectedCheck
+                          - ./gradlew build connectedCheck --stacktrace
 
                 - language: objective-c
                   os: osx
