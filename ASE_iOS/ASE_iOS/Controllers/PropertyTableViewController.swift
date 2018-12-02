@@ -15,16 +15,28 @@ class PropertyTableViewController: UITableViewController {
     var postCode = ""
     
     var properties = [Property]()
+    
+    let activityIndicator = UIActivityIndicatorView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         print(postCode)
+        activityIndicator.style = .gray
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
         
         if postCode.count > 0 {
             getPropertyData(postCode: postCode) {
-                //guard self.properties.count > 0 else { return } //show alert maybe.
+                guard self.properties.count > 0 else {
+                    self.showAlert(title: "No Data", message: "Sorry we are unable to display property data.")
+                    self.activityIndicator.stopAnimating()
+                    return
+                } //show alert maybe.
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+                    self.activityIndicator.stopAnimating()
                 }
                 
             }

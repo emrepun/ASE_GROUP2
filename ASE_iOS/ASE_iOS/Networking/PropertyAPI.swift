@@ -15,7 +15,7 @@ enum PropertyAPI {
 
 extension PropertyAPI: EndpointType {
     var baseURL: URL {
-        return URL(string: "https://6746a94d.ngrok.io/api")!
+        return URL(string: "https://ase-group2.herokuapp.com/api")!
     }
     
     var path: String {
