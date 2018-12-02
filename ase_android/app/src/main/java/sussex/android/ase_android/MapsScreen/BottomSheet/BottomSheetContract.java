@@ -17,6 +17,5 @@ public interface BottomSheetContract {
         interface Presenter extends BasePresenter {
 
                 void displayAddresses(String postcode);
-                void displayInfo(String json, String price);
         }
 }
