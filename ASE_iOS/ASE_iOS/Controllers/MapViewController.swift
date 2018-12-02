@@ -191,6 +191,7 @@ class MapViewController: UIViewController {
         let centerCoordinate = mapView.getCenterCoordinate()
         let radius = mapView.getRadius() / 1000
         print(radius)
+        currentRadius = radius
         
         let strRadius = String(radius)
         let latitude = String(centerCoordinate.latitude)
@@ -325,7 +326,9 @@ extension MapViewController: GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         // FIXME: Fix
         // TODO: Open Post Code Specific house prices list.
-        performSegue(withIdentifier: "showListPrices", sender: marker)
+        if currentRadius < 1 {
+            performSegue(withIdentifier: "showListPrices", sender: marker)
+        }
         return true
     }
     
