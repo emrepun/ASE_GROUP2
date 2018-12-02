@@ -39,6 +39,13 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
+		<key>Pods-ASE_iOS-ASE_iOSTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
 		<key>Pods-ASE_iOS.xcscheme</key>
 		<dict>
 			<key>isShown</key>
