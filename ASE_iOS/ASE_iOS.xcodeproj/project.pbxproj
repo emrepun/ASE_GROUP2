@@ -24,7 +24,6 @@
 		FB35127521A9F99A00E465E6 /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB35127421A9F99A00E465E6 /* Property.swift */; };
 		FB35127721AA21D800E465E6 /* PropertyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB35127621AA21D800E465E6 /* PropertyTableViewCell.swift */; };
 		FB38D780218923DD00DE884A /* ColorSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB38D77F218923DD00DE884A /* ColorSingleton.swift */; };
-		FB3D4D6821A7282C00394854 /* ApiController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3D4D6721A7282C00394854 /* ApiController.swift */; };
 		FB58AADC21B350CF00ADB277 /* GMUWeightedLatLng.m in Sources */ = {isa = PBXBuildFile; fileRef = FB58AA9421B350CE00ADB277 /* GMUWeightedLatLng.m */; };
 		FB58AADD21B350CF00ADB277 /* GMUGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = FB58AA9721B350CE00ADB277 /* GMUGradient.m */; };
 		FB58AADE21B350CF00ADB277 /* GMUHeatmapTileLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FB58AA9821B350CE00ADB277 /* GMUHeatmapTileLayer.m */; };
@@ -86,7 +85,6 @@
 		FB35127421A9F99A00E465E6 /* Property.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Property.swift; sourceTree = "<group>"; };
 		FB35127621AA21D800E465E6 /* PropertyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTableViewCell.swift; sourceTree = "<group>"; };
 		FB38D77F218923DD00DE884A /* ColorSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSingleton.swift; sourceTree = "<group>"; };
-		FB3D4D6721A7282C00394854 /* ApiController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiController.swift; sourceTree = "<group>"; };
 		FB58AA9321B350CE00ADB277 /* GMUGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMUGradient.h; sourceTree = "<group>"; };
 		FB58AA9421B350CE00ADB277 /* GMUWeightedLatLng.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMUWeightedLatLng.m; sourceTree = "<group>"; };
 		FB58AA9521B350CE00ADB277 /* GMUHeatmapTileLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMUHeatmapTileLayer.h; sourceTree = "<group>"; };
@@ -393,6 +391,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		FBA5662721B41B7100027FD3 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		FBCB4592216FBD5E00089508 = {
 			isa = PBXGroup;
 			children = (
@@ -400,6 +405,7 @@
 				FBCB459C216FBD5F00089508 /* Products */,
 				D21FD0DB0B98D2F5A23C0BE3 /* Pods */,
 				56818594E7A84EDC0E53875D /* Frameworks */,
+				FBA5662721B41B7100027FD3 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -601,7 +607,6 @@
 				A934756C219DCE2600B28051 /* PropertyTableViewController.swift in Sources */,
 				FB58AAE521B350CF00ADB277 /* GMUFeature.m in Sources */,
 				FB58AADC21B350CF00ADB277 /* GMUWeightedLatLng.m in Sources */,
-				FB3D4D6821A7282C00394854 /* ApiController.swift in Sources */,
 				FB925BC421A7596E006BBE32 /* Response.swift in Sources */,
 				FB58AAF221B350CF00ADB277 /* GMUDefaultClusterIconGenerator.m in Sources */,
 				FB925BBD21A758AA006BBE32 /* Networking.swift in Sources */,
