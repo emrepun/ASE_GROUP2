@@ -26,9 +26,9 @@ matrix:
                   before_script:
                           - cd ASE_android
                           - ls
-                          - chmod +x ./gradlew
+                          - chmod +x gradlew
                   script:
-                          - ./gradlew build connectedCheck --stacktrace
+                          - gradlew build connectedCheck --stacktrace
 
                 - language: objective-c
                   os: osx
