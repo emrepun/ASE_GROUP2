@@ -28,7 +28,7 @@ matrix:
                           - ls
                           - chmod +x ../ASE_android/gradlew
                   script:
-                          - ../ASE_android/gradlew build connectedCheck --stacktrace
+                          - ../ASE_android/gradlew build ../ASE_android/app/connectedCheck --stacktrace
 
                 - language: objective-c
                   os: osx
