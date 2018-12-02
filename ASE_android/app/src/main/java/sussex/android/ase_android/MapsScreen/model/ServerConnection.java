@@ -29,7 +29,7 @@ public class ServerConnection implements MapsContract.Model {
     /**
      * server URL of our backend database server
      */
-    private String serverURL = "https://ab6a5144.ngrok.io/api/";
+    private String serverURL = "https://ase-group2.herokuapp.com/api/";
 
     /**
      * @param context Context for creating the Volley request queue
@@ -111,7 +111,6 @@ public class ServerConnection implements MapsContract.Model {
     public void postcodeJsonParse(final CallbackInfoInterface callback, String postcode) {
         mQueue.cancelAll("address");
         String url = serverURL+"addresses/"+postcode;
-        //String url = "https://api.myjson.com/bins/b9emq"; //temp json in case the link is down
         RequestQueue mQueue = Volley.newRequestQueue(context);
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
