@@ -40,6 +40,12 @@ android:
 
  - build-tools-$ANDROID_BUILD_TOOLS
 
+ - android-22
+
+ - android-28
+
+ - build-tools-28.0.3
+
  - android-$ANDROID_API
 
  - android-$EMULATOR_API_LEVEL
