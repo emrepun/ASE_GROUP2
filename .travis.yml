@@ -60,6 +60,14 @@ android:
 
  - sys-img-armeabi-v7a-addon-google_apis-google-22
 
+licenses:
+
+ - android-sdk-preview-license-.+
+
+ - android-sdk-license-.+
+
+ - google-gdk-license-.+
+
 before_install:
 
 
