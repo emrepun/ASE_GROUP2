@@ -2,7 +2,6 @@ package sussex.android.ase_android.MapsScreen.BottomSheet;
 
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
 import sussex.android.ase_android.MapsScreen.model.CallbackInfoInterface;
-import sussex.android.ase_android.MapsScreen.model.JSONparser;
 
 public class BottomSheetPresenter implements  BottomSheetContract.Presenter, CallbackInfoInterface {
     BottomSheetContract.View view;
@@ -13,7 +12,7 @@ public class BottomSheetPresenter implements  BottomSheetContract.Presenter, Cal
     public BottomSheetPresenter(BottomSheetContract.View view, MapsContract.Presenter mapsPresenter){
     this.view=view;
         this.mapsPresenter=mapsPresenter;
-        this.jsonParser=mapsPresenter.getJsonParser();
+        this.jsonParser=mapsPresenter.getServerConnectionHandler();
     }
 
     public void displayAddresses(String postcode){

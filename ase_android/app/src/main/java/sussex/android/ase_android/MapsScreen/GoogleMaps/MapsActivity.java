@@ -26,7 +26,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
-import com.google.maps.android.heatmaps.HeatmapTileProvider;
+import com.google.android.gms.maps.model.VisibleRegion;
 
 import sussex.android.ase_android.CustomInfoWindowAdapter;
 import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetContract;
@@ -77,7 +77,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * installed Google Play services and returned to the app.
      */
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {
 
         mMap = googleMap;
 
@@ -87,6 +87,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 MapStyleOptions.loadRawResourceStyle(
                         this, R.raw.style_json));
 
+        //set Listener for hiding and displaying the BottomSheet
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
@@ -103,6 +104,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(this));
 
+        //Set listener for notifying the presenter when the camera position changes
         final CameraPosition[] mPreviousCameraPosition = {null};
         mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
@@ -111,12 +113,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if(mPreviousCameraPosition[0] == null || !mPreviousCameraPosition[0].equals(position)) {
                     //position changed
                     mPreviousCameraPosition[0] = mMap.getCameraPosition();
-                    mapsPresenter.cameraPosChanged(mPreviousCameraPosition[0]);
-                }
+
+                    float radius_meter = calcVisibleRadius();
+
+                    mapsPresenter.cameraPosChanged(mPreviousCameraPosition[0].target,radius_meter);
+                    }
             }
         });
 
-
+        //zoom to the current location
         final LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         assert service != null;
@@ -133,6 +138,47 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         }
 
+    private float calcVisibleRadius() {
+        VisibleRegion visibleRegion = mMap.getProjection().getVisibleRegion();
+
+        LatLng farRight = visibleRegion.farRight; //top right
+        LatLng farLeft = visibleRegion.farLeft; //top left
+        LatLng nearRight = visibleRegion.nearRight; //bottom right
+        LatLng nearLeft = visibleRegion.nearLeft; //bottom left
+
+        float[] radiusWidth = new float[2];
+        Location.distanceBetween(
+                (farRight.latitude+nearRight.latitude)/2,
+                (farRight.longitude+nearRight.longitude)/2,
+                (farLeft.latitude+nearLeft.latitude)/2,
+                (farLeft.longitude+nearLeft.longitude)/2,
+                radiusWidth
+        );
+
+
+        float[] distanceHeight = new float[2];
+        Location.distanceBetween(
+                (farRight.latitude+nearRight.latitude)/2,
+                (farRight.longitude+nearRight.longitude)/2,
+                (farLeft.latitude+nearLeft.latitude)/2,
+                (farLeft.longitude+nearLeft.longitude)/2,
+                distanceHeight
+        );
+
+        float radius_meter;
+
+        if (radiusWidth[0]>distanceHeight[0]){
+            radius_meter = radiusWidth[0];
+        } else {
+            radius_meter = distanceHeight[0];
+        }
+
+        return radius_meter;
+    }
+
+    /**
+     * Asks for permission of location services
+     */
     public void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -144,6 +190,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    /**
+     * Callback for accepting/denying the location permission request
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -175,6 +224,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.clear();
     }
 
+    /**
+     * Adds the heatmap to the map
+     * @param options the TileOverlay options of the heatmap
+     * @return the added TileOverlayy
+     */
     public TileOverlay addTileOverlay(TileOverlayOptions options){
        return  mMap.addTileOverlay(options);
     }
