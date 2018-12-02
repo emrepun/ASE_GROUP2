@@ -24,12 +24,8 @@ matrix:
 
                           - google-gdk-license-.+
                   before_script:
-                          - cd ase_android
-                          - mv google-services.json ../
-                          - cd ..
-                          - mv google-service.json ASE_android
                           - cd ASE_android
-                          - ls
+                          - ls -la
                           - chmod +x ../ASE_android/gradlew
                   script:
                           - ./gradlew build connectedCheck --stacktrace
