@@ -57,7 +57,7 @@ android:
 before_install:
 
 
-- cd ASE_Android
+- cd ASE_android
 - chmod +x ./gradlew
 
 before_script:
