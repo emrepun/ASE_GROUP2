@@ -25,9 +25,11 @@ sector = connection.model("sector", sector.schema);
 module.exports.getAreas = async (lat, long, radius) => {
     lat = parseFloat(lat);
     long = parseFloat(long);
+    console.log(lat, long, Math.cos(lat));
     var latdiff = radius / 110.574;
-    var longdiff = 111.32 * Math.cos(lat);
+    var longdiff = 111.32 * Math.abs(Math.cos(lat));
     longdiff = radius / longdiff;
+    console.log(latdiff, longdiff);
     var data = await area.find({
         Latitude: { $gte: lat - latdiff / 2, $lte: lat + latdiff / 2 },
         Longitude: { $gte: long - longdiff / 2, $lte: long + longdiff / 2 }
@@ -46,7 +48,7 @@ exports.getDistricts = async (lat, long, radius) => {
     lat = parseFloat(lat);
     long = parseFloat(long);
     var latdiff = radius / 110.574;
-    var longdiff = 111.32 * Math.cos(lat);
+    var longdiff = 111.32 * Math.abs(Math.cos(lat));
     longdiff = radius / longdiff;
     var data = await district.find({
         Latitude: { $gte: lat - latdiff / 2, $lte: lat + latdiff / 2 },
@@ -67,7 +69,7 @@ exports.getSectors = async (lat, long, radius) => {
     lat = parseFloat(lat);
     long = parseFloat(long);
     var latdiff = radius / 110.574;
-    var longdiff = 111.32 * Math.cos(lat);
+    var longdiff = 111.32 * Math.abs(Math.cos(lat));
     longdiff = radius / longdiff;
     var data = await sector.find({
         Latitude: { $gte: lat - latdiff / 2, $lte: lat + latdiff / 2 },
