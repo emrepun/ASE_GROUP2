@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-var mongoose = require("mongoose").set("debug", true);
+var mongoose = require("mongoose");
 var dbCreds = require("../auth/dbCreds.js");
 
 const DATABASE = "postcodes";
