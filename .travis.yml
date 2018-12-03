@@ -70,7 +70,7 @@ matrix:
 
                 - language: objective-c
                   os: osx
-                  osx_image: xcode8.3
+                  osx_image: xcode9.4
                   xcode_project: ASE_iOS.xcodeproj
                   xcode_scheme: ASE_iOS
                   xcode_destination: platform=iOS Simulator,OS=10.3,name=iPhone XS Max
