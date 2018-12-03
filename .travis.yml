@@ -26,6 +26,7 @@ matrix:
                   before_script:
                           - cd ASE_android
                           - chmod +x ../ASE_android/gradlew
+                          - android list target
                   script:
                           - ./gradlew build connectedCheck --stacktrace
 
