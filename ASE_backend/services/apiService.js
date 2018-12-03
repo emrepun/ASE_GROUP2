@@ -34,29 +34,63 @@ var getAveragePrice = async function(postcode) {
 /**
  * Gets the postcode data for a point around a certain radius
  * Information is precomputed and stored in a DB, see dbService
+ * if radius is above a certain threshold, returns a lower 'resolution'
  * @param {number} lat - latitude
  * @param {number} long - longitude
  * @param {number} radius - radius in kilometers, can be decimal
  * @returns {Array} Array of postcode objects, with each a postcode, latitude and longitude properties
  */
 var getPricesAtAround = async function(lat, long, radius) {
-    var postcodes = await postcodeService.getPostcodesNearAround(
-        lat,
-        long,
-        radius
-    );
-    var asyncPrices = postcodes.map(postcode =>
-        getAveragePrice(postcode.Postcode)
-    );
-    var prices = await Promise.all(asyncPrices);
-    postcodes = postcodes.map((postcode, i) => {
-        return {
-            price: prices[i],
-            postcode: postcode.Postcode,
-            latitude: postcode.Latitude,
-            longitude: postcode.Longitude
-        };
-    });
+    var postcodes = [];
+    if (radius < 1 || radius == undefined) {
+        postcodes = await postcodeService.getPostcodesNearAround(
+            lat,
+            long,
+            radius
+        );
+        var asyncPrices = postcodes.map(postcode =>
+            getAveragePrice(postcode.Postcode)
+        );
+        var prices = await Promise.all(asyncPrices);
+        postcodes = postcodes.map((postcode, i) => {
+            return {
+                price: prices[i],
+                postcode: postcode.Postcode,
+                latitude: postcode.Latitude,
+                longitude: postcode.Longitude
+            };
+        });
+    } else if (radius > 90) {
+        postcodes = await dbService.getAreas(lat, long, radius);
+        postcodes = postcodes.map(postcode => {
+            return {
+                price: postcode.Average_price,
+                postcode: postcode._id,
+                latitude: postcode.Latitude + "",
+                longitude: postcode.Longitude + ""
+            };
+        });
+    } else if (radius > 40) {
+        postcodes = await dbService.getDistricts(lat, long, radius);
+        postcodes = postcodes.map(postcode => {
+            return {
+                price: postcode.Average_price,
+                postcode: postcode._id,
+                latitude: postcode.Latitude + "",
+                longitude: postcode.Longitude + ""
+            };
+        });
+    } else {
+        postcodes = await dbService.getSectors(lat, long, radius);
+        postcodes = postcodes.map(postcode => {
+            return {
+                price: postcode.Average_price,
+                postcode: postcode._id,
+                latitude: postcode.Latitude + "",
+                longitude: postcode.Longitude + ""
+            };
+        });
+    }
     return postcodes;
 };
 
