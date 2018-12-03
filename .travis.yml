@@ -11,8 +11,8 @@ cache:
 matrix:
         include:
 
-                - language: nodejs
-                - nodejs:
+                - language: node_js
+                - node_js:
                         - "iojs"
                         - "7"
                 - before_script:
