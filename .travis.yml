@@ -26,7 +26,9 @@ env:
 
  - ANDROID_BUILD_TOOLS=24.0.2
 
- - ANDROID_ABI=google_apis/armeabi-v7a
+ - ANDROID_ABI=armeabi-v7a
+
+ - ANDROID_TAG=google_apis
 
  - ADB_INSTALL_TIMEOUT=5 # minutes
  - secure: "kYQFW12wY9zzMNqtor4sTeE4k/877t0igpS/AaPon7MNr+ebqEkeg9z6L1sE+81bopDX+0K62AxO4mKVxOiGGGVU5JS1ZFWg/BhPyKCThm1tUzXCBs5s8AxWU9s9MudfTHgPLwsOhvpKogivA0ZXt5iEFrkv57A51qZFMQ0Irl8iAaMiwjzv+FRT26jCCBCKB5jlRwocwOB7wEujlUN289i5y9o/wcWhBmA5YY7y64hdlZEs/bmF7RXXFpsRzmpvcm9rbnffBfSgDXAmnM1U7S9BLNgxtEoXraXlVlejnkti8+7aBmAqbQTto69eLPJlnGZ917BQLuhPqdapMNvLOwGP/CUVkzAMYsIndQafJsleRTYIRTlH2I+/ZMmaCZVUE4dxO97j1Nrbbksqb5zTzxKVJjgF5FpgZoa8KZeKh5TvFzWP5ZON53UcKM34J2D9juV6iNt34yffYq5OPkCblDHPiL9SbK01fGYlgVhdO9w9O/D+ybdsPC32syHnQgNQTH7GZlIJdJzamv9dN4zB/Hqk3LlECMHXWdYxCP/2EnEIFWO9P0TPw+Fb2B0t7hi/8ksvd7O2PaK3JL9i39prR4ZGeNkrJ3EmmM4dOV8CVZpTLrx+FshHgEszkmkn/nuiMrEqdz/4LK0fRsPLXkr9RFd2HJGrW6ng/lPYkVBT60w="
@@ -52,7 +54,9 @@ android:
 
  - addon-google_apis-google-19 # google play services
 
- - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
+ - sys-img-armeabi-v7a-google_apis-25
+
+ - sys-img-armeabi-v7a-google_apis-25
 
    #- sys-img-armeabi-v7a-addon-google_apis-google-$EMULATOR_API_LEVEL
 
@@ -67,7 +71,6 @@ android:
 before_install:
 
 - mkdir "$ANDROID_HOME/licenses" || true
-
 - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
 - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
 - cd ASE_android
@@ -77,9 +80,7 @@ before_install:
 before_script:
 
 - android list targets
-
-- echo no | android create avd --force -n test -t android-25 --abi google_apis/armeabi-v7a
-
+- echo no | android create avd --force -n test -t "android-25" --abi $ANDROID_ABI --tag $ANDROID_TAG
 - emulator -avd test -no-skin -no-audio -no-window &
 
 - android-wait-for-emulator
