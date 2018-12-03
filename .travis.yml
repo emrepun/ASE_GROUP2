@@ -52,6 +52,6 @@ matrix:
                           - "iojs"
                           - "7"
                   before_script:
-                          - 
+                          - cd ASE_backend
                   script:
                           -  npm test
