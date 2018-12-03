@@ -25,7 +25,7 @@ matrix:
                           - google-gdk-license-.+
                   before_script:
                           - mv ASE_android/ tempdir/
-                          - mv ase_android/google-services.json tempdir/
+                          - mv ./ase_android/google-services.json tempdir/
                           - mv tempdir/ ASE_android/
                           - cd ASE_android
                           - ls -la
