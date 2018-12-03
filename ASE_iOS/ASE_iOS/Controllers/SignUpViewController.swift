@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FirebaseAuth
+//import FirebaseAuth
 
 class SignUpViewController: UIViewController {
 
@@ -30,17 +30,17 @@ class SignUpViewController: UIViewController {
     
     @IBAction func signUpButton(_ sender: UIButton) {
         
-        Auth.auth().createUser(withEmail: email.text!, password: password.text!) { (authResult, error) in
-            if error == nil {
-                self.performSegue(withIdentifier: "LogIn", sender: self)
-            }
-            else{
-                let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                
-                alertController.addAction(defaultAction)
-                self.present(alertController, animated: true, completion: nil)
-            }
-        }
+//        Auth.auth().createUser(withEmail: email.text!, password: password.text!) { (authResult, error) in
+//            if error == nil {
+//                self.performSegue(withIdentifier: "LogIn", sender: self)
+//            }
+//            else{
+//                let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+//                let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//                
+//                alertController.addAction(defaultAction)
+//                self.present(alertController, animated: true, completion: nil)
+//            }
+//        }
     }
 }

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FirebaseAuth
+//import FirebaseAuth
 
 class LogInViewController: UIViewController {
 
@@ -31,17 +31,17 @@ class LogInViewController: UIViewController {
     
     @IBAction func LogInButton(_ sender: UIButton) {
         
-        Auth.auth().signIn(withEmail: email.text!, password: password.text!) { (user, error) in
-            if error == nil{
-                self.performSegue(withIdentifier: "LogIn", sender: self)
-            }
-            else{
-                let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                
-                alertController.addAction(defaultAction)
-                self.present(alertController, animated: true, completion: nil)
-            }
-        }
+//        Auth.auth().signIn(withEmail: email.text!, password: password.text!) { (user, error) in
+//            if error == nil{
+//                self.performSegue(withIdentifier: "LogIn", sender: self)
+//            }
+//            else{
+//                let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+//                let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//                
+//                alertController.addAction(defaultAction)
+//                self.present(alertController, animated: true, completion: nil)
+//            }
+//        }
     }
 }

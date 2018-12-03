@@ -9,8 +9,8 @@
 import UIKit
 import CoreLocation
 import MapKit
-import FirebaseAuth
-import FirebaseDatabase
+//import FirebaseAuth
+//import FirebaseDatabase
 import GoogleMaps
 
 
@@ -113,23 +113,23 @@ class MapViewController: UIViewController {
     fileprivate func writeLocationData() {
         locationManager.startMonitoringSignificantLocationChanges()
         
-        let innerUser = Auth.auth().currentUser
+        //let innerUser = Auth.auth().currentUser
         let currentDate = getCurrentMillis()
-        let timeStamp = String(currentDate)
-        let ref = Database.database().reference().child("gpsdata").child(innerUser!.uid).child(timeStamp)
+        //let timeStamp = String(currentDate)
+        //let ref = Database.database().reference().child("gpsdata").child(innerUser!.uid).child(timeStamp)
 
-        let locationObject = [
-            "latitude": user.latitude,
-            "longitude": user.longitude
-        ] as [String: Any]
+        //let locationObject = [
+//            "latitude": user.latitude,
+//            "longitude": user.longitude
+        //] as [String: Any]
         
-        ref.setValue(locationObject) { (error, ref) in
-            if error == nil {
-                print("chill")
-            } else {
-                print("error")
-            }
-        }
+//        ref.setValue(locationObject) { (error, ref) in
+//            if error == nil {
+//                print("chill")
+//            } else {
+//                print("error")
+//            }
+//        }
         
         locationManager.stopMonitoringSignificantLocationChanges()
     }
