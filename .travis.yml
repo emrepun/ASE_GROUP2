@@ -24,10 +24,8 @@ matrix:
 
                           - google-gdk-license-.+
                   before_script:
-                          - GLOBIGNORE=google_maps_api.xml
-                          - find ./ase_android/app/ -name 'google-services.json' -exec mv -t ./ASE_android/app/ {} +
                           - find ./ase_android/app/src/ -name '*.*' -exec mv -t ./ASE_android/app/src/ {} +
-                          - unset GLOBIGNORE
+                          - find ./ase_android/app/ -name 'google-services.json' -exec mv -t ./ASE_android/app/ {} +
                           - cd ASE_android
                           - ls -la 
                           - chmod +x ../ASE_android/gradlew
