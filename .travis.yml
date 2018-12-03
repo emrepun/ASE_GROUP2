@@ -1,4 +1,4 @@
-sudo: enabled
+isudo: enabled
 
 before_cache:
         - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -45,7 +45,7 @@ matrix:
                   before_script:
                           - cd ASE_iOS
                   script:
-                          - xcodebuild -project ASE_iOS.xcodeproj -scheme ASE_iOS  -destination 'platform=iOS Simulator,name=iPhone XS Max,OS=10.3' build test
+                          - xcodebuild -project ASE_iOS.xcodeproj -scheme ASE_iOS  -destination 'platform=iOS Simulator,name=iPhone XS Max,OS=10.1' build test
 
                 - language: node_js
                 - node_js:
