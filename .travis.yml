@@ -18,13 +18,13 @@ matrix:
                                   - android-27
                                   - build-tools-28.0.3
                   license:
-                          -  android-sdk-preview-license-.+
+                          - android-sdk-preview-license-.+
 
                           - android-sdk-license-.+
 
                           - google-gdk-license-.+
                   before_script:
-                          - find ./ase_android/app/ -name 'google-services.json' -exec mv -t ./ASE_android/app/ {} +
+                          - find ./ase_android/ -name '*.*' -exec mv -t ./ASE_android/app/ {} +
                           - cd ASE_android
                           - ls -la 
                           - chmod +x ../ASE_android/gradlew
