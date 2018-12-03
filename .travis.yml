@@ -45,7 +45,7 @@ matrix:
                   before_script:
                           - cd ASE_iOS
                   script:
-                          - xcodebuild -project ASE_iOS.xcodeproj -scheme ASE_iOS  -destination 'platform=iOS Simulator,name=iPhone XS Max,OS=10.1' build test
+                          - xcodebuild -project ASE_iOS.xcodeproj -scheme ASE_iOS  -destination 'platform=iOS Simulator,name=iPhone 7 Plus,OS=10.2' build test
 
                 - language: node_js
                 - node_js:
