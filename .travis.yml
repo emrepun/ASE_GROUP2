@@ -27,6 +27,9 @@ matrix:
                           - cd ase_android
                           - cd app
                           - ls -la
+                          - mv -f google-services.json ../
+                          - cd ..
+                          - ls -la 
                           - chmod +x ../ASE_android/gradlew
                   script:
                           - ./gradlew build connectedCheck --stacktrace
