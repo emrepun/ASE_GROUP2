@@ -1,0 +1,50 @@
+sudo: enabled
+
+before_cache:
+        - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+        directories:
+                - $HOME/.gradle/caches/
+                - $HOME/.gradle/wrapper/
+
+matrix:
+        include:
+                - language: android
+                  jdk: oraclejdk8
+                  android:
+                          components:
+                                  - tools
+                                  - android-27
+                                  - build-tools-28.0.3
+                  license:
+                          - android-sdk-preview-license-.+
+
+                          - android-sdk-license-.+
+
+                          - google-gdk-license-.+
+                  before_script:
+                          - cd ASE_android
+                          - chmod +x ../ASE_android/gradlew
+                  script:
+                          - ./gradlew build connectedCheck --stacktrace
+
+                - language: objective-c
+                  os: osx
+                  osx_image: xcode8.3
+                  xcode_project: ASE_iOS.xcodeproj
+                  xcode_scheme: ASE_iOS
+                  xcode_destination: platform=iOS Simulator,OS=10.3,name=iPhone XS Max
+                  before_script:
+                          - cd ASE_iOS
+                  script:
+                          - xcodebuild -project ASE_iOS.xcodeproj -scheme ASE_iOS  -destination 'platform=iOS Simulator,name=iPhone 7 Plus,OS=10.2' build test
+
+                - language: node_js
+                - node_js:
+                          - "iojs"
+                          - "7"
+                  before_script:
+                          - cd ASE_backend
+                  script:
+                          -  npm test
