@@ -103,8 +103,7 @@ public class ServerConnectionTest {
         scon.postcodeJsonParse(new CallbackInfoInterface() {
             @Override
             public void displayInfo(String json, String price) {
-                assertEquals(price, 14);
-                assertEquals(json.substring(1,10), "BN2 0JH");
+                assertEquals(price, "68000");
                 lock.countDown();
             }
         }, "BN2 0JH");
