@@ -19,46 +19,13 @@ matrix:
                                   - android-22
                                   - build-tools-28.0.3
                                   - sys-img-x86-android-27
-                                  - sys-img-armeabi-v7a-android-17
+                                  - sys-img-armeabi-v7a-android-22
                   license:
                           - android-sdk-preview-license-.+
 
                           - android-sdk-license-.+
 
                           - google-gdk-license-.+
-
-                  env:
-                          - SYS=25 ABI="google_apis;arm64-v8a"
-                          - SYS=25 ABI="google_apis;armeabi-v7a"
-                          - SYS=24 ABI="google_apis;arm64-v8a"
-                          - SYS=24 ABI="google_apis;armeabi-v7a"
-                          - SYS=23 ABI="google_apis;armeabi-v7a"
-
-                          - SYS=22 ABI="default;x86" # demo failure due to no accelerator on travis
-                          - SYS=22 ABI="default;x86_64" # demo failure due to no accelerator on travis
-                          - SYS=22 ABI="google_apis;x86" # demo failure due to no accelerator on travis
-                          - SYS=22 ABI="google_apis;x86_64" # demo failure due to no accelerator on travis
-                          - SYS=22 ABI="google_apis;armeabi-v7a"
-                          - SYS=22 ABI="default;armeabi-v7a"
-
-                          - SYS=21 ABI="default;armeabi-v7a"
-                          - SYS=20 ABI="default;armeabi-v7a"
-                          - SYS=19 ABI="default;armeabi-v7a"
-                          - SYS=18 ABI="default;armeabi-v7a"
-                          - SYS=17 ABI="default;armeabi-v7a"
-                          - SYS=16 ABI="default;armeabi-v7a"
-                          - SYS=15 ABI="default;armeabi-v7a"
-                          - SYS=14 ABI="default;armeabi-v7a"
-                          - SYS=10 ABI="default;armeabi-v7a"
-
-                  matrix:
-                          allow_failures:
-                                   - env: SYS=22 ABI="default;x86"
-                                   - env: SYS=22 ABI="default;x86_64"
-                                   - env: SYS=22 ABI="google_apis;x86"
-                                   - env: SYS=22 ABI="google_apis;x86_64"
-                                   - env: SYS=20 ABI="default;armeabi-v7a"
-                                   - env: SYS=14 ABI="default;armeabi-v7a"
                   before_script:
                           - echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-22,sys-img-x86_64-android-22
                           - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
