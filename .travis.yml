@@ -28,7 +28,7 @@ matrix:
                           - cd app
                           - ls -la
                           - mv -f google-services.json ../../../
-                          - cd ..
+                          - cd ../../..
                           - ls -la 
                           - chmod +x ../ASE_android/gradlew
                   script:
