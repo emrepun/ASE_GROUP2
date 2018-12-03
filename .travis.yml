@@ -78,4 +78,4 @@ matrix:
                           - cd ASE_iOS
                           - pod install
                   script:
-                          - xcodebuild clean test -project ASE_iOS.xcodeproj -scheme ASE_iOS -destination "platform=iOS Simulator,OS=9,name=iPhone 7" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO -quiet
+                          - xcodebuild clean test -project ASE_iOS.xcodeproj -scheme ASE_iOS -destination "platform=iOS Simulator,OS=9,name=iPhone 6" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO -quiet
