@@ -27,19 +27,14 @@ matrix:
 
                           - google-gdk-license-.+
                   before_script:
-                          - echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-22,sys-img-x86_64-android-22
-                          - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
-                          - emulator -avd test -no-audio -no-window &
-                          - android-wait-for-emulator
-                          - adb shell input keyevent 82 &
                           - cd ASE_android
                           - chmod +x ../ASE_android/gradlew
                   script:
-                          - ./gradlew build connectedCheck --stacktrace --debug --info
+                          - ./gradlew build connectedCheck --stacktrace
 
                 - language: objective-c
                   os: osx
-                  osx_image: xcode10.0
+                  osx_image: xcode9.4
                   xcode_project: ASE_iOS.xcodeproj
                   xcode_scheme: ASE_iOS
                   xcode_destination: platform=iOS Simulator,OS=10.3,name=iPhone 7 Plus
