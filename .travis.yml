@@ -77,4 +77,4 @@ matrix:
                   before_script:
                           - cd ASE_iOS
                   script:
-                          - xcodebuild clean test -project ASE_iOS.xcodeproj -scheme ASE_iOS -destination "platform=iOS Simulator,name=iPhone 7,OS=10.3" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO -quiet
+                          - xcodebuild clean test -project ASE_iOS.xcodeproj -scheme ASE_iOS -destination "platform:iOS Simulator, id:F60B87EC-8969-41A7-90ED-D0826ECC32DB, OS:10.3.1, name:iPhone 7 Plus" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO -quiet
