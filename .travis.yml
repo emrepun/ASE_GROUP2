@@ -106,7 +106,7 @@ matrix:
                   osx_image: xcode8.3
                   xcode_project: ASE_iOS.xcodeproj
                   xcode_scheme: ASE_iOS
-                  xcode_destination: platform=iOS Simulator,OS=10.3,name=iPhone XS Max
+                  xcode_destination: platform=iOS Simulator,OS=10.3,name=iPhone 7 Plus
                   before_script:
                           - cd ASE_iOS
                   script:
