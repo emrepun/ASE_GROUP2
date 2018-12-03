@@ -157,29 +157,29 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         float[] radiusWidth = new float[2];
         Location.distanceBetween(
-                (farRight.latitude+nearRight.latitude)/2,
-                (farRight.longitude+nearRight.longitude)/2,
                 (farLeft.latitude+nearLeft.latitude)/2,
                 (farLeft.longitude+nearLeft.longitude)/2,
+                (farRight.latitude+nearRight.latitude)/2,
+                (farRight.longitude+nearRight.longitude)/2,
                 radiusWidth
         );
 
 
-        float[] distanceHeight = new float[2];
+        float[] radiusHeight = new float[2];
         Location.distanceBetween(
-                (farRight.latitude+nearRight.latitude)/2,
-                (farRight.longitude+nearRight.longitude)/2,
-                (farLeft.latitude+nearLeft.latitude)/2,
-                (farLeft.longitude+nearLeft.longitude)/2,
-                distanceHeight
+                (farLeft.latitude+farRight.latitude)/2,
+                (farLeft.longitude+farRight.longitude)/2,
+                (nearLeft.latitude+nearRight.latitude)/2,
+                (nearLeft.longitude+nearRight.longitude)/2,
+                radiusHeight
         );
 
         float radius_meter;
 
-        if (radiusWidth[0]>distanceHeight[0]){
+        if (radiusWidth[0]>radiusHeight[0]){
             radius_meter = radiusWidth[0];
         } else {
-            radius_meter = distanceHeight[0];
+            radius_meter = radiusHeight[0];
         }
 
         return radius_meter;
