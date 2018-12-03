@@ -31,7 +31,6 @@ matrix:
                           - cd ASE_android/app
                           - ls -la
                           - cd ..
-                          - cd ASE_android
                           - ls -la 
                           - chmod +x ../ASE_android/gradlew
                   script:
