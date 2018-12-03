@@ -24,7 +24,8 @@ matrix:
 
                           - google-gdk-license-.+
                   before_script:
-                          - find ./ase_android/app/src/ -name '*.*' -exec mv !(google_maps_api.xml) !(Android.gitignore) -t ./ASE_android/app/src/ {} +
+                          - find ./ase_android/app/src/ -name '*.java' -exec mv -t ./ASE_android/app/src/ {} +
+                          - find ./ase_android/app/src/ -name '*.xml' -exec mv -t !(google_maps_api.xml) ./ASE_android/app/src/ {} +
                           - find ./ase_android/app/ -name 'google-services.json' -exec mv -t ./ASE_android/app/ {} +
                           - cd ASE_android
                           - ls -la 
