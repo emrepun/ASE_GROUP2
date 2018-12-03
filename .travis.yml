@@ -26,16 +26,15 @@ matrix:
                   before_script:
                           - cd ASE_android
                           - chmod +x ../ASE_android/gradlew
-                          - android list target
                   script:
                           - ./gradlew build connectedCheck --stacktrace
 
                 - language: objective-c
                   os: osx
-                  osx_image: xcode10.0
+                  osx_image: xcode8.3
                   xcode_project: ASE_iOS.xcodeproj
                   xcode_scheme: ASE_iOS
-                  xcode_destination: platform=iOS Simulator,OS=10.3,name=iPhone 7 Plus
+                  xcode_destination: platform=iOS Simulator,OS=10.3,name=iPhone XS Max
                   before_script:
                           - cd ASE_iOS
                   script:
@@ -49,3 +48,4 @@ matrix:
                           - cd ASE_backend
                   script:
                           -  npm test
+
