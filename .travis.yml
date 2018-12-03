@@ -25,6 +25,7 @@ matrix:
                           - google-gdk-license-.+
                   before_script:
                           - cd ASE_android
+                          - cd app
                           - ls -la
                           - chmod +x ../ASE_android/gradlew
                   script:
