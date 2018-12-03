@@ -18,8 +18,6 @@ matrix:
                                   - android-27
                                   - android-22
                                   - build-tools-28.0.3
-                                  - sys-img-x86-android-27
-                                  - sys-img-armeabi-v7a-android-22
                   license:
                           - android-sdk-preview-license-.+
 
