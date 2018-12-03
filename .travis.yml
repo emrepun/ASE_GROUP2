@@ -1,0 +1,10 @@
+sudo: enabled
+language: node_js
+node_js:
+        - "iojs"
+        - "7"
+before_script:
+        - cd ASE_backend
+script:
+        - npm test
+
