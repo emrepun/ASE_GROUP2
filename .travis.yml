@@ -18,7 +18,6 @@ matrix:
                 - before_script:
                         - cd ASE_backend
                 - script:
-                        - npm start
                         - npm test
 
                 - language: android
