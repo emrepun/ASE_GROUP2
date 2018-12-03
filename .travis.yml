@@ -1,5 +1,13 @@
 sudo: enabled
 
+before_cache:
+        - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+        directories:
+                - $HOME/.gradle/caches/
+                - $HOME/.gradle/wrapper/
+
 matrix:
         include:
                 - language: node_js
@@ -87,3 +95,15 @@ matrix:
                   script:
 
                   - ./gradlew clean build connectedCheck --stacktrace
+
+                  - language: objective-c
+                    os: osx
+                    osx_image: xcode8.3
+                    xcode_project: ASE_iOS.xcodeproj
+                    xcode_scheme: ASE_iOS
+                    xcode_destination: platform=iOS Simulator,OS=10.3,name=iPhone XS Max
+                    before_script:
+                          - cd ASE_iOS
+                    script:
+                          - xcodebuild -project ASE_iOS.xcodeproj -scheme ASE_iOS  -destination 'platform=iOS Simulator,name=iPHone XS Max,OS=10.3' build test
+
