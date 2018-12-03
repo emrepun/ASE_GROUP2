@@ -73,5 +73,5 @@ matrix:
                   before_script:
                           - cd ASE_iOS
                   script:
-                          - xcodebuild -project ASE_iOS.xcworkspace -scheme ASE_iOS  -destination 'platform=iOS Simulator,name=iPHone XS Max,OS=10.3' build test
+                          - xcodebuild -workspace ASE_iOS.xcworkspace -scheme ASE_iOS  -destination 'platform=iOS Simulator,name=iPHone XS Max,OS=10.3' build test
 
