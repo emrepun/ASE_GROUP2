@@ -4,7 +4,7 @@
     "description": "Backend for ASE Task 3",
     "main": "server.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "./node_modules/mocha/bin/mocha",
         "start": "nodemon server.js"
     },
     "repository": {
@@ -19,12 +19,16 @@
     "homepage": "https://github.com/emrepun/ASE_GROUP2#readme",
     "dependencies": {
         "body-parser": "^1.18.3",
+        "chai": "^4.2.0",
         "csvtojson": "^2.0.8",
         "express": "^4.16.4",
+        "mocha": "^5.2.0",
         "mongoose": "5.3.13",
         "mongoose-double": "0.0.1",
+        "node-mocks-http": "^1.7.3",
+        "nodemon": "^1.18.7",
         "request": "^2.88.0",
         "request-promise-native": "^1.0.5",
-        "nodemon": "^1.18.7"
+        "superagent": "^4.0.0"
     }
 }
