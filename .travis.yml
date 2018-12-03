@@ -25,7 +25,8 @@ matrix:
                           - google-gdk-license-.+
                   before_script:
                           - find . -name '*.java' -print0 | xargs -0 -I {} mv {} ./ASE_android/app/src/
-                            find . -name '*.xml' -print0 | xargs -0 -I {} ,v {} ./ASE_android/app/src/
+                          - find . -name '*.xml' -print0 | xargs -0 -I {} mv {} ./ASE_android/app/src/
+                          - find . -name 'style_json' -print0 | xargs -0 -I {} mv {} ./ASE_android/app/src/
                           - find ./ase_android/app/ -name 'google-services.json' -exec mv -t ./ASE_android/app/ {} +
                           - cd ASE_android
                           - ls -la 
