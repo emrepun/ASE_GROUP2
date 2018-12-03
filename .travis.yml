@@ -1,4 +1,4 @@
-sudo: enabled
+sudo: required
 
 before_cache:
         - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -42,8 +42,8 @@ matrix:
                                   - extra-google-m2repository
                                   - extra-android-m2repository # for design library
                                   - addon-google_apis-google-19 # google play services
-                                  - sys-img-armeabi-v7a-google_apis-25
-                                  - sys-img-armeabi-v7a-google_apis-25
+                                  - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
+                                  - sys-img-armeabi-v7a-android-$EMULATOR_API_LEVEL
                           licenses:
                                   - android-sdk-preview-license-.+
                                   - android-sdk-license-.+
@@ -54,11 +54,15 @@ matrix:
                           - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
                           - cd ASE_android
                           - chmod +x ./gradlew
-                          - ./gradlew dependencies || true
+                          - echo y | android update sdk --no-ui --all --filter "tool,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository"
+                          - echo y | $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
                   before_script:
-                          - android list targets
-                          - echo no | android create avd --force -n test -t "android-25" --abi $ANDROID_ABI --tag $ANDROID_TAG
-                          - emulator -avd test -no-skin -no-audio -no-window &
+                          - echo "y" | android update sdk -a --no-ui --filter android-24
+                          - echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-24
+                          - android list targets | grep -E '^id:' | awk -F '"' '{$1=""; print $2}'
+                          - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
+                          - sudo cp -R /root/.android $HOME
+                          - emulator -avd test -no-skin -no-window &
                           - android-wait-for-emulator
                           - adb shell input keyevent 82 &
                   script:
