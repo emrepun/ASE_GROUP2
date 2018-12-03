@@ -93,18 +93,17 @@ matrix:
                   - adb shell input keyevent 82 &
 
                   script:
-
                         - ./gradlew clean build connectedCheck --stacktrace
 
 
-                  - language: objective-c
-                    os: osx
-                    osx_image: xcode8.3
-                    xcode_project: ASE_iOS.xcodeproj
-                    xcode_scheme: ASE_iOS
-                    xcode_destination: platform=iOS Simulator,OS=10.3,name=iPhone XS Max
-                    before_script:
+                - language: objective-c
+                  os: osx
+                  osx_image: xcode8.3
+                  xcode_project: ASE_iOS.xcodeproj
+                  xcode_scheme: ASE_iOS
+                  xcode_destination: platform=iOS Simulator,OS=10.3,name=iPhone XS Max
+                  before_script:
                           - cd ASE_iOS
-                    script:
+                  script:
                           - xcodebuild -project ASE_iOS.xcodeproj -scheme ASE_iOS  -destination 'platform=iOS Simulator,name=iPHone XS Max,OS=10.3' build test
 
