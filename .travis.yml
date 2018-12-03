@@ -1,0 +1,9 @@
+sudo: enabled
+language: node_js
+node_js:
+        - "7"
+before_script:
+        - cd ASE_backend
+script:
+        - npm install
+        - npm test
