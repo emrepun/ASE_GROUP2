@@ -94,7 +94,8 @@ matrix:
 
                   script:
 
-                  - ./gradlew clean build connectedCheck --stacktrace
+                        - ./gradlew clean build connectedCheck --stacktrace
+
 
                   - language: objective-c
                     os: osx
