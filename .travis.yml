@@ -80,7 +80,7 @@ matrix:
                           - brew update
                           - brew install xctool
                   script:
-                          - xctool -project ASE_iOS.xcodeproj -scheme ASE_iOS -sk iphonesimulator ONLY_ACTIVE_ARCH=NO
+                          - xctool -project ASE_iOS.xcodeproj -scheme ASE_iOS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
                           - xctool test -project ASE_iOS.xcodeproj -scheme ASE_iOS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
                           #- xcodebuild clean test -project ASE_iOS.xcodeproj -scheme ASE_iOS -destination "platform=iOS Simulator,OS=10.1,name=iPhone 7" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO -quiet
 
