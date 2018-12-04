@@ -72,7 +72,6 @@ matrix:
                   os: osx
                   osx_image: xcode10.1
                   xcode_project: ASE_iOS.xcodeproj
-                  xcode_scheme: ASE_iOS
                   before_script:
                           - cd ASE_iOS
                           - pod repo update
