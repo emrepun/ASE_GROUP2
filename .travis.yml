@@ -73,7 +73,6 @@ matrix:
                   osx_image: xcode9.4
                   xcode_project: ASE_iOS.xcodeproj
                   xcode_scheme: ASE_iOS
-                  xcode_destination: platform=iOS Simulator,OS=10.3,name=iPhone XS Max
                   before_script:
                           - cd ASE_iOS
                           - pod repo update
