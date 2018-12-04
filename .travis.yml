@@ -70,7 +70,7 @@ matrix:
                   
                 - language: objective-c
                   os: osx
-                  osx_image: xcode9.4
+                  osx_image: xcode10
                   xcode_project: ASE_iOS.xcodeproj
                   xcode_scheme: ASE_iOS
                   before_script:
