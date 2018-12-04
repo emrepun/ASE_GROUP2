@@ -80,7 +80,7 @@ matrix:
                           - brew install xctool
                   script:
                           xcodebuild \
-                          -project ASE_iOS.xcodeproj \
+                          -workspace ASE_iOS.xcworkspace \
                           -sdk iphonesimulator
                           -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' \
                           test
