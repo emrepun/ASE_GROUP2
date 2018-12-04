@@ -67,7 +67,7 @@ matrix:
                           - adb shell input keyevent 82 &
                   script:
                           - ./gradlew clean build connectedCheck --stacktrace
-
+                  
                 - language: objective-c
                   os: osx
                   osx_image: xcode9.4
