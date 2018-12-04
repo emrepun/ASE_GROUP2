@@ -77,6 +77,9 @@ matrix:
                           - cd ASE_iOS
                           - pod repo update
                           - pod install
+                          - brew update
+                          - brew install xctool
                   script:
-                          - xcodebuild clean test -project ASE_iOS.xcodeproj -scheme ASE_iOS -destination "platform=iOS Simulator,OS=10.1,name=iPhone 7" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO -quiet
+                          - xctool test -project ASE_iOS.xcodeproj -scheme ASE_iOS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+                          #- xcodebuild clean test -project ASE_iOS.xcodeproj -scheme ASE_iOS -destination "platform=iOS Simulator,OS=10.1,name=iPhone 7" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO -quiet
 
