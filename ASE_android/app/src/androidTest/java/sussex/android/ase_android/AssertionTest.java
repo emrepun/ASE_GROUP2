@@ -30,6 +30,19 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class AssertionTest {
+    @Before
+    public void unlockScreen() {
+        final CategorySelectionActivity activity = mActivityRule.getActivity();
+        Runnable wakeUpDevice = new Runnable() {
+            public void run() {
+                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            }
+        };
+        activity.runOnUiThread(wakeUpDevice);
+    }
+
     @Rule
     public ActivityTestRule<MainActivity> mapsActivityActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 

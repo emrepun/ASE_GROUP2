@@ -17,6 +17,20 @@ import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 public class InstrumentedTest {
+
+    @Before
+    public void unlockScreen() {
+        final CategorySelectionActivity activity = mActivityRule.getActivity();
+        Runnable wakeUpDevice = new Runnable() {
+            public void run() {
+                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            }
+        };
+        activity.runOnUiThread(wakeUpDevice);
+    }
+
     @Rule
     public ActivityTestRule<MainActivity> mapsActivityActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
