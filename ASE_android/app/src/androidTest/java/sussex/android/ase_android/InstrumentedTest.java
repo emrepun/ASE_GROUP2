@@ -9,6 +9,7 @@ import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
+import android.view.WindowManager;
 
 import org.junit.Rule;
 import org.junit.Test;

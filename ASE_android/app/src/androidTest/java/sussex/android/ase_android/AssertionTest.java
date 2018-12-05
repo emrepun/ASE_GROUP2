@@ -12,6 +12,7 @@ import android.support.test.uiautomator.UiSelector;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.WindowManager;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
