@@ -34,7 +34,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class AssertionTest {
     @Before
     public void unlockScreen() {
-        final MapsActivity activity = mapsActivityActivityTestRule.getActivity();
+        final MainActivity activity = mapsActivityActivityTestRule.getActivity();
         Runnable wakeUpDevice = new Runnable() {
             public void run() {
                 activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
