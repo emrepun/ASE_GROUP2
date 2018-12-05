@@ -13,6 +13,7 @@ import android.view.WindowManager;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.Before
 import org.junit.runner.RunWith;
 
 
@@ -21,7 +22,7 @@ public class InstrumentedTest {
 
     @Before
     public void unlockScreen() {
-        final CategorySelectionActivity activity = mActivityRule.getActivity();
+        final MapsActivity activity = mapsActivityActivityTestRule.getActivity();
         Runnable wakeUpDevice = new Runnable() {
             public void run() {
                 activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |

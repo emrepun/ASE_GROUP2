@@ -21,6 +21,7 @@ import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -33,7 +34,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class AssertionTest {
     @Before
     public void unlockScreen() {
-        final CategorySelectionActivity activity = mActivityRule.getActivity();
+        final MapsActivity activity = mapsActivityActivityTestRule.getActivity();
         Runnable wakeUpDevice = new Runnable() {
             public void run() {
                 activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
