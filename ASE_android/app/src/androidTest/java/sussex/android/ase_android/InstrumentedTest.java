@@ -13,7 +13,7 @@ import android.view.WindowManager;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.Before
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 
