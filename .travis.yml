@@ -33,16 +33,16 @@ matrix:
                         - npm install
                         - npm test
                   after_success:
-                          - docker login -u $DOCKER_USER -p $DOCKER_PASS
-                          - |
-                            if [ $TRAVIS_BRANCH == "master" ];
-                            then export DOCKER_BRANCH = master;
-                            elif [ $TRAVIS_BRANCH == "development" ];
-                            then export DOCKER_BRANCH=development;
-                            else export DOCKER_BRANCH=branch;
-                            fi
-                          - docker build -t asegroup1/backend-$DOCKER_BRANCH:latest .
-                          - docker push asegroup1/backend-$DOCKER_BRANCH:latest
+                          # - docker login -u $DOCKER_USER -p $DOCKER_PASS
+                          #- |
+                          # if [ $TRAVIS_BRANCH == "master" ];
+                          # then export DOCKER_BRANCH = master;
+                          # elif [ $TRAVIS_BRANCH == "development" ];
+                          # then export DOCKER_BRANCH=development;
+                          # else export DOCKER_BRANCH=branch;
+                          # fi
+                          #- docker build -t asegroup1/backend-$DOCKER_BRANCH:latest .
+                          #- docker push asegroup1/backend-$DOCKER_BRANCH:latest
 
 
                 - language: android
