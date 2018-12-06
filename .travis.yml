@@ -38,6 +38,7 @@ matrix:
                                   on: master
                                   app: ase-group2
                                   run:
+                                          - sleep
                                           - "rake db:migrate"
                                           - restart
                                           - "rake cleanup"
@@ -119,4 +120,14 @@ matrix:
                   after_script:
                           #- ./cc-test-reporter -p ASE_iOS after-build --exit-code $TRAVIS_TEST_RESULT
 
+deploy:
+        provider: heroku
+        api-key: 7a669883-840c-4750-b1e4-c850da0f0f2e
+        on: master
+        app: ase-group2
+        run:
+                - sleep
+                - "rake db:migrate"
+                - restart
+                - "rake cleanup"
 
