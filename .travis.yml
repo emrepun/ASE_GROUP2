@@ -27,7 +27,7 @@ matrix:
                         - cd ASE_backend
                         - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
                         - chmod +x ./cc-test-reporter
-                        - ./cc-test-reporter before-build
+                        - ./cc-test-reporter -p ASE_backend before-build
                   script:
                         - npm install
                         - npm test
@@ -93,7 +93,7 @@ matrix:
                   script:
                           - ./gradlew clean build connectedCheck --stacktrace
                   after_script:
-                          - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+                          - ./cc-test-reporter -p ASE_android after-build --exit-code $TRAVIS_TEST_RESULT
                   
                 - language: swift
                   os: osx
@@ -116,5 +116,5 @@ matrix:
                           #xcodebuild -workspace ASE_iOS.xcworkspace -scheme ASE_iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' test
                           #- xcodebuild clean test -project ASE_iOS.xcodeproj -scheme ASE_iOS -destination "platform=iOS Simulator,OS=10.1,name=iPhone 7" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO -quiet
                   after_script:
-                          - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+                          - ./cc-test-reporter -p ASE_iOS after-build --exit-code $TRAVIS_TEST_RESULT
                           
