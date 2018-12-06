@@ -16,7 +16,11 @@ env:
                 - ANDROID_ABI=armeabi-v7a
                 - ANDROID_TAG=google_apis
                 - ADB_INSTALL_TIMEOUT=5
+                - CC_TEST_REPORTER_ID=03239df105a5a57945b742180970c6fc4c098b756d7d43059fa14aeea332ce30
 
+before_script:
+        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        - chmod +x ./cc-test-reporter
 
 matrix:
         include:
@@ -28,6 +32,17 @@ matrix:
                   script:
                         - npm install
                         - npm test
+                  after_success:
+                          - docker login -u $DOCKER_USER -p $DOCKER_PASS
+                          - |
+                            if [ $TRAVIS_BRANCH == "master" ];
+                            then export DOCKER_BRANCH = master;
+                            elif [ $TRAVIS_BRANCH == "development" ];
+                            then export DOCKER_BRANCH=development;
+                            else export DOCKER_BRANCH=branch;
+                            fi
+                          - docker build -t asegroup1/backend-$DOCKER_BRANCH:latest .
+                          - docker push asegroup1/backend-$DOCKER_BRANCH:latest
 
 
                 - language: android
@@ -91,4 +106,8 @@ matrix:
                           #- xcodebuild test -workspace ASE_iOS.xcworkspace -scheme ASE_iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7,OS=12.0' ONLY_ACTIVE_ARCH=NO
                           #xcodebuild -workspace ASE_iOS.xcworkspace -scheme ASE_iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' test
                           #- xcodebuild clean test -project ASE_iOS.xcodeproj -scheme ASE_iOS -destination "platform=iOS Simulator,OS=10.1,name=iPhone 7" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO -quiet
+                          
 
+after_script:
+        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+                          
