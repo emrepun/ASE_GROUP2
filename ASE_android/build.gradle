@@ -27,9 +27,137 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+ 
+Log In Sign Up
+By using our site, you acknowledge that you have read and understand our Cookie Policy, Privacy Policy, and our Terms of Service.
+
+Home
+PUBLIC
+Stack Overflow
+Tags
+Users
+Jobs
+Teams
+Q&A for work
+Learn More
+ 
+Gradle: How to Display Test Results in the Console in Real Time?
+Ask Question
+up vote
+157
+down vote
+favorite
+42
+I would like to see test results ( system.out/err, log messages from components being tested ) as they run in the same console I run:
+
+gradle test
+And not wait until tests are done to look at the test reports ( that are only generated when tests are completed, so I can't "tail -f" anything while tests are running )
+
+testing console gradle
+shareimprove this question
+edited Dec 21 '15 at 13:27
+
+Grzegorz Żur
+30k107580
+asked Oct 18 '10 at 21:53
+
+tolitius
+16.9k45869
+add a comment
+12 Answers
+active oldest votes
+up vote
+112
+down vote
+accepted
+You could run Gradle with INFO logging level on the command line. It'll show you the result of each test while they are running. Downside is that you will get far more output for other tasks also.
+
+gradle test -i
+shareimprove this answer
+answered Mar 19 '11 at 14:01
+
+Benjamin Muschko
+22.5k95377
+11
+With 1.0-milestone 6 the Gradle DSL now let's you configure that directly using testLogging.showStandardStreams = true within the test closure. – Benjamin Muschko Nov 23 '11 at 12:32
+4
+This doesn't work in gradle 1.11. I get a lot of debug output, but not the individual test results. – David Moles Apr 24 '14 at 23:12
+18
+That -i will throw a bunch of irrelevant infos on the terminal. – Thuy Trinh Dec 11 '15 at 13:53
+6
+In addition to a lot of useless output, nothing is displayed for a tests that pass and generate no output. – toolbear Oct 8 '16 at 0:37
+You can use grep to filter out the thousands of unwanted lines. See stackoverflow.com/questions/3963708/… – Mr-IDE Oct 20 at 18:45
+add a comment
+
+up vote
+124
+down vote
+You can add a Groovy closure inside your build.gradle file that does the logging for you:
+
 test {
-    reports {
-        junitXml.enabled = true
-        html.enabled = true
-    }               
+    afterTest { desc, result -> 
+        logger.quiet "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
+    }
+}
+On your console it then reads like this:
+
+:compileJava UP-TO-DATE
+:compileGroovy
+:processResources
+:classes
+:jar
+:assemble
+:compileTestJava
+:compileTestGroovy
+:processTestResources
+:testClasses
+:test
+Executing test maturesShouldBeCharged11DollarsForDefaultMovie [movietickets.MovieTicketsTests] with result: SUCCESS
+Executing test studentsShouldBeCharged8DollarsForDefaultMovie [movietickets.MovieTicketsTests] with result: SUCCESS
+Executing test seniorsShouldBeCharged6DollarsForDefaultMovie [movietickets.MovieTicketsTests] with result: SUCCESS
+Executing test childrenShouldBeCharged5DollarsAnd50CentForDefaultMovie [movietickets.MovieTicketsTests] with result: SUCCESS
+:check
+:build
+Since version 1.1 Gradle supports much more options to log test output. With those options at hand you can achieve a similar output with the following configuration:
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+tasks.withType(Test) {
+    testLogging {
+        // set options for log level LIFECYCLE
+        events TestLogEvent.FAILED,
+               TestLogEvent.PASSED,
+               TestLogEvent.SKIPPED,
+               TestLogEvent.STANDARD_OUT
+        exceptionFormat TestExceptionFormat.FULL
+        showExceptions true
+        showCauses true
+        showStackTraces true
+
+        // set options for log level DEBUG and INFO
+        debug {
+            events TestLogEvent.STARTED,
+                   TestLogEvent.FAILED,
+                   TestLogEvent.PASSED,
+                   TestLogEvent.SKIPPED,
+                   TestLogEvent.STANDARD_ERROR,
+                   TestLogEvent.STANDARD_OUT
+            exceptionFormat TestExceptionFormat.FULL
+        }
+        info.events = debug.events
+        info.exceptionFormat = debug.exceptionFormat
+
+        afterSuite { desc, result ->
+            if (!desc.parent) { // will match the outermost suite
+                def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)"
+                def startItem = '|  ', endItem = '  |'
+                def repeatLength = startItem.length() + output.length() + endItem.length()
+                println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+            }
+        }
+    }
 }
