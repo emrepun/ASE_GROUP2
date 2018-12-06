@@ -25,7 +25,6 @@ matrix:
                         - "7"
                   before_script:
                         - cd ASE_backend
-                          #- ./cc-test-reporter before-build
                   script:
                         - npm install
                         - npm test
