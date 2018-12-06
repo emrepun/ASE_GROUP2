@@ -18,11 +18,6 @@ env:
                 - ADB_INSTALL_TIMEOUT=5
                 - CC_TEST_REPORTER_ID=03239df105a5a57945b742180970c6fc4c098b756d7d43059fa14aeea332ce30
 
-before_script:
-        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-        - chmod +x ./cc-test-reporter
-        - ./cc-test-reporter before-build
-
 matrix:
         include:
                 - language: node_js
@@ -30,6 +25,9 @@ matrix:
                         - "7"
                   before_script:
                         - cd ASE_backend
+                        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+                        - chmod +x ./cc-test-reporter
+                        - ./cc-test-reporter before-build
                   script:
                         - npm install
                         - npm test
@@ -89,6 +87,9 @@ matrix:
                           - adb shell settings put global transition_animation_scale 0 &
                           - adb shell settings put global animator_duration_scale 0 &
                           - adb shell input keyevent 82 &
+                          - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+                          - chmod +x ./cc-test-reporter
+                          - ./cc-test-reporter before-build
                   script:
                           - ./gradlew clean build connectedCheck --stacktrace
                   after_script:
@@ -104,6 +105,9 @@ matrix:
                           - pod install
                           - brew update
                           - brew install xctool
+                          - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+                          - chmod +x ./cc-test-reporter
+                          - ./cc-test-reporter before-build
                   script:
                           - xcodebuild -workspace ASE_iOS.xcworkspace -scheme ASE_iOS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
                           - xcodebuild test -workspace ASE_iOS.xcworkspace -scheme ASE_iOS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
