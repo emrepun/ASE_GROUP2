@@ -118,3 +118,25 @@ matrix:
                   after_script:
                           - ./cc-test-reporter -p ASE_iOS after-build --exit-code $TRAVIS_TEST_RESULT
                           
+                - language: ruby
+                  cache:
+                          bundler: true
+                          directories:
+                                  - node_modules
+                  addons:
+                          chrome: stable
+                  before_install:
+                          - nvm install
+                          - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+                          - chmod +x ./cc-test-reporter
+                          - ./cc-test-report before-build
+                  install:
+                          - bundle install --without production --path=${BUNDLE_PATH:-vendor/bundle}
+                  before_script:
+                          - bundle exec rake db:create db:migrate
+                  script:
+                          - bundle exec rspec
+                  after_script:
+                          - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
+
