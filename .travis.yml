@@ -25,8 +25,6 @@ matrix:
                         - "7"
                   before_script:
                         - cd ASE_backend
-                        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-                        - chmod +x ./cc-test-reporter
                           #- ./cc-test-reporter before-build
                   script:
                         - npm install
@@ -34,6 +32,15 @@ matrix:
                   after_script:
                           #- ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
                   after_success:
+                          deploy:
+                                  provider: heroku
+                                  api_key: 7a669883-840c-4750-b1e4-c850da0f0f2e
+                                  on: master
+                                  app: ase-group2
+                                  run:
+                                          - "rake db:migrate"
+                                          - restart
+                                          - "rake cleanup"
                           # - docker login -u $DOCKER_USER -p $DOCKER_PASS
                           #- |
                           # if [ $TRAVIS_BRANCH == "master" ];
@@ -87,13 +94,9 @@ matrix:
                           - adb shell settings put global transition_animation_scale 0 &
                           - adb shell settings put global animator_duration_scale 0 &
                           - adb shell input keyevent 82 &
-                          - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-                          - chmod +x ./cc-test-reporter
-                            #- ./cc-test-reporter before-build
                   script:
                           - ./gradlew clean build connectedCheck --stacktrace
                   after_script:
-                          #- ./cc-test-reporter -p ASE_android after-build --exit-code $TRAVIS_TEST_RESULT
                   
                 - language: swift
                   os: osx
@@ -105,8 +108,6 @@ matrix:
                           - pod install
                           - brew update
                           - brew install xctool
-                          - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-                          - chmod +x ./cc-test-reporter
                             #- ./cc-test-reporter before-build
                   script:
                           - xcodebuild -workspace ASE_iOS.xcworkspace -scheme ASE_iOS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
@@ -117,28 +118,5 @@ matrix:
                           #- xcodebuild clean test -project ASE_iOS.xcodeproj -scheme ASE_iOS -destination "platform=iOS Simulator,OS=10.1,name=iPhone 7" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO -quiet
                   after_script:
                           #- ./cc-test-reporter -p ASE_iOS after-build --exit-code $TRAVIS_TEST_RESULT
-                          
-                - language: ruby
-                  cache:
-                          bundler: true
-                          directories:
-                                  - node_modules
-                  addons:
-                          chrome: stable
-                  before_install:
-                          - nvm install 8.0.0
-                          - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-                          - chmod +x ./cc-test-reporter
-                          - ./cc-test-report before-build
-                  install:
-                          - bundle install --without production --path=${BUNDLE_PATH:-vendor/bundle}
-                  before_script:
-                          - bundle exec rake db:create db:migrate
-                  script:
-                          - bundle exec rspec
-                  after_script:
-                          - ./cc-test-reporter format-coverage -t cobertura -o coverage/codeclimate.ASE_backend.json coverage/backend/.resultset.json
-                          - ./cc-test-reporter sum-coverage coverage/codeclimate.*.json -p 2
-                          - if [[ "$TRAVIS_TEST_RESULT" == 0 ]]; then ./cc-test-reporter upload-coverage; fi
 
 
