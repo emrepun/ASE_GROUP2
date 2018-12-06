@@ -125,7 +125,7 @@ after_failure:
         - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
         - chmod +x send.sh
         - ./send.sh failure $WEBHOOK_URL
-                  after_script:
+          #after_script:
                           #- ./cc-test-reporter -p ASE_iOS after-build --exit-code $TRAVIS_TEST_RESULT
 
                           #deploy:
