@@ -52,7 +52,7 @@ public class PoliceDataConnection implements MapsContract.Model {
     public void markerJsonParse(final CallbackMarkerInterface callback, double lat, double lon, double radius) {
         //cancel all other requests to the backend as they are now outdated
         mQueue.cancelAll("marker");
-        if(radius>1.7){
+        if(radius>2){ //api is <1 mile
             Toast.makeText(context, "Crime data can only be shown up to a radius of 1 mile.", Toast.LENGTH_SHORT).show();
         }
         String url = serverURL+"?lat="+lat+"&lng="+lon;

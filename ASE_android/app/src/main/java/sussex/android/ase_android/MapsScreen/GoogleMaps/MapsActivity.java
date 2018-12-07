@@ -258,8 +258,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void clearMap(){
-        mClusterManager.clearItems();
         mMap.clear();
+        mClusterManager.clearItems();
+        mClusterManager.cluster();
     }
 
     /**
