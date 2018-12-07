@@ -107,67 +107,9 @@ public class PoliceDataConnection implements MapsContract.Model {
     }
 
     /**
-     * This method returns all information about the properties within the provided postcode
-     * @param callback Callback for passing the properties to the caller
-     * @param postcode Postcode
+     * The bottom sheet is not needed for the police map
      */
     public void postcodeJsonParse(final CallbackInfoInterface callback, String postcode) {
-        mQueue.cancelAll("address");
-        String url = serverURL+"addresses/"+postcode;
-        RequestQueue mQueue = Volley.newRequestQueue(context);
-
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try{
-                            String json="";
-                            String price = "";
-                            String houseAddress="";
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject postcodeData = response.getJSONObject(i);
-                                double pricePaid;
-                                try {
-                                    pricePaid = postcodeData.getDouble("pricePaid");
-                                } catch (JSONException e) {
-                                    pricePaid=0;
-                                }
-                                String town;
-                                String address;
-                                try {
-                                    JSONObject propAddrObject = postcodeData.getJSONObject("propertyAddress");
-                                    town = propAddrObject.getString("town");
-                                    address = propAddrObject.getString("paon") + " "
-                                            + propAddrObject.getString("street");
-                                }catch (JSONException e) {
-                                    town="Unknown";
-                                    address="Unknown";
-                                }
-                                json=json+address+"\n";
-                                price=price+"£" + String.format(Locale.UK,"%,.2f", pricePaid)+"\n";
-
-                                /*json=json+address+"\n"+pricePaid+"\n";*/
-
-
-                            }
-                            callback.displayInfo(json, price);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                Toast.makeText(context, "The backend server was not reachable or produced an error", Toast.LENGTH_LONG).show();
-            }
-        });
-        //30 seconds timeout, because the backend can take multiple seconds to query the database
-        int socketTimeout = 30000;
-        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-        request.setRetryPolicy(policy);
-        request.setTag("address");
-        mQueue.add(request);
-
+        //do nothing
     }
 }

@@ -146,7 +146,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void markerClicked(Marker marker) {
-        if(enableInfoWindow) {
+        if(enableInfoWindow && marker.getTitle()!=null && marker.getSnippet()!=null) {
             bottomSheetView.displayBottomSheet(marker.getTitle(), marker.getSnippet());
         }
         marker.showInfoWindow();
