@@ -13,8 +13,6 @@ import GoogleMaps
 import GooglePlaces
 import GooglePlacePicker
 
-
-
 class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate {
     
     @IBOutlet var mapView: GMSMapView!
@@ -25,10 +23,11 @@ class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate 
     
     @IBOutlet var toggleDataControl: UISegmentedControl!
     
+    @IBOutlet var toggleViewControl: UISegmentedControl!
+    
     let locationManager = CLLocationManager()
-    //var authorizationStatus = CLLocationManager.authorizationStatus()
+
     var user = User(latitude: 0.0, longitude: 0.0)
-    //var postTimer: Timer!
     
     private let networking = Networking()
     
@@ -44,8 +43,6 @@ class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate 
     private var heatmapLayer: GMUHeatmapTileLayer!
     private var gradientColors = [UIColor.green, UIColor.red]
     private var gradientStartPoints = [0.6, 1.0] as [NSNumber]
-    
-    var isHeatmap = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,69 +104,17 @@ class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate 
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
-    @IBAction func toggleViewTapped(_ sender: Any) {
-        activityIndicator.startAnimating()
-        
-        if isHeatmap {
-            isHeatmap = !isHeatmap
-            toggleButton.setTitle("Heatmap", for: .normal)
-            heatmapLayer.map = nil
-            //guard postCodes.count > 0 else { return }
-            
-            if !isCrime {
-                DispatchQueue.main.async {
-                    for postCode in self.postCodes {
-                        let marker = PlaceMarker(postCode: postCode)
-                        marker.map = self.mapView
-                    }
-                }
-            } else {
-                DispatchQueue.main.async {
-                    for crime in self.crimes {
-                        let marker = CrimeMarker(crime: crime)
-                        marker.map = self.mapView
-                    }
-                }
-            }
-            
-        } else {
-            isHeatmap = !isHeatmap
-            toggleButton.setTitle("Markers", for: .normal)
-            //guard list.count > 0 else { return }
-            mapView.clear()
-
-            let heatLayer = GMUHeatmapTileLayer()
-            heatLayer.radius = 80
-            heatLayer.opacity = 0.8
-            heatLayer.gradient = GMUGradient(colors: gradientColors,
-                                             startPoints: gradientStartPoints,
-                                             colorMapSize: 256)
-            if !isCrime {
-                heatLayer.weightedData = list
-            } else {
-                heatLayer.weightedData = crimeList
-            }
-            
-            heatLayer.map = mapView
-            heatmapLayer = heatLayer
-            heatmapLayer.map = mapView
-        }
-        activityIndicator.stopAnimating()
-    }
-    
     @IBAction func refreshTapped(_ sender: Any) {
-        activityIndicator.startAnimating()
         let centerCoordinate = mapView.getCenterCoordinate()
         let radius = mapView.getRadius() / 1000
         currentRadius = radius
+        prepareViewForUpdate()
         
         let strRadius = String(radius)
         let latitude = String(centerCoordinate.latitude)
         let longitude = String(centerCoordinate.longitude)
         
-        isHeatmap = false
-        toggleButton.setTitle("Heatmap", for: .normal)
-        heatmapLayer.map = nil
+        
         
         if !isCrime {
             emptyArrays { (success) in
@@ -181,6 +126,7 @@ class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate 
                     }
                 }
             }
+            
         } else {
             emptyArrays { (success) in
                 if success {
@@ -213,6 +159,55 @@ class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate 
         present(placePicker, animated: true, completion: nil)
     }
     
+    
+    @IBAction func toggleViewTapped(_ sender: Any) {
+        let index = toggleViewControl.selectedSegmentIndex
+        activityIndicator.startAnimating()
+        if index == 0 {
+            // markers
+            heatmapLayer.map = nil
+            //guard postCodes.count > 0 else { return }
+            
+            if !isCrime {
+                DispatchQueue.main.async {
+                    for postCode in self.postCodes {
+                        let marker = PlaceMarker(postCode: postCode)
+                        marker.map = self.mapView
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    for crime in self.crimes {
+                        let marker = CrimeMarker(crime: crime)
+                        marker.map = self.mapView
+                    }
+                }
+            }
+            
+        } else if index == 1 {
+            // heatmap
+            //guard list.count > 0 else { return }
+            mapView.clear()
+            
+            let heatLayer = GMUHeatmapTileLayer()
+            heatLayer.radius = 80
+            heatLayer.opacity = 0.8
+            heatLayer.gradient = GMUGradient(colors: gradientColors,
+                                             startPoints: gradientStartPoints,
+                                             colorMapSize: 256)
+            if !isCrime {
+                heatLayer.weightedData = list
+            } else {
+                heatLayer.weightedData = crimeList
+            }
+            
+            heatLayer.map = mapView
+            heatmapLayer = heatLayer
+            heatmapLayer.map = mapView
+        }
+        activityIndicator.stopAnimating()
+    }
+    
     @IBAction func toggleDataTapped(_ sender: Any) {
         let index = toggleDataControl.selectedSegmentIndex
         let coordinates = mapView.getCenterCoordinate()
@@ -220,14 +215,9 @@ class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate 
         let lat = String(coordinates.latitude)
         let long = String(coordinates.longitude)
         let stringRadius = String(radius)
-        toggleButton.setTitle("Heatmap", for: .normal)
         
-        heatmapLayer.map = nil
-        mapView.clear()
-        
-        activityIndicator.startAnimating()
         currentRadius = radius
-        isHeatmap = false
+        prepareViewForUpdate()
         
         if index == 0 {
             //property
@@ -256,7 +246,6 @@ class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate 
             }
         }
     }
-    
     
 }
     // MARK: Location Delegate Methods
@@ -313,6 +302,13 @@ extension MapViewController: CLLocationManagerDelegate {
             
             self.activityIndicator.stopAnimating()
         }
+    }
+    
+    private func prepareViewForUpdate() {
+        activityIndicator.startAnimating()
+        toggleViewControl.selectedSegmentIndex = 0
+        heatmapLayer.map = nil
+        mapView.clear()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -373,7 +369,7 @@ extension MapViewController {
     func placePicker(_ viewController: GMSPlacePickerViewController, didPick place: GMSPlace) {
         viewController.dismiss(animated: true, completion: nil)
         
-        activityIndicator.startAnimating()
+        prepareViewForUpdate()
         
         let radius = mapView.getRadius() / 1000
         currentRadius = radius
@@ -382,10 +378,8 @@ extension MapViewController {
         let latitude = String(place.coordinate.latitude)
         let longitude = String(place.coordinate.longitude)
         
-        isHeatmap = false
-        toggleButton.setTitle("Heatmap", for: .normal)
-        heatmapLayer.map = nil
-        
+        toggleDataControl.selectedSegmentIndex = 0
+
         emptyArrays { (success) in
             if success {
                 let location = GMSCameraPosition.camera(withLatitude: place.coordinate.latitude, longitude: place.coordinate.longitude, zoom: 17.0)
@@ -400,10 +394,7 @@ extension MapViewController {
     }
     
     func placePickerDidCancel(_ viewController: GMSPlacePickerViewController) {
-        // Dismiss the place picker, as it cannot dismiss itself.
         viewController.dismiss(animated: true, completion: nil)
-        
-        print("No place selected")
     }
 }
 
