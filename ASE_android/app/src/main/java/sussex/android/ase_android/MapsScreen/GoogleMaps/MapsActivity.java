@@ -232,7 +232,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public Marker addMarker(MarkerOptions markerOptions) {
         Marker marker = mMap.addMarker(markerOptions);
-        if(marker.getTitle().equals(postcodeSearch)){
+        if(postcodeSearch.equals(marker.getTitle())){
             postcodeSearch="";
             markerClicked(marker);
         }

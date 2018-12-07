@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.location.Address;
-import android.location.Geocoder;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -18,12 +16,12 @@ import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.google.maps.android.heatmaps.WeightedLatLng;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import sussex.android.ase_android.MapsScreen.model.CallbackMarkerInterface;
+import sussex.android.ase_android.MapsScreen.model.PoliceDataConnection;
 import sussex.android.ase_android.MapsScreen.model.PostCodeMarker;
 import sussex.android.ase_android.MapsScreen.model.ServerConnection;
 import sussex.android.ase_android.R;
@@ -31,14 +29,14 @@ import sussex.android.ase_android.R;
 public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInterface {
 
     private MapsContract.View view;
-    private MapsContract.Model jsonparser;
+    private MapsContract.Model ServerConnectionHandler;
     private List<PostCodeMarker> markerList = new ArrayList<>();
 
     private boolean heatMapEnabled;
 
     public MapsPresenter(MapsContract.View view) {
         this.view = view;
-        jsonparser=new ServerConnection(view.getActivity());
+        ServerConnectionHandler =new PoliceDataConnection(view.getActivity());
     }
 
 
@@ -60,11 +58,22 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
             enableHeatMap();
         }else {
             for (PostCodeMarker postCodeMarker : markerList) {
-                view.addMarker(new MarkerOptions()
-                        .position(new LatLng(postCodeMarker.getLat(), postCodeMarker.getLon()))
-                        .icon(bitmapDescriptorFromVector(view.getActivity(), R.drawable.ic_marker))
-                        .title(postCodeMarker.getPostcode())
-                        .snippet("Average price: £" + String.format(Locale.UK, "%,.2f", postCodeMarker.getPrice())));
+
+                MarkerOptions markerOptions=new MarkerOptions();
+                markerOptions.position(new LatLng(postCodeMarker.getLat(), postCodeMarker.getLon()));
+                markerOptions.title(postCodeMarker.getPostcode());
+                if(postCodeMarker.getType()==PostCodeMarker.HOUSE_MARKER){
+                    if(postCodeMarker.getPrice()>0){
+                        markerOptions.snippet("Average price: £" + String.format(Locale.UK, "%,.2f", postCodeMarker.getPrice()));
+                    }else{
+                        markerOptions.snippet("Unknown average price.");
+                    }
+                    markerOptions.icon(bitmapDescriptorFromVector(view.getActivity(), R.drawable.ic_marker));
+                }else{
+                    markerOptions.icon(bitmapDescriptorFromVector(view.getActivity(), R.drawable.ic_marker_police));
+                }
+
+                view.addMarker(markerOptions);
             }
         }
     }
@@ -88,7 +97,11 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
 
 
     public MapsContract.Model getServerConnectionHandler(){
-        return jsonparser;
+        return ServerConnectionHandler;
+    }
+
+    public void setServerConnectionHandler(MapsContract.Model serverConnectionHandler){
+        this.ServerConnectionHandler=serverConnectionHandler;
     }
 
     /**
@@ -129,6 +142,6 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
      * @param radius_meter radius of the current visible region in meters
      */
     public void cameraPosChanged(LatLng target, float radius_meter) {
-        jsonparser.markerJsonParse(this,target.latitude, target.longitude,radius_meter/1000);
+        ServerConnectionHandler.markerJsonParse(this,target.latitude, target.longitude,radius_meter/1000);
     }
 }

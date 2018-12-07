@@ -21,7 +21,9 @@ import java.util.Locale;
 
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
 
-public class ServerConnection implements MapsContract.Model {
+
+
+public class PoliceDataConnection implements MapsContract.Model {
     private Context context;
     private RequestQueue mQueue;
 
@@ -29,12 +31,12 @@ public class ServerConnection implements MapsContract.Model {
     /**
      * server URL of our backend database server
      */
-    private String serverURL = "https://ase-group2.herokuapp.com/api/";
+    private String serverURL = "https://data.police.uk/api/crimes-street/all-crime";
 
     /**
      * @param context Context for creating the Volley request queue
      */
-    public ServerConnection(Context context){
+    public PoliceDataConnection(Context context){
         this.context=context;
         mQueue=Volley.newRequestQueue(context);
     }
@@ -50,7 +52,10 @@ public class ServerConnection implements MapsContract.Model {
     public void markerJsonParse(final CallbackMarkerInterface callback, double lat, double lon, double radius) {
         //cancel all other requests to the backend as they are now outdated
         mQueue.cancelAll("marker");
-        String url = serverURL+"pcprices/"+lat+"/"+lon+"/"+radius;
+        if(radius>1.7){
+            Toast.makeText(context, "Crime data can only be shown up to a radius of 1 mile.", Toast.LENGTH_SHORT).show();
+        }
+        String url = serverURL+"?lat="+lat+"&lng="+lon;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -59,26 +64,24 @@ public class ServerConnection implements MapsContract.Model {
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject postcodeData = response.getJSONObject(i);
-                                double price;
-                                try {
-                                    price = postcodeData.getDouble("price");
-                                }catch (JSONException e){
-                                    price=0;
-                                }
-                                String postcode;
-                                try{
-                                    postcode = postcodeData.getString("postcode");
-                                }catch (JSONException e){
-                                    postcode="Unknown";
-                                }
                                 double lat;double lon;
                                 try {
-                                    lat = postcodeData.getDouble("latitude");
-                                    lon = postcodeData.getDouble("longitude");
+                                    JSONObject locObject = postcodeData.getJSONObject("location");
+                                    lat = locObject.getDouble("latitude");
+                                    lon = locObject.getDouble("longitude");
                                 }catch (JSONException e){
                                     lat=lon=0;
                                 }
-                                markerArrayList.add(new PostCodeMarker(lat,lon, price, postcode, PostCodeMarker.HOUSE_MARKER));
+
+                                String category;
+                                try {
+                                    category = postcodeData.getString("category");
+                                } catch (JSONException e) {
+                                    category = "Unknown Crime";
+                                }
+
+
+                                markerArrayList.add(new PostCodeMarker(lat,lon, 1.0, category, PostCodeMarker.POLICE_MARKER));
 
                             }
                             //pass markers back to calling object
