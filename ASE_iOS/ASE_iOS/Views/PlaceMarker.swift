@@ -26,8 +26,6 @@ class PlaceMarker: GMSMarker {
             }
         }
         
-        
-        
         let view = Bundle.main.loadNibNamed("MarkerInfoView", owner: nil, options: nil)?.first as! MarkerInfoView
         
         if let stringPrice = postCode.price {
@@ -41,13 +39,9 @@ class PlaceMarker: GMSMarker {
                 view.priceLabel.text = "N/A"
             }
         }
-        
-        //view.priceLabel.text = postCode.price!
-        
         iconView = view
         appearAnimation = .pop
     }
-    
 }
 
 

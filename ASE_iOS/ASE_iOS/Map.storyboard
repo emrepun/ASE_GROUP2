@@ -76,14 +76,33 @@
                                     <action selector="refreshTapped:" destination="NZU-Xh-nlQ" eventType="touchUpInside" id="WL7-qD-281"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ssb-yr-C8c">
+                                <rect key="frame" x="16" y="104" width="30" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="JTp-l4-bgo"/>
+                                    <constraint firstAttribute="width" constant="30" id="xHg-nE-XeY"/>
+                                </constraints>
+                                <state key="normal" image="search"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="searchPlaceTapped:" destination="NZU-Xh-nlQ" eventType="touchUpInside" id="5bB-zx-IGk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Fe7-x7-mcS" firstAttribute="leading" secondItem="qBJ-j1-K9d" secondAttribute="leading" constant="16" id="807-oY-1bH"/>
                             <constraint firstItem="qBJ-j1-K9d" firstAttribute="bottom" secondItem="Fe7-x7-mcS" secondAttribute="bottom" constant="100" id="CIJ-N9-pfD"/>
+                            <constraint firstItem="ssb-yr-C8c" firstAttribute="top" secondItem="qBJ-j1-K9d" secondAttribute="top" constant="16" id="DQz-Fo-RLd"/>
                             <constraint firstAttribute="bottom" secondItem="KJ7-CS-8aJ" secondAttribute="bottom" id="GhX-85-p69"/>
                             <constraint firstItem="qBJ-j1-K9d" firstAttribute="trailing" secondItem="KJ7-CS-8aJ" secondAttribute="trailing" id="MaM-6W-KqX"/>
                             <constraint firstItem="qBJ-j1-K9d" firstAttribute="trailing" secondItem="sz0-Ev-6zW" secondAttribute="trailing" constant="16" id="Vs1-RG-uYI"/>
+                            <constraint firstItem="ssb-yr-C8c" firstAttribute="leading" secondItem="qBJ-j1-K9d" secondAttribute="leading" constant="16" id="e44-Ua-c4C"/>
                             <constraint firstItem="KJ7-CS-8aJ" firstAttribute="top" secondItem="0jC-TT-DJG" secondAttribute="top" id="gZc-kQ-nJx"/>
                             <constraint firstItem="qBJ-j1-K9d" firstAttribute="bottom" secondItem="sz0-Ev-6zW" secondAttribute="bottom" constant="100" id="hcW-mf-ZKQ"/>
                             <constraint firstItem="KJ7-CS-8aJ" firstAttribute="leading" secondItem="qBJ-j1-K9d" secondAttribute="leading" id="jjf-2H-hoO"/>
@@ -173,4 +192,7 @@
             <point key="canvasLocation" x="76.811594202898561" y="123.88392857142857"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="search" width="24" height="24"/>
+    </resources>
 </document>
