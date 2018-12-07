@@ -34,9 +34,12 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
 
     private boolean heatMapEnabled;
 
+
+
     public MapsPresenter(MapsContract.View view) {
         this.view = view;
         ServerConnectionHandler =new PoliceDataConnection(view.getActivity());
+
     }
 
 
@@ -57,42 +60,8 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
         if(heatMapEnabled){
             enableHeatMap();
         }else {
-            for (PostCodeMarker postCodeMarker : markerList) {
-
-                MarkerOptions markerOptions=new MarkerOptions();
-                markerOptions.position(new LatLng(postCodeMarker.getLat(), postCodeMarker.getLon()));
-                markerOptions.title(postCodeMarker.getPostcode());
-                if(postCodeMarker.getType()==PostCodeMarker.HOUSE_MARKER){
-                    if(postCodeMarker.getPrice()>0){
-                        markerOptions.snippet("Average price: £" + String.format(Locale.UK, "%,.2f", postCodeMarker.getPrice()));
-                    }else{
-                        markerOptions.snippet("Unknown average price.");
-                    }
-                    markerOptions.icon(bitmapDescriptorFromVector(view.getActivity(), R.drawable.ic_marker));
-                }else{
-                    markerOptions.icon(bitmapDescriptorFromVector(view.getActivity(), R.drawable.ic_marker_police));
-                }
-
-                view.addMarker(markerOptions);
-            }
+            view.addMarkersClustered(markerList);
         }
-    }
-
-
-    /**
-     * Generates a bitmap from the provided vector image
-     * @param context Context
-     * @param vectorResId id of the vector image
-     * @return Bitmap representation of the vector image at the right resolution in respect to the device
-     */
-    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
-        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
-        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
-        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        vectorDrawable.draw(canvas);
-        return BitmapDescriptorFactory.fromBitmap(bitmap);
-
     }
 
 

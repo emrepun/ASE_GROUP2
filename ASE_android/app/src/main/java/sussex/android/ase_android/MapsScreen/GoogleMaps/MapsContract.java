@@ -8,16 +8,21 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 
+import java.util.List;
+
 import sussex.android.ase_android.BasePresenter;
 import sussex.android.ase_android.MapsScreen.model.CallbackInfoInterface;
 import sussex.android.ase_android.MapsScreen.model.CallbackMarkerInterface;
+import sussex.android.ase_android.MapsScreen.model.PostCodeMarker;
 
 public interface MapsContract {
     interface View {
         Activity getActivity();
+        void addMarkersClustered(List<PostCodeMarker> marker);
         Marker addMarker(MarkerOptions marker);
         TileOverlay addTileOverlay(TileOverlayOptions options);
         void clearMap();
+
     }
 
     interface Presenter extends BasePresenter {

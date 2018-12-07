@@ -35,10 +35,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.gms.maps.model.VisibleRegion;
+import com.google.maps.android.clustering.ClusterItem;
+import com.google.maps.android.clustering.ClusterManager;
+
+import java.util.List;
 
 import sussex.android.ase_android.CustomInfoWindowAdapter;
 import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetContract;
 import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetView;
+import sussex.android.ase_android.MapsScreen.model.PostCodeMarker;
 import sussex.android.ase_android.R;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,MapsContract.View, CompoundButton.OnCheckedChangeListener {
@@ -53,6 +58,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     Switch switch1;
 
     boolean enableInfoWindow =true;
+
+    private ClusterManager<PostCodeMarker> mClusterManager;
 
 
     private boolean heatMapEnabled;
@@ -93,10 +100,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 MapStyleOptions.loadRawResourceStyle(
                         this, R.raw.style_json));
 
+        mClusterManager = new ClusterManager<>(this, mMap);
+        mClusterManager.setRenderer(new MarkerRenderer(this, mMap, mClusterManager));
+
         //set Listener for hiding and displaying the BottomSheet
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
+                mClusterManager.onMarkerClick(marker);
                 markerClicked(marker);
                 return true;
             }
@@ -115,6 +126,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
+                mClusterManager.onCameraIdle();
                 CameraPosition position = mMap.getCameraPosition();
                 if(mPreviousCameraPosition[0] == null || !mPreviousCameraPosition[0].equals(position)) {
                     //position changed
@@ -146,10 +158,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void markerClicked(Marker marker) {
-        if(enableInfoWindow && marker.getTitle()!=null && marker.getSnippet()!=null) {
-            bottomSheetView.displayBottomSheet(marker.getTitle(), marker.getSnippet());
+        if(marker!=null && marker.getTitle()!=null) {
+            if (enableInfoWindow && marker.getSnippet() != null) {
+                bottomSheetView.displayBottomSheet(marker.getTitle(), marker.getSnippet());
+            }
+            marker.showInfoWindow();
         }
-        marker.showInfoWindow();
     }
 
     private float calcVisibleRadius() {
@@ -229,6 +243,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return this;
     }
 
+    public void addMarkersClustered(List<PostCodeMarker> markerList){
+                mClusterManager.addItems(markerList);
+                mClusterManager.cluster();
+    }
     @Override
     public Marker addMarker(MarkerOptions markerOptions) {
         Marker marker = mMap.addMarker(markerOptions);
@@ -240,6 +258,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void clearMap(){
+        mClusterManager.clearItems();
         mMap.clear();
     }
 
