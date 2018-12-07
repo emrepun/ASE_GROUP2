@@ -2,6 +2,7 @@ package sussex.android.ase_android.MapsScreen.GoogleMaps;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -17,6 +18,11 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -74,13 +80,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
+     * Sets up the map options and callbacks once the map is ready
      */
     @Override
     public void onMapReady(final GoogleMap googleMap) {
@@ -97,10 +97,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                if(enableInfoWindow) {
-                    bottomSheetView.displayBottomSheet(marker.getTitle(), marker.getSnippet());
-                }
-                return false;
+                markerClicked(marker);
+                return true;
             }
         });
 
@@ -126,7 +124,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     enableInfoWindow = radius_meter < 1000;
 
                     mapsPresenter.cameraPosChanged(mPreviousCameraPosition[0].target,radius_meter);
-                    }
+                }
             }
         });
 
@@ -145,7 +143,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         14));
             }
         }
+    }
+
+    private void markerClicked(Marker marker) {
+        if(enableInfoWindow) {
+            bottomSheetView.displayBottomSheet(marker.getTitle(), marker.getSnippet());
         }
+        marker.showInfoWindow();
+    }
 
     private float calcVisibleRadius() {
         VisibleRegion visibleRegion = mMap.getProjection().getVisibleRegion();
@@ -225,8 +230,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
-    public Marker addMarker(MarkerOptions marker) {
-        return mMap.addMarker(marker);
+    public Marker addMarker(MarkerOptions markerOptions) {
+        Marker marker = mMap.addMarker(markerOptions);
+        if(marker.getTitle().equals(postcodeSearch)){
+            postcodeSearch="";
+            markerClicked(marker);
+        }
+        return marker;
     }
 
     public void clearMap(){
@@ -236,10 +246,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     /**
      * Adds the heatmap to the map
      * @param options the TileOverlay options of the heatmap
-     * @return the added TileOverlayy
+     * @return the added TileOverlay
      */
     public TileOverlay addTileOverlay(TileOverlayOptions options){
-       return  mMap.addTileOverlay(options);
+        return  mMap.addTileOverlay(options);
     }
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -250,5 +260,28 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         clearMap();
         mapsPresenter.switchHeatmap(heatMapEnabled);
+    }
+
+
+    private int PLACE_PICKER_REQUEST = 1;
+    private String postcodeSearch="";
+    public void search_onclick(View view) {
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try {
+            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(this, data);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(),
+                        17));
+                postcodeSearch=place.getName().toString();
+            }
+        }
     }
 }
