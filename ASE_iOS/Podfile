@@ -11,6 +11,8 @@ target 'ASE_iOS' do
 pod 'Firebase/Core'
 pod 'Firebase/Database'
 pod 'GoogleMaps'
+pod 'GooglePlaces'
+pod 'GooglePlacePicker'
 
 #Tests
 

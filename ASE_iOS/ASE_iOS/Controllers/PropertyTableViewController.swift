@@ -30,7 +30,7 @@ class PropertyTableViewController: UITableViewController {
         if postCode.count > 0 {
             getPropertyData(postCode: postCode) {
                 guard self.properties.count > 0 else {
-                    self.showAlert(title: "No Data", message: "Sorry we are unable to display property data.")
+                    self.showAlert(title: "No Data", message: "Sorry, there is no data available for this postcode.")
                     self.activityIndicator.stopAnimating()
                     return
                 } //show alert maybe.
