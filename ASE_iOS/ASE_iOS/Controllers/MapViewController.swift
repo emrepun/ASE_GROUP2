@@ -23,6 +23,8 @@ class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate 
     
     let activityIndicator = UIActivityIndicatorView()
     
+    @IBOutlet var toggleDataControl: UISegmentedControl!
+    
     let locationManager = CLLocationManager()
     //var authorizationStatus = CLLocationManager.authorizationStatus()
     var user = User(latitude: 0.0, longitude: 0.0)
@@ -31,9 +33,12 @@ class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate 
     private let networking = Networking()
     
     private var postCodes = [PostCode]()
+    private var crimes = [Crime]()
     var list = [GMUWeightedLatLng]()
+    var crimeList = [GMUWeightedLatLng]()
     
     var isDataRequestSent = false
+    var isCrime = false
     var currentRadius = 0.0
     
     private var heatmapLayer: GMUHeatmapTileLayer!
@@ -85,6 +90,13 @@ class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate 
         }
     }
     
+    private func getCrimeData(lat: String, long: String, completion: (() -> Void)?) {
+        networking.performNetworkTask(endpoint: CrimeAPI.crimes(lat: lat, long: long), type: [Crime].self) { [weak self] (response) in
+            self?.crimes = response
+            completion?()
+        }
+    }
+ 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -97,23 +109,33 @@ class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate 
     
     @IBAction func toggleViewTapped(_ sender: Any) {
         activityIndicator.startAnimating()
+        
         if isHeatmap {
             isHeatmap = !isHeatmap
             toggleButton.setTitle("Heatmap", for: .normal)
             heatmapLayer.map = nil
-            guard postCodes.count > 0 else { return }
+            //guard postCodes.count > 0 else { return }
             
-            DispatchQueue.main.async {
-                for postCode in self.postCodes {
-                    let marker = PlaceMarker(postCode: postCode)
-                    marker.map = self.mapView
+            if !isCrime {
+                DispatchQueue.main.async {
+                    for postCode in self.postCodes {
+                        let marker = PlaceMarker(postCode: postCode)
+                        marker.map = self.mapView
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    for crime in self.crimes {
+                        let marker = CrimeMarker(crime: crime)
+                        marker.map = self.mapView
+                    }
                 }
             }
             
         } else {
             isHeatmap = !isHeatmap
             toggleButton.setTitle("Markers", for: .normal)
-            guard list.count > 0 else { return }
+            //guard list.count > 0 else { return }
             mapView.clear()
 
             let heatLayer = GMUHeatmapTileLayer()
@@ -122,7 +144,12 @@ class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate 
             heatLayer.gradient = GMUGradient(colors: gradientColors,
                                              startPoints: gradientStartPoints,
                                              colorMapSize: 256)
-            heatLayer.weightedData = list
+            if !isCrime {
+                heatLayer.weightedData = list
+            } else {
+                heatLayer.weightedData = crimeList
+            }
+            
             heatLayer.map = mapView
             heatmapLayer = heatLayer
             heatmapLayer.map = mapView
@@ -144,12 +171,24 @@ class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate 
         toggleButton.setTitle("Heatmap", for: .normal)
         heatmapLayer.map = nil
         
-        emptyArrays { (success) in
-            if success {
-                self.getPropertyData(lat: latitude, long: longitude, radius: strRadius) {
-                    DispatchQueue.main.async {
-                        self.getMarkerAndHeatmapAfterCompletion()
+        if !isCrime {
+            emptyArrays { (success) in
+                if success {
+                    self.getPropertyData(lat: latitude, long: longitude, radius: strRadius) {
+                        DispatchQueue.main.async {
+                            self.deployMarkerAndHeatmapForProperty()
+                        }
                     }
+                }
+            }
+        } else {
+            emptyArrays { (success) in
+                if success {
+                    self.getCrimeData(lat: latitude, long: longitude, completion: {
+                        DispatchQueue.main.async {
+                            self.deployMarkerAndHeatmapForCrime()
+                        }
+                    })
                 }
             }
         }
@@ -158,6 +197,8 @@ class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate 
     func emptyArrays(completion: @escaping (_ success: Bool) -> Void) {
         DispatchQueue.main.async {
             self.postCodes.removeAll()
+            self.crimes.removeAll()
+            self.crimeList.removeAll()
             self.list.removeAll()
             self.mapView.clear()
             
@@ -172,12 +213,54 @@ class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate 
         present(placePicker, animated: true, completion: nil)
     }
     
+    @IBAction func toggleDataTapped(_ sender: Any) {
+        let index = toggleDataControl.selectedSegmentIndex
+        let coordinates = mapView.getCenterCoordinate()
+        let radius = mapView.getRadius() / 1000
+        let lat = String(coordinates.latitude)
+        let long = String(coordinates.longitude)
+        let stringRadius = String(radius)
+        toggleButton.setTitle("Heatmap", for: .normal)
+        
+        heatmapLayer.map = nil
+        mapView.clear()
+        
+        activityIndicator.startAnimating()
+        currentRadius = radius
+        isHeatmap = false
+        
+        if index == 0 {
+            //property
+            isCrime = false
+            
+            emptyArrays { (success) in
+                if success {
+                    self.getPropertyData(lat: lat, long: long, radius: stringRadius) {
+                        DispatchQueue.main.async {
+                            self.deployMarkerAndHeatmapForProperty()
+                        }
+                    }
+                }
+            }
+            
+        } else if index == 1 {
+            //crime
+            isCrime = true
+            
+            emptyArrays { (success) in
+                if success {
+                    self.getCrimeData(lat: lat, long: long, completion: {
+                        self.deployMarkerAndHeatmapForCrime()
+                    })
+                }
+            }
+        }
+    }
+    
     
 }
     // MARK: Location Delegate Methods
 extension MapViewController: CLLocationManagerDelegate {
-    
-    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         guard status == .authorizedWhenInUse else {
             return
@@ -189,7 +272,7 @@ extension MapViewController: CLLocationManagerDelegate {
         mapView.settings.myLocationButton = true
     }
     
-    fileprivate func getMarkerAndHeatmapAfterCompletion() {
+    fileprivate func deployMarkerAndHeatmapForProperty() {
         DispatchQueue.main.async {
             for postCode in self.postCodes {
                 let marker = PlaceMarker(postCode: postCode)
@@ -211,7 +294,25 @@ extension MapViewController: CLLocationManagerDelegate {
             // Add the lat lngs to the heatmap layer.
             self.heatmapLayer.weightedData = self.list
         }
-        
+    }
+    
+    fileprivate func deployMarkerAndHeatmapForCrime() {
+        DispatchQueue.main.async {
+            for crime in self.crimes {
+                let marker = CrimeMarker(crime: crime)
+                marker.map = self.mapView
+                
+                if let latitude = crime.location?.latitude,
+                    let longitude = crime.location?.longitude,
+                    let lat = Double(latitude),
+                    let long = Double(longitude) {
+                    let coords = GMUWeightedLatLng(coordinate: CLLocationCoordinate2DMake(lat, long), intensity: 1.0)
+                    self.crimeList.append(coords)
+                }
+            }
+            
+            self.activityIndicator.stopAnimating()
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -225,7 +326,7 @@ extension MapViewController: CLLocationManagerDelegate {
                 print(location.coordinate.longitude)
                 getPropertyData(lat: String(location.coordinate.latitude), long: String(location.coordinate.longitude), radius: "0.1") {
                     DispatchQueue.main.async {
-                        self.getMarkerAndHeatmapAfterCompletion()
+                        self.deployMarkerAndHeatmapForProperty()
                     }
                 }
             }
@@ -252,8 +353,6 @@ extension MapViewController: CLLocationManagerDelegate {
 
 extension MapViewController: GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        // FIXME: Fix
-        // TODO: Open Post Code Specific house prices list.
         if currentRadius < 1 {
             performSegue(withIdentifier: "showListPrices", sender: marker)
         }
@@ -264,7 +363,6 @@ extension MapViewController: GMSMapViewDelegate {
 
 // MARK: Places Search
 extension MapViewController {
-    // The code snippet below shows how to create and display a GMSPlacePickerViewController.
     @IBAction func pickPlace(_ sender: UIButton) {
         let config = GMSPlacePickerConfig(viewport: nil)
         let placePicker = GMSPlacePickerViewController(config: config)
@@ -272,10 +370,7 @@ extension MapViewController {
         present(placePicker, animated: true, completion: nil)
     }
     
-    // To receive the results from the place picker 'self' will need to conform to
-    // GMSPlacePickerViewControllerDelegate and implement this code.
     func placePicker(_ viewController: GMSPlacePickerViewController, didPick place: GMSPlace) {
-        // Dismiss the place picker, as it cannot dismiss itself.
         viewController.dismiss(animated: true, completion: nil)
         
         activityIndicator.startAnimating()
@@ -297,7 +392,7 @@ extension MapViewController {
                 self.mapView.animate(to: location)
                 self.getPropertyData(lat: latitude, long: longitude, radius: "0.15") {
                     DispatchQueue.main.async {
-                        self.getMarkerAndHeatmapAfterCompletion()
+                        self.deployMarkerAndHeatmapForProperty()
                     }
                 }
             }

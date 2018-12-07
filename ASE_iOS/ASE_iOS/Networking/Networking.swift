@@ -9,10 +9,17 @@
 import Foundation
 
 struct Networking {
-    func performNetworkTask<T: Codable>(endpoint: PropertyAPI,
+    func performNetworkTask<T: Codable>(endpoint: EndpointType,
                                         type: T.Type,
                                         completion: ((_ response: T) -> Void)?) {
-        let url = endpoint.baseURL.appendingPathComponent(endpoint.path)
+        var url: URL!
+        
+        if endpoint is CrimeAPI {
+            url = endpoint.baseURL
+        } else {
+            url = endpoint.baseURL.appendingPathComponent(endpoint.path)
+        }
+        
         let urlRequest = URLRequest(url: url)
         
         print(url)

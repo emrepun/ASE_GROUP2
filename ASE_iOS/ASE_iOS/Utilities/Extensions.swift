@@ -71,3 +71,12 @@ extension GMSMapView {
 }
 
 
+extension URLComponents {
+    init(scheme: String, host: String, path: String, queryItems: [URLQueryItem]) {
+        self.init()
+        self.scheme = scheme
+        self.host = host
+        self.path = path
+        self.queryItems = queryItems
+    }
+}
