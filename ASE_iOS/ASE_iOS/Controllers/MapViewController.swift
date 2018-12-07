@@ -278,6 +278,8 @@ extension MapViewController {
         // Dismiss the place picker, as it cannot dismiss itself.
         viewController.dismiss(animated: true, completion: nil)
         
+        activityIndicator.startAnimating()
+        
         let radius = mapView.getRadius() / 1000
         currentRadius = radius
         
@@ -293,7 +295,7 @@ extension MapViewController {
             if success {
                 let location = GMSCameraPosition.camera(withLatitude: place.coordinate.latitude, longitude: place.coordinate.longitude, zoom: 17.0)
                 self.mapView.animate(to: location)
-                self.getPropertyData(lat: latitude, long: longitude, radius: strRadius) {
+                self.getPropertyData(lat: latitude, long: longitude, radius: "0.15") {
                     DispatchQueue.main.async {
                         self.getMarkerAndHeatmapAfterCompletion()
                     }
