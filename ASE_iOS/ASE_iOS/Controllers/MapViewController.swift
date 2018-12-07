@@ -9,13 +9,13 @@
 import UIKit
 import CoreLocation
 import MapKit
-//import FirebaseAuth
-//import FirebaseDatabase
 import GoogleMaps
+import GooglePlaces
+import GooglePlacePicker
 
 
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate {
     
     @IBOutlet var mapView: GMSMapView!
     
@@ -56,12 +56,6 @@ class MapViewController: UIViewController {
         heatmapLayer = GMUHeatmapTileLayer()
         heatmapLayer.radius = 80
         heatmapLayer.opacity = 0.8
-//        heatmapLayer.gradient = GMUGradient(colors: gradientColors,
-//                                            startPoints: gradientStartPoints,
-//                                            colorMapSize: 256)
-        
-        //checkForAuthorization()
-        //postTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(writeLocationData), userInfo: nil, repeats: true)     
     }
     
     
@@ -99,56 +93,6 @@ class MapViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-    }
-    
-    
-//    fileprivate func checkForAuthorization() {
-//        if authorizationStatus == .denied || authorizationStatus == .restricted {
-//            print("big")
-//            showAlert(title: "Location Services Disabled", message: "Please enable Location Services in Settings to view your location on map")
-//        }
-//    }
-    
-    @objc
-    fileprivate func writeLocationData() {
-        locationManager.startMonitoringSignificantLocationChanges()
-        
-        //let innerUser = Auth.auth().currentUser
-        let currentDate = getCurrentMillis()
-        //let timeStamp = String(currentDate)
-        //let ref = Database.database().reference().child("gpsdata").child(innerUser!.uid).child(timeStamp)
-
-        //let locationObject = [
-//            "latitude": user.latitude,
-//            "longitude": user.longitude
-        //] as [String: Any]
-        
-//        ref.setValue(locationObject) { (error, ref) in
-//            if error == nil {
-//                print("chill")
-//            } else {
-//                print("error")
-//            }
-//        }
-        
-        locationManager.stopMonitoringSignificantLocationChanges()
-    }
-    
-    
-//    @IBAction func locateMeButtonTapped(_ sender: Any) {
-//        let authStat = CLLocationManager.authorizationStatus()
-//        
-//        if authStat == .denied || authStat == .restricted || authStat == .notDetermined {
-//            showAlert(title: "Location Services Disabled", message: "Please enable Location Services in Settings to locate yourself!")
-//        } else {
-//            let distance: CLLocationDistance = 500
-//            let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, latitudinalMeters: distance, longitudinalMeters: distance)
-//            mapView.setRegion(region, animated: true)
-//        }
-//    }
-    
-    func getCurrentMillis()->Int64 {
-        return Int64(Date().timeIntervalSince1970 * 1000)
     }
     
     @IBAction func toggleViewTapped(_ sender: Any) {
@@ -190,7 +134,6 @@ class MapViewController: UIViewController {
         activityIndicator.startAnimating()
         let centerCoordinate = mapView.getCenterCoordinate()
         let radius = mapView.getRadius() / 1000
-        print(radius)
         currentRadius = radius
         
         let strRadius = String(radius)
@@ -220,23 +163,15 @@ class MapViewController: UIViewController {
             
             completion(true)
         }
-        
     }
     
-    
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?
-    {
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "AnnotationIdentifier")
-        
-        if annotationView == nil {
-            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "AnnotationIdentifier")
-        }
-        
-        annotationView?.image = UIImage(named: "homemarker")
-        annotationView?.canShowCallout = true
-        
-        return annotationView
+    @IBAction func searchPlaceTapped(_ sender: Any) {
+        let config = GMSPlacePickerConfig(viewport: nil)
+        let placePicker = GMSPlacePickerViewController(config: config)
+        placePicker.delegate = self
+        present(placePicker, animated: true, completion: nil)
     }
+    
     
 }
     // MARK: Location Delegate Methods
@@ -275,7 +210,6 @@ extension MapViewController: CLLocationManagerDelegate {
             self.activityIndicator.stopAnimating()
             // Add the lat lngs to the heatmap layer.
             self.heatmapLayer.weightedData = self.list
-            //heatmapLayer.map = mapView
         }
         
     }
@@ -292,7 +226,6 @@ extension MapViewController: CLLocationManagerDelegate {
                 getPropertyData(lat: String(location.coordinate.latitude), long: String(location.coordinate.longitude), radius: "0.1") {
                     DispatchQueue.main.async {
                         self.getMarkerAndHeatmapAfterCompletion()
-                        //self.addHeatMap()
                     }
                 }
             }
@@ -303,10 +236,6 @@ extension MapViewController: CLLocationManagerDelegate {
         mapView.camera = GMSCameraPosition(target: camLocation.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
         
         locationManager.stopUpdatingLocation()
-    }
-    
-    func addHeatMap() {
-        heatmapLayer.map = mapView
     }
     
     // MARK: Segue settings
@@ -322,7 +251,6 @@ extension MapViewController: CLLocationManagerDelegate {
 }
 
 extension MapViewController: GMSMapViewDelegate {
-    
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         // FIXME: Fix
         // TODO: Open Post Code Specific house prices list.
@@ -331,28 +259,54 @@ extension MapViewController: GMSMapViewDelegate {
         }
         return true
     }
-    
-    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
-//        let centerCoordinate = mapView.getCenterCoordinate()
-//        let radius = mapView.getRadius() / 1000
-//        print(radius)
-//        let strRadius = String(radius)
-//        let latitude = String(centerCoordinate.latitude)
-//        let longitude = String(centerCoordinate.longitude)
-//
-//        if radius != currentRadius {
-//            isHeatmap = false
-//            toggleButton.setTitle("Heatmap", for: .normal)
-//            heatmapLayer.map = nil
-//            self.postCodes.removeAll()
-//            self.list.removeAll()
-//
-//            currentRadius = radius
-//            getPropertyData(lat: latitude, long: longitude, radius: strRadius) {
-//                self.getMarkerAndHeatmapAfterCompletion()
-//            }
-//        }
+}
+
+
+// MARK: Places Search
+extension MapViewController {
+    // The code snippet below shows how to create and display a GMSPlacePickerViewController.
+    @IBAction func pickPlace(_ sender: UIButton) {
+        let config = GMSPlacePickerConfig(viewport: nil)
+        let placePicker = GMSPlacePickerViewController(config: config)
+        
+        present(placePicker, animated: true, completion: nil)
     }
     
+    // To receive the results from the place picker 'self' will need to conform to
+    // GMSPlacePickerViewControllerDelegate and implement this code.
+    func placePicker(_ viewController: GMSPlacePickerViewController, didPick place: GMSPlace) {
+        // Dismiss the place picker, as it cannot dismiss itself.
+        viewController.dismiss(animated: true, completion: nil)
+        
+        let radius = mapView.getRadius() / 1000
+        currentRadius = radius
+        
+        let strRadius = String(radius)
+        let latitude = String(place.coordinate.latitude)
+        let longitude = String(place.coordinate.longitude)
+        
+        isHeatmap = false
+        toggleButton.setTitle("Heatmap", for: .normal)
+        heatmapLayer.map = nil
+        
+        emptyArrays { (success) in
+            if success {
+                let location = GMSCameraPosition.camera(withLatitude: place.coordinate.latitude, longitude: place.coordinate.longitude, zoom: 17.0)
+                self.mapView.animate(to: location)
+                self.getPropertyData(lat: latitude, long: longitude, radius: strRadius) {
+                    DispatchQueue.main.async {
+                        self.getMarkerAndHeatmapAfterCompletion()
+                    }
+                }
+            }
+        }
+    }
+    
+    func placePickerDidCancel(_ viewController: GMSPlacePickerViewController) {
+        // Dismiss the place picker, as it cannot dismiss itself.
+        viewController.dismiss(animated: true, completion: nil)
+        
+        print("No place selected")
+    }
 }
 

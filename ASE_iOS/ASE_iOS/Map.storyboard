@@ -76,11 +76,20 @@
                                     <action selector="refreshTapped:" destination="NZU-Xh-nlQ" eventType="touchUpInside" id="WL7-qD-281"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ssb-yr-C8c">
+                                <rect key="frame" x="183" y="104" width="48" height="30"/>
+                                <state key="normal" title="Search"/>
+                                <connections>
+                                    <action selector="searchPlaceTapped:" destination="NZU-Xh-nlQ" eventType="touchUpInside" id="5bB-zx-IGk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Fe7-x7-mcS" firstAttribute="leading" secondItem="qBJ-j1-K9d" secondAttribute="leading" constant="16" id="807-oY-1bH"/>
                             <constraint firstItem="qBJ-j1-K9d" firstAttribute="bottom" secondItem="Fe7-x7-mcS" secondAttribute="bottom" constant="100" id="CIJ-N9-pfD"/>
+                            <constraint firstItem="ssb-yr-C8c" firstAttribute="centerX" secondItem="0jC-TT-DJG" secondAttribute="centerX" id="Cwq-jQ-YJE"/>
+                            <constraint firstItem="ssb-yr-C8c" firstAttribute="top" secondItem="qBJ-j1-K9d" secondAttribute="top" constant="16" id="DQz-Fo-RLd"/>
                             <constraint firstAttribute="bottom" secondItem="KJ7-CS-8aJ" secondAttribute="bottom" id="GhX-85-p69"/>
                             <constraint firstItem="qBJ-j1-K9d" firstAttribute="trailing" secondItem="KJ7-CS-8aJ" secondAttribute="trailing" id="MaM-6W-KqX"/>
                             <constraint firstItem="qBJ-j1-K9d" firstAttribute="trailing" secondItem="sz0-Ev-6zW" secondAttribute="trailing" constant="16" id="Vs1-RG-uYI"/>

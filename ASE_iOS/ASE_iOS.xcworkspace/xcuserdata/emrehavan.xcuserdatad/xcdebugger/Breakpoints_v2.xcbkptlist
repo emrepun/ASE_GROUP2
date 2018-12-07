@@ -40,44 +40,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ASE_iOS/Controllers/MapViewController.swift"
-            timestampString = "565808649.954898"
+            timestampString = "565894744.017415"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
             landmarkName = "toggleViewTapped(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ASE_iOS/Controllers/MapViewController.swift"
-            timestampString = "565808649.959129"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
-            landmarkName = "emptyArrays(completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ASE_iOS/Controllers/MapViewController.swift"
-            timestampString = "565808649.9602619"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
-            landmarkName = "getPropertyData(lat:long:radius:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -111,118 +79,6 @@
             endingLineNumber = "32"
             landmarkName = "performNetworkTask(endpoint:type:completion:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ASE_iOS/Controllers/MapViewController.swift"
-            timestampString = "565808649.9617389"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "258"
-            endingLineNumber = "258"
-            landmarkName = "getMarkerAndHeatmapAfterCompletion()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ASE_iOS.MapViewController.(getMarkerAndHeatmapAfterCompletion in _8E2F5071E175EB08F0FF2B682E9B382D)() -&gt; ()"
-                  moduleName = "ASE_iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/emrehavan/Desktop/ASE%20Project/ASE_GROUP2/ASE_iOS/ASE_iOS/Controllers/MapViewController.swift"
-                  timestampString = "565453776.172237"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "258"
-                  endingLineNumber = "258"
-                  offsetFromSymbolStart = "28">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in ASE_iOS.MapViewController.(getMarkerAndHeatmapAfterCompletion in _8E2F5071E175EB08F0FF2B682E9B382D)() -&gt; ()"
-                  moduleName = "ASE_iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/emrehavan/Desktop/ASE%20Project/ASE_GROUP2/ASE_iOS/ASE_iOS/Controllers/MapViewController.swift"
-                  timestampString = "565453776.174068"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "259"
-                  endingLineNumber = "259"
-                  offsetFromSymbolStart = "44">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ASE_iOS/Controllers/MapViewController.swift"
-            timestampString = "565808649.962744"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "257"
-            endingLineNumber = "257"
-            landmarkName = "getMarkerAndHeatmapAfterCompletion()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ASE_iOS/Controllers/MapViewController.swift"
-            timestampString = "565808649.963742"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
-            landmarkName = "refreshTapped(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Bool) -&gt; () in ASE_iOS.MapViewController.refreshTapped(Any) -&gt; ()"
-                  moduleName = "ASE_iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/emrehavan/Desktop/ASE%20Project/ASE_GROUP2/ASE_iOS/ASE_iOS/Controllers/MapViewController.swift"
-                  timestampString = "565453776.1828901"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "206"
-                  endingLineNumber = "206"
-                  offsetFromSymbolStart = "144">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in closure #1 (Swift.Bool) -&gt; () in ASE_iOS.MapViewController.refreshTapped(Any) -&gt; ()"
-                  moduleName = "ASE_iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/emrehavan/Desktop/ASE%20Project/ASE_GROUP2/ASE_iOS/ASE_iOS/Controllers/MapViewController.swift"
-                  timestampString = "565453776.184865"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "207"
-                  endingLineNumber = "207"
-                  offsetFromSymbolStart = "28">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
