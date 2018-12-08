@@ -5,7 +5,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const PORT = process.env.PORT | 3000;
-const HOST = '0.0.0.0';
+const HOST = "0.0.0.0";
 
 var app = express();
 app.use(bodyParser.json());
@@ -16,5 +16,5 @@ app.use("/api", apiRouter);
 
 app.listen(PORT, function() {
     // eslint-disable-next-line no-console
-    console.log(`listening on ${"HOST"}:${3000}`);
+    console.log(`listening on ${HOST}:${3000}`);
 });

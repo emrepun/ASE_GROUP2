@@ -86,6 +86,7 @@ exports.getSectors = async (lat, long, radius) => {
  * postcodes in that range
  */
 exports.getPostCodes = async (lat, long, radius) => {
+    radius *= 1.5
     lat = parseFloat(lat);
     long = parseFloat(long);
     var latdiff = radius / 110.574;
