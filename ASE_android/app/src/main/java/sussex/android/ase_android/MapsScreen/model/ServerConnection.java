@@ -92,10 +92,11 @@ public class ServerConnection implements MapsContract.Model {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                Toast.makeText(context, "The backend server was not reachable or produced an error", Toast.LENGTH_LONG).show();
             }
         });
-        //30 seconds timeout, because the backend can take multiple seconds to query the database
-        int socketTimeout = 30000;
+        //20 seconds timeout, because the backend can take multiple seconds to query the database
+        int socketTimeout = 20000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         request.setRetryPolicy(policy);
         request.setTag("marker");
@@ -150,6 +151,7 @@ public class ServerConnection implements MapsContract.Model {
                             callback.displayInfo(json, price);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Toast.makeText(context, "The backend server was not reachable or produced an error", Toast.LENGTH_LONG).show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -159,8 +161,8 @@ public class ServerConnection implements MapsContract.Model {
                 Toast.makeText(context, "The backend server was not reachable or produced an error", Toast.LENGTH_LONG).show();
             }
         });
-        //30 seconds timeout, because the backend can take multiple seconds to query the database
-        int socketTimeout = 30000;
+        //20 seconds timeout, because the backend can take multiple seconds to query the database
+        int socketTimeout = 20000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         request.setRetryPolicy(policy);
         request.setTag("address");

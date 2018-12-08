@@ -95,6 +95,7 @@ public class PoliceDataConnection implements MapsContract.Model {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                Toast.makeText(context, "The backend server was not reachable or produced an error", Toast.LENGTH_LONG).show();
             }
         });
         //30 seconds timeout, because the backend can take multiple seconds to query the database
