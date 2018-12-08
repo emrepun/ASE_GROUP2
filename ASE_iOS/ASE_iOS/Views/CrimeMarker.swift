@@ -21,7 +21,7 @@ class CrimeMarker: GMSMarker {
             }
         }
         
-        icon = #imageLiteral(resourceName: "homemarker")
+        icon = #imageLiteral(resourceName: "alertmarker")
         appearAnimation = .pop
     }
 }
