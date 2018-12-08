@@ -23,19 +23,18 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sz0-Ev-6zW">
-                                <rect key="frame" x="278" y="670" width="120" height="41"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="368" y="104" width="30" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="120" id="Ibq-TB-GrZ"/>
+                                    <constraint firstAttribute="width" constant="30" id="Ibq-TB-GrZ"/>
+                                    <constraint firstAttribute="height" constant="30" id="seU-ub-PCs"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="Refresh">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
+                                <state key="normal" image="refresh">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                        <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
@@ -52,7 +51,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ssb-yr-C8c">
                                 <rect key="frame" x="16" y="104" width="30" height="30"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="JTp-l4-bgo"/>
                                     <constraint firstAttribute="width" constant="30" id="xHg-nE-XeY"/>
@@ -68,7 +67,7 @@
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ZPL-Lw-hZj">
-                                <rect key="frame" x="16" y="670" width="135" height="29"/>
+                                <rect key="frame" x="16" y="738" width="135" height="29"/>
                                 <segments>
                                     <segment title="Property"/>
                                     <segment title="Crime"/>
@@ -78,7 +77,7 @@
                                 </connections>
                             </segmentedControl>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="36r-Jd-q2d">
-                                <rect key="frame" x="16" y="626" width="139" height="29"/>
+                                <rect key="frame" x="16" y="694" width="139" height="29"/>
                                 <segments>
                                     <segment title="Markers"/>
                                     <segment title="Heatmap"/>
@@ -90,9 +89,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="sz0-Ev-6zW" firstAttribute="top" secondItem="qBJ-j1-K9d" secondAttribute="top" constant="16" id="115-N4-hOg"/>
                             <constraint firstItem="ZPL-Lw-hZj" firstAttribute="leading" secondItem="qBJ-j1-K9d" secondAttribute="leading" constant="16" id="60l-cT-OQQ"/>
-                            <constraint firstItem="qBJ-j1-K9d" firstAttribute="bottom" secondItem="ZPL-Lw-hZj" secondAttribute="bottom" constant="164" id="8Rh-TJ-vGy"/>
-                            <constraint firstItem="sz0-Ev-6zW" firstAttribute="top" secondItem="ZPL-Lw-hZj" secondAttribute="top" id="9bz-0f-9oF"/>
+                            <constraint firstItem="qBJ-j1-K9d" firstAttribute="bottom" secondItem="ZPL-Lw-hZj" secondAttribute="bottom" constant="96" id="8Rh-TJ-vGy"/>
                             <constraint firstItem="ssb-yr-C8c" firstAttribute="top" secondItem="qBJ-j1-K9d" secondAttribute="top" constant="16" id="DQz-Fo-RLd"/>
                             <constraint firstAttribute="bottom" secondItem="KJ7-CS-8aJ" secondAttribute="bottom" id="GhX-85-p69"/>
                             <constraint firstItem="qBJ-j1-K9d" firstAttribute="trailing" secondItem="KJ7-CS-8aJ" secondAttribute="trailing" id="MaM-6W-KqX"/>
@@ -190,6 +189,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="refresh" width="36" height="45"/>
         <image name="search" width="24" height="24"/>
     </resources>
 </document>
