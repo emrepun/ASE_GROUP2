@@ -53,6 +53,9 @@
 		FB58AAF521B350CF00ADB277 /* GQTPointQuadTreeChild.m in Sources */ = {isa = PBXBuildFile; fileRef = FB58AAD721B350CF00ADB277 /* GQTPointQuadTreeChild.m */; };
 		FB6BCD5D21712ABB00778AC4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5C21712ABB00778AC4 /* User.swift */; };
 		FB6BCD5F21712B7D00778AC4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BCD5E21712B7D00778AC4 /* Extensions.swift */; };
+		FB71AE3121BAF34800486D17 /* Crime.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB71AE3021BAF34800486D17 /* Crime.swift */; };
+		FB71AE3321BAF38300486D17 /* CrimeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB71AE3221BAF38300486D17 /* CrimeAPI.swift */; };
+		FB71AE3521BAF8D600486D17 /* CrimeMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB71AE3421BAF8D600486D17 /* CrimeMarker.swift */; };
 		FB77E0D921833139008A9448 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB77E0D821833139008A9448 /* GoogleService-Info.plist */; };
 		FB925BBD21A758AA006BBE32 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB925BBC21A758AA006BBE32 /* Networking.swift */; };
 		FB925BBF21A758CD006BBE32 /* PropertyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB925BBE21A758CD006BBE32 /* PropertyAPI.swift */; };
@@ -171,6 +174,9 @@
 		FB58AADB21B350CF00ADB277 /* GQTBounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GQTBounds.h; sourceTree = "<group>"; };
 		FB6BCD5C21712ABB00778AC4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FB6BCD5E21712B7D00778AC4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		FB71AE3021BAF34800486D17 /* Crime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crime.swift; sourceTree = "<group>"; };
+		FB71AE3221BAF38300486D17 /* CrimeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrimeAPI.swift; sourceTree = "<group>"; };
+		FB71AE3421BAF8D600486D17 /* CrimeMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrimeMarker.swift; sourceTree = "<group>"; };
 		FB77E0D821833139008A9448 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FB925BBC21A758AA006BBE32 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		FB925BBE21A758CD006BBE32 /* PropertyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyAPI.swift; sourceTree = "<group>"; };
@@ -236,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				A9F9FED12199D4EF008FCE0C /* PlaceMarker.swift */,
+				FB71AE3421BAF8D600486D17 /* CrimeMarker.swift */,
 				A9F9FED32199D66F008FCE0C /* MarkerInfoView.xib */,
 				A9F9FED52199D692008FCE0C /* MarkerInfoView.swift */,
 				FB35127621AA21D800E465E6 /* PropertyTableViewCell.swift */,
@@ -280,6 +287,7 @@
 				FB925BBC21A758AA006BBE32 /* Networking.swift */,
 				FB925BBE21A758CD006BBE32 /* PropertyAPI.swift */,
 				FB925BC021A758DD006BBE32 /* EndpointType.swift */,
+				FB71AE3221BAF38300486D17 /* CrimeAPI.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -420,6 +428,7 @@
 				A9F9FECF2199D097008FCE0C /* PostCode.swift */,
 				FB925BC321A7596E006BBE32 /* Response.swift */,
 				FB35127421A9F99A00E465E6 /* Property.swift */,
+				FB71AE3021BAF34800486D17 /* Crime.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -773,6 +782,7 @@
 				FB58AADE21B350CF00ADB277 /* GMUHeatmapTileLayer.m in Sources */,
 				FB58AAE921B350CF00ADB277 /* GMUPair.m in Sources */,
 				FB58AAF521B350CF00ADB277 /* GQTPointQuadTreeChild.m in Sources */,
+				FB71AE3321BAF38300486D17 /* CrimeAPI.swift in Sources */,
 				FB58AAEB21B350CF00ADB277 /* GMUGeoJSONParser.m in Sources */,
 				FB58AAEE21B350CF00ADB277 /* GMUWrappingDictionaryKey.m in Sources */,
 				FB58AAE721B350CF00ADB277 /* GMUStyle.m in Sources */,
@@ -793,7 +803,9 @@
 				FBCB459F216FBD5F00089508 /* AppDelegate.swift in Sources */,
 				FB58AAEC21B350CF00ADB277 /* GMUClusterManager.m in Sources */,
 				A9CE61812187D19B003120EF /* LogInViewController.swift in Sources */,
+				FB71AE3521BAF8D600486D17 /* CrimeMarker.swift in Sources */,
 				FB6BCD5D21712ABB00778AC4 /* User.swift in Sources */,
+				FB71AE3121BAF34800486D17 /* Crime.swift in Sources */,
 				FB58AAE321B350CF00ADB277 /* GMUPolygon.m in Sources */,
 				FB58AAEF21B350CF00ADB277 /* GMUSimpleClusterAlgorithm.m in Sources */,
 				A9CE617F2187D14F003120EF /* MapViewController.swift in Sources */,
