@@ -79,6 +79,28 @@ exports.getSectors = async (lat, long, radius) => {
 };
 
 /**
+ * @param lat Latitude
+ * @param long Longitude
+ * @param radius Radius in km
+ * Converts lat and long with radius to a lat/long bracket and searches the db for
+ * postcodes in that range
+ */
+exports.getPostCodes = async (lat, long, radius) => {
+    radius *= 1.5
+    lat = parseFloat(lat);
+    long = parseFloat(long);
+    var latdiff = radius / 110.574;
+    var longdiff = 111.32 * Math.abs(Math.cos(lat));
+    longdiff = radius / longdiff;
+    var req = {
+        Latitude: { $gte: lat - latdiff / 2, $lte: lat + latdiff / 2 },
+        Longitude: { $gte: long - longdiff / 2, $lte: long + longdiff / 2 }
+    };
+    var data = await postcodeDataModel.find(req);
+    return data;
+};
+
+/**
  * @param {string} postcode
  * @returns postcode object and associated data
  */

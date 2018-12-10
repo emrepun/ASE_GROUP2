@@ -43,21 +43,13 @@ var getAveragePrice = async function(postcode) {
 var getPricesAtAround = async function(lat, long, radius) {
     var postcodes = [];
     if (radius < 1 || radius == undefined) {
-        postcodes = await postcodeService.getPostcodesNearAround(
-            lat,
-            long,
-            radius
-        );
-        var asyncPrices = postcodes.map(postcode =>
-            getAveragePrice(postcode.Postcode)
-        );
-        var prices = await Promise.all(asyncPrices);
-        postcodes = postcodes.map((postcode, i) => {
+        postcodes = await dbService.getPostCodes(lat, long, radius);
+        postcodes = postcodes.map(postcode => {
             return {
-                price: prices[i],
-                postcode: postcode.Postcode,
-                latitude: postcode.Latitude,
-                longitude: postcode.Longitude
+                price: postcode.Average_price,
+                postcode: postcode._id,
+                latitude: postcode.Latitude + "",
+                longitude: postcode.Longitude + ""
             };
         });
     } else if (radius > 90) {
