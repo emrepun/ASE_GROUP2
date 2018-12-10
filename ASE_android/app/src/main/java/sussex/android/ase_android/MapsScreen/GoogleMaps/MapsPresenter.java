@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.location.Address;
-import android.location.Geocoder;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -18,12 +16,12 @@ import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.google.maps.android.heatmaps.WeightedLatLng;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import sussex.android.ase_android.MapsScreen.model.CallbackMarkerInterface;
+import sussex.android.ase_android.MapsScreen.model.PoliceDataConnection;
 import sussex.android.ase_android.MapsScreen.model.PostCodeMarker;
 import sussex.android.ase_android.MapsScreen.model.ServerConnection;
 import sussex.android.ase_android.R;
@@ -31,14 +29,17 @@ import sussex.android.ase_android.R;
 public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInterface {
 
     private MapsContract.View view;
-    private MapsContract.Model jsonparser;
+    private MapsContract.Model ServerConnectionHandler;
     private List<PostCodeMarker> markerList = new ArrayList<>();
 
     private boolean heatMapEnabled;
 
+
+
     public MapsPresenter(MapsContract.View view) {
         this.view = view;
-        jsonparser=new ServerConnection(view.getActivity());
+        ServerConnectionHandler =new PoliceDataConnection(view.getActivity());
+
     }
 
 
@@ -59,36 +60,17 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
         if(heatMapEnabled){
             enableHeatMap();
         }else {
-            for (PostCodeMarker postCodeMarker : markerList) {
-                view.addMarker(new MarkerOptions()
-                        .position(new LatLng(postCodeMarker.getLat(), postCodeMarker.getLon()))
-                        .icon(bitmapDescriptorFromVector(view.getActivity(), R.drawable.ic_marker))
-                        .title(postCodeMarker.getPostcode())
-                        .snippet("Average price: £" + String.format(Locale.UK, "%,.2f", postCodeMarker.getPrice())));
-            }
+            view.addMarkersClustered(markerList);
         }
     }
 
 
-    /**
-     * Generates a bitmap from the provided vector image
-     * @param context Context
-     * @param vectorResId id of the vector image
-     * @return Bitmap representation of the vector image at the right resolution in respect to the device
-     */
-    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
-        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
-        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
-        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        vectorDrawable.draw(canvas);
-        return BitmapDescriptorFactory.fromBitmap(bitmap);
-
+    public MapsContract.Model getServerConnectionHandler(){
+        return ServerConnectionHandler;
     }
 
-
-    public MapsContract.Model getServerConnectionHandler(){
-        return jsonparser;
+    public void setServerConnectionHandler(MapsContract.Model serverConnectionHandler){
+        this.ServerConnectionHandler=serverConnectionHandler;
     }
 
     /**
@@ -129,6 +111,6 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
      * @param radius_meter radius of the current visible region in meters
      */
     public void cameraPosChanged(LatLng target, float radius_meter) {
-        jsonparser.markerJsonParse(this,target.latitude, target.longitude,radius_meter/1000);
+        ServerConnectionHandler.markerJsonParse(this,target.latitude, target.longitude,radius_meter/1000);
     }
 }

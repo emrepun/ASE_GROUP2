@@ -35,7 +35,23 @@
 
     <include layout="@layout/layout_pull_up" />
 
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        map:backgroundTint="#82FFFFFF"
+        map:borderWidth="0dp"
+        map:elevation="1dp"
+        map:layout_anchor="@+id/drawer_layout"
+        map:layout_anchorGravity="left|top"
+        map:pressedTranslationZ="3dp"
+        map:srcCompat="@android:drawable/ic_search_category_default"
+        map:fabSize="mini"
+        android:onClick="search_onclick"
+        />
 
 
 </android.support.design.widget.CoordinatorLayout>
