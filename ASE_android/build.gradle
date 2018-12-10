@@ -5,6 +5,8 @@ buildscript {
     repositories {
         google()
         jcenter()
+        jcenter {url 'https://dl.bintray.com/android/android-tools'}
+        jcenter {url 'https://firebase.bintray.com/gradle'}
         maven {
             url 'https://maven.fabric.io/public'
         }
@@ -13,6 +15,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.2.1'
         classpath 'com.google.gms:google-services:4.0.1'
         classpath 'io.fabric.tools:gradle:1.26.1'
+        classpath 'com.google.firebase:firebase-plugins:1.1.5'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
