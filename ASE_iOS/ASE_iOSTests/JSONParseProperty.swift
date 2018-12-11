@@ -16,6 +16,7 @@ class JSONParseProperty: XCTestCase {
     var property: Property!
     let pricePaid = 40000
     let street = "London Rd."
+    let date = "Fri, 04 Oct 1996"
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -25,7 +26,8 @@ class JSONParseProperty: XCTestCase {
                 "propertyAddress": {
                     "street": "London Rd.",
                     "paon": "24"
-                }
+                },
+                "transactionDate": "Fri, 04 Oct 1996"
             }
         
     """.data(using: .utf8)!
@@ -53,6 +55,15 @@ class JSONParseProperty: XCTestCase {
         do {
             property = try jsonDecoder.decode(Property.self, from: mockJsonProperty)
             XCTAssert(property.propertyAddress?.street! == self.street)
+        } catch _ {
+            XCTAssert(false)
+        }
+    }
+    
+    func testPropertyTransactionDateJSONParser() {
+        do {
+            property = try jsonDecoder.decode(Property.self, from: mockJsonProperty)
+            XCTAssert(property.transactionDate == self.date)
         } catch _ {
             XCTAssert(false)
         }

@@ -11,6 +11,7 @@ import UIKit
 class PropertyTableViewCell: UITableViewCell {
     @IBOutlet var addressLabel: UILabel!
     @IBOutlet var priceLabel: UILabel!
+    @IBOutlet var transactionDateLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

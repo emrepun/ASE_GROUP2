@@ -11,6 +11,7 @@ import Foundation
 struct Property: Codable {
     let pricePaid: Int?
     let propertyAddress: Address?
+    let transactionDate: String?
 }
 
 struct Address: Codable {

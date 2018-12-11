@@ -133,29 +133,38 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0W5-ls-jVW">
-                                            <rect key="frame" x="28" y="19.5" width="303" height="20.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <rect key="frame" x="28" y="21.5" width="309" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="psi-bn-6Kx">
-                                            <rect key="frame" x="347" y="19.5" width="39" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <rect key="frame" x="353" y="24" width="33" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EwK-yg-GXy">
+                                            <rect key="frame" x="355" y="5" width="31" height="15"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="0W5-ls-jVW" firstAttribute="leading" secondItem="7Iz-qg-MD7" secondAttribute="leadingMargin" constant="8" id="439-Lu-eHK"/>
-                                        <constraint firstItem="psi-bn-6Kx" firstAttribute="centerY" secondItem="7Iz-qg-MD7" secondAttribute="centerY" id="WcH-qA-4Nt"/>
+                                        <constraint firstItem="psi-bn-6Kx" firstAttribute="top" secondItem="EwK-yg-GXy" secondAttribute="bottom" constant="4" id="Fee-dN-V8j"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="psi-bn-6Kx" secondAttribute="bottom" constant="8" id="GBR-zM-NMc"/>
                                         <constraint firstItem="psi-bn-6Kx" firstAttribute="leading" secondItem="0W5-ls-jVW" secondAttribute="trailing" constant="16" id="haY-WM-wbG"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="psi-bn-6Kx" secondAttribute="trailing" constant="8" id="lZu-6e-s9u"/>
+                                        <constraint firstItem="EwK-yg-GXy" firstAttribute="trailing" secondItem="psi-bn-6Kx" secondAttribute="trailing" id="xcB-nx-orS"/>
                                         <constraint firstItem="0W5-ls-jVW" firstAttribute="centerY" secondItem="7Iz-qg-MD7" secondAttribute="centerY" id="xqr-ts-oB5"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="addressLabel" destination="0W5-ls-jVW" id="O2r-kc-xmh"/>
                                     <outlet property="priceLabel" destination="psi-bn-6Kx" id="y4t-nF-oJU"/>
+                                    <outlet property="transactionDateLabel" destination="EwK-yg-GXy" id="yCA-7j-bFa"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
