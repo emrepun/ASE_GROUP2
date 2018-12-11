@@ -178,7 +178,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void markerClicked(Marker marker) {
         if(marker!=null && marker.getTitle()!=null) {
-            if (enableInfoWindow && marker.getSnippet() != null && !marker.getSnippet().isEmpty()) {
+            if (enableInfoWindow && marker.getSnippet() != null && !marker.getSnippet().equals("Occurred within the last month.")) {
                 //only display info window for markers where that information is available
                 bottomSheetView.displayBottomSheet(marker.getTitle(), marker.getSnippet());
             }
