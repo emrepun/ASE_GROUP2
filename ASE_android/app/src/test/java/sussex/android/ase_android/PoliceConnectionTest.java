@@ -18,6 +18,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
@@ -31,10 +32,12 @@ import sussex.android.ase_android.MapsScreen.Model.PostCodeMarker;
 import sussex.android.ase_android.MapsScreen.Model.ServerConnection;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.timeout;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 
@@ -61,7 +64,7 @@ public class PoliceConnectionTest {
         RequestQueue queue = newVolleyRequestQueueForTest(context);
         Field privateQueue = null;
         try {
-            privateQueue = ServerConnection.class.getDeclaredField("mQueue");
+            privateQueue = PoliceDataConnection.class.getDeclaredField("mQueue");
         } catch (NoSuchFieldException e1) {
             e1.printStackTrace();
         }
@@ -87,7 +90,7 @@ public class PoliceConnectionTest {
             }
         });
         scon.markerJsonParse(callBack, 50.822823, -0.131921,0.1);
-        lock.await(10000, TimeUnit.MILLISECONDS);
+        //lock.await(10000, TimeUnit.MILLISECONDS); not needed verify has timeout
         verify(callBack, timeout(5000).times(1)).displayMarkers((List<PostCodeMarker>)any());
     }
 
@@ -95,11 +98,11 @@ public class PoliceConnectionTest {
 
     @Test
     public void markerJsonParse() throws InterruptedException {
+        final List<PostCodeMarker> markerList_result = new ArrayList<>();
         scon.markerJsonParse(new CallbackMarkerInterface() {
             @Override
             public void displayMarkers(List<PostCodeMarker> markerList) {
-                assertEquals(markerList.size(), 15);
-                assertEquals(markerList.get(0).getPostcode(), "BN2 0JH");
+                markerList_result.addAll(markerList);
                 lock.countDown();
             }
 
@@ -108,7 +111,8 @@ public class PoliceConnectionTest {
                 fail(errorMessage);
             }
         }, 50.822823, -0.131921,0.1);
-        lock.await(10000, TimeUnit.MILLISECONDS);
+        lock.await(5000, TimeUnit.MILLISECONDS);
+        assertTrue(markerList_result.size()> 0);
     }
 
 }

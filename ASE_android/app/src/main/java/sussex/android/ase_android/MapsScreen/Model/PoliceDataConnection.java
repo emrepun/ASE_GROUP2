@@ -66,15 +66,15 @@ public class PoliceDataConnection implements MapsContract.Model {
                             //pass markers back to calling object
                             callback.displayMarkers(markerArrayList);
                         } catch (JSONException e) {
-                            Crashlytics.logException(e);
                             callback.onResponseError("The backend server produced an error.");
+                            Crashlytics.logException(e);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Crashlytics.logException(error);
                 callback.onResponseError("The backend server was not reachable.");
+                Crashlytics.logException(error);
             }
         });
         //30 seconds timeout, because the backend can take multiple seconds to query the database

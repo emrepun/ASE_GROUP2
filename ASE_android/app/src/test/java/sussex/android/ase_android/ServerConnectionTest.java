@@ -17,6 +17,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
@@ -86,7 +87,7 @@ public class ServerConnectionTest {
             }
         });
         scon.markerJsonParse(callBack, 50.822823, -0.131921,0.1);
-        lock.await(10000, TimeUnit.MILLISECONDS);
+        //lock.await(10000, TimeUnit.MILLISECONDS);
         verify(callBack, timeout(5000).times(1)).displayMarkers((List<PostCodeMarker>)any());
     }
 
@@ -94,11 +95,11 @@ public class ServerConnectionTest {
 
     @Test
     public void markerJsonParse() throws InterruptedException {
+        final List<PostCodeMarker> markerList_result = new ArrayList<>();
         scon.markerJsonParse(new CallbackMarkerInterface() {
             @Override
             public void displayMarkers(List<PostCodeMarker> markerList) {
-                assertEquals(markerList.size(), 15);
-                assertEquals(markerList.get(0).getPostcode(), "BN2 0JH");
+                markerList_result.addAll(markerList);
                 lock.countDown();
             }
 
@@ -108,6 +109,8 @@ public class ServerConnectionTest {
             }
         }, 50.822823, -0.131921,0.1);
         lock.await(10000, TimeUnit.MILLISECONDS);
+        assertEquals(markerList_result.size(), 2);
+        assertEquals(markerList_result.get(0).getPostcode(), "BN2 0JH");
     }
 
     @Test
