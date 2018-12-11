@@ -26,7 +26,7 @@ matrix:
                         - cd ASE_backend
                   script:
                         - npm install
-                        - npm test
+                        - npm tests
                         - jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
                   after_script:
                           #- ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
