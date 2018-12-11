@@ -4,7 +4,7 @@ plugins {
 }
 
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.google.gms.google-services'
 cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
 
 android {
