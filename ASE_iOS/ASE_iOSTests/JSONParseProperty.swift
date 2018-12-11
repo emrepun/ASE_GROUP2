@@ -27,7 +27,7 @@ class JSONParseProperty: XCTestCase {
                     "street": "London Rd.",
                     "paon": "24"
                 },
-                transactionDate: "Fri, 04 Oct 1996"
+                "transactionDate": "Fri, 04 Oct 1996"
             }
         
     """.data(using: .utf8)!
