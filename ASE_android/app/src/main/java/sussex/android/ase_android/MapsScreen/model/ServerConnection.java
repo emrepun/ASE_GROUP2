@@ -58,30 +58,7 @@ public class ServerConnection implements MapsContract.Model {
                     public void onResponse(JSONArray response) {
                         ArrayList<PostCodeMarker> markerArrayList= new ArrayList<>();
                         try {
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject postcodeData = response.getJSONObject(i);
-                                double price;
-                                try {
-                                    price = postcodeData.getDouble("price");
-                                }catch (JSONException e){
-                                    price=0;
-                                }
-                                String postcode;
-                                try{
-                                    postcode = postcodeData.getString("postcode");
-                                }catch (JSONException e){
-                                    postcode="Unknown";
-                                }
-                                double lat;double lon;
-                                try {
-                                    lat = postcodeData.getDouble("latitude");
-                                    lon = postcodeData.getDouble("longitude");
-                                }catch (JSONException e){
-                                    lat=lon=0;
-                                }
-                                markerArrayList.add(new PostCodeMarker(lat,lon, price, postcode, PostCodeMarker.HOUSE_MARKER));
-
-                            }
+                            parseMarkerResponse(response, markerArrayList);
                             //pass markers back to calling object
                             callback.displayMarkers(markerArrayList);
                         } catch (JSONException e) {
@@ -103,6 +80,33 @@ public class ServerConnection implements MapsContract.Model {
         request.setTag("marker");
         mQueue.add(request);
 
+    }
+
+    private void parseMarkerResponse(JSONArray response, ArrayList<PostCodeMarker> markerArrayList) throws JSONException {
+        for (int i = 0; i < response.length(); i++) {
+            JSONObject postcodeData = response.getJSONObject(i);
+            double price;
+            try {
+                price = postcodeData.getDouble("price");
+            }catch (JSONException e){
+                price=0;
+            }
+            String postcode;
+            try{
+                postcode = postcodeData.getString("postcode");
+            }catch (JSONException e){
+                postcode="Unknown";
+            }
+            double lat;double lon;
+            try {
+                lat = postcodeData.getDouble("latitude");
+                lon = postcodeData.getDouble("longitude");
+            }catch (JSONException e){
+                lat=lon=0;
+            }
+            markerArrayList.add(new PostCodeMarker(lat,lon, price, postcode, PostCodeMarker.HOUSE_MARKER));
+
+        }
     }
 
     /**

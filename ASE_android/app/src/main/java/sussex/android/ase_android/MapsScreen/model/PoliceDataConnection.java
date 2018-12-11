@@ -63,28 +63,7 @@ public class PoliceDataConnection implements MapsContract.Model {
                     public void onResponse(JSONArray response) {
                         ArrayList<PostCodeMarker> markerArrayList= new ArrayList<>();
                         try {
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject postcodeData = response.getJSONObject(i);
-                                double lat;double lon;
-                                try {
-                                    JSONObject locObject = postcodeData.getJSONObject("location");
-                                    lat = locObject.getDouble("latitude");
-                                    lon = locObject.getDouble("longitude");
-                                }catch (JSONException e){
-                                    lat=lon=0;
-                                }
-
-                                String category;
-                                try {
-                                    category = postcodeData.getString("category");
-                                } catch (JSONException e) {
-                                    category = "Unknown Crime";
-                                }
-
-
-                                markerArrayList.add(new PostCodeMarker(lat,lon, 1.0, category, PostCodeMarker.POLICE_MARKER));
-
-                            }
+                            parseApiResponse(response, markerArrayList);
                             //pass markers back to calling object
                             callback.displayMarkers(markerArrayList);
                         } catch (JSONException e) {
@@ -106,6 +85,31 @@ public class PoliceDataConnection implements MapsContract.Model {
         request.setTag("policemarker");
         mQueue.add(request);
 
+    }
+
+    private void parseApiResponse(JSONArray response, ArrayList<PostCodeMarker> markerArrayList) throws JSONException {
+        for (int i = 0; i < response.length(); i++) {
+            JSONObject postcodeData = response.getJSONObject(i);
+            double lat;double lon;
+            try {
+                JSONObject locObject = postcodeData.getJSONObject("location");
+                lat = locObject.getDouble("latitude");
+                lon = locObject.getDouble("longitude");
+            }catch (JSONException e){
+                lat=lon=0;
+            }
+
+            String category;
+            try {
+                category = postcodeData.getString("category");
+            } catch (JSONException e) {
+                category = "Unknown Crime";
+            }
+
+
+            markerArrayList.add(new PostCodeMarker(lat,lon, 1.0, category, PostCodeMarker.POLICE_MARKER));
+
+        }
     }
 
     /**
