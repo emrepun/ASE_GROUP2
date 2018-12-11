@@ -16,7 +16,6 @@ env:
                 - ANDROID_ABI=armeabi-v7a
                 - ANDROID_TAG=google_apis
                 - ADB_INSTALL_TIMEOUT=5
-                - CC_TEST_REPORTER_ID=03239df105a5a57945b742180970c6fc4c098b756d7d43059fa14aeea332ce30
 
 matrix:
         include:
@@ -28,6 +27,7 @@ matrix:
                   script:
                         - npm install
                         - npm test
+                        - jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
                   after_script:
                           #- ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
                           # - docker login -u $DOCKER_USER -p $DOCKER_PASS
@@ -73,7 +73,6 @@ matrix:
                           - echo "y" | android update sdk -a --no-ui --filter android-24
                           - echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-24
                           - android list targets | grep -E '^id:' | awk -F '"' '{$1=""; print $2}'
-                            #- echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
                           - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a --device 'Nexus 4' --sdcard 128M
                           - emulator -avd test -no-window -no-audio -skin 768x1280 &
                           - sudo cp -R /root/.android $HOME
@@ -97,7 +96,6 @@ matrix:
                           - pod install
                           - brew update
                           - brew install xctool
-                            #- ./cc-test-reporter before-build
                   script:
                           - xcodebuild -workspace ASE_iOS.xcworkspace -scheme ASE_iOS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
                           - xcodebuild test -workspace ASE_iOS.xcworkspace -scheme ASE_iOS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
@@ -114,17 +112,4 @@ after_failure:
         - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
         - chmod +x send.sh
         - ./send.sh failure $WEBHOOK_URL
-          #after_script:
-                          #- ./cc-test-reporter -p ASE_iOS after-build --exit-code $TRAVIS_TEST_RESULT
-
-                          #deploy:
-                          # provider: heroku
-                          # api-key: 7a669883-840c-4750-b1e4-c850da0f0f2e
-                          #on: master
-                          # app: ase-group2
-                          # run:
-                          # - sleep
-                          # - "rake db:migrate"
-                          # - restart
-                          #  - "rake cleanup"
 
