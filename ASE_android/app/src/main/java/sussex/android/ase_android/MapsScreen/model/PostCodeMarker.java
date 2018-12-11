@@ -39,7 +39,7 @@ public class PostCodeMarker implements ClusterItem {
                 snippet=("Unknown average price.");
             }
         }else{
-            snippet="";
+            snippet="Occurred within the last month.";
         }
     }
 
