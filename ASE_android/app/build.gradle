@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'net.saliman.cobertura'
+apply plugin: 'com.github.stevesaliman.gradle-cobertura-plugin'
 apply plugin: 'com.github.kt3k.coveralls'
 
 cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
