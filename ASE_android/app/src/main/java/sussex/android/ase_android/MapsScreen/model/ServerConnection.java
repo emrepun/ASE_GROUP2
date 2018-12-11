@@ -11,6 +11,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.crashlytics.android.Crashlytics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,15 +85,15 @@ public class ServerConnection implements MapsContract.Model {
                             //pass markers back to calling object
                             callback.displayMarkers(markerArrayList);
                         } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(context, "The backend server was not reachable or produced an error", Toast.LENGTH_LONG).show();
+                            Crashlytics.logException(e);
+                            callback.onResponseError("The backend server produced an error.");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                Toast.makeText(context, "The backend server was not reachable or produced an error", Toast.LENGTH_LONG).show();
+                Crashlytics.logException(error);
+                callback.onResponseError("The backend server was not reachable.");
             }
         });
         //20 seconds timeout, because the backend can take multiple seconds to query the database
@@ -150,16 +151,15 @@ public class ServerConnection implements MapsContract.Model {
                             }
                             callback.displayInfo(json, price);
                         } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(context, "The backend server was not reachable or produced an error", Toast.LENGTH_LONG).show();
+                            Crashlytics.logException(e);
+                            callback.onResponseError("The backend server produced an error.");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                Toast.makeText(context, "The backend server was not reachable or produced an error", Toast.LENGTH_LONG).show();
-            }
+                Crashlytics.logException(error);
+                callback.onResponseError("The backend server was not reachable.");            }
         });
         //20 seconds timeout, because the backend can take multiple seconds to query the database
         int socketTimeout = 20000;

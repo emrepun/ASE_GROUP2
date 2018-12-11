@@ -12,6 +12,7 @@ public interface BottomSheetContract {
                 void displayAddresses(String json, String price);
 
                 void populateListView(String json, String price);
+                void onResponseError(String errorMessage);
         }
 
         interface Presenter extends BasePresenter {

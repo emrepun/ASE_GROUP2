@@ -1,6 +1,7 @@
 package sussex.android.ase_android.MapsScreen.BottomSheet;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.support.design.widget.BottomSheetBehavior;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -79,6 +80,15 @@ public class BottomSheetView implements BottomSheetContract.View{
 
     public void populateListView(String json, String price){
 
+    }
+
+    @Override
+    public void onResponseError(String errorMessage) {
+        new AlertDialog.Builder(activity)
+                .setTitle("Error")
+                .setMessage(errorMessage)
+                .setPositiveButton("OK", null)
+                .show();
     }
 
     /**

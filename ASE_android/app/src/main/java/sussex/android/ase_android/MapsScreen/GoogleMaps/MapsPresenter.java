@@ -1,16 +1,9 @@
 package sussex.android.ase_android.MapsScreen.GoogleMaps;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
+import android.app.AlertDialog;
 import android.util.Log;
 
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
@@ -18,13 +11,11 @@ import com.google.maps.android.heatmaps.WeightedLatLng;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import sussex.android.ase_android.MapsScreen.model.CallbackMarkerInterface;
 import sussex.android.ase_android.MapsScreen.model.PoliceDataConnection;
 import sussex.android.ase_android.MapsScreen.model.PostCodeMarker;
 import sussex.android.ase_android.MapsScreen.model.ServerConnection;
-import sussex.android.ase_android.R;
 
 public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInterface {
 
@@ -38,7 +29,7 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
 
     public MapsPresenter(MapsContract.View view) {
         this.view = view;
-        ServerConnectionHandler =new PoliceDataConnection(view.getActivity());
+        ServerConnectionHandler =new ServerConnection(view.getActivity());
 
     }
 
@@ -50,6 +41,19 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
     public void displayMarkers(List<PostCodeMarker> markerList) {
         this.markerList=markerList;
         displayMarkers();
+    }
+
+    /**
+     * displays an error message when the backend produces an error
+     * @param errorMessage message to display
+     */
+    @Override
+    public void onResponseError(String errorMessage) {
+        new AlertDialog.Builder(view.getActivity())
+                .setTitle("Error")
+                .setMessage(errorMessage)
+                .setPositiveButton("OK", null)
+                .show();
     }
 
     /**

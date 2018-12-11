@@ -11,6 +11,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.crashlytics.android.Crashlytics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +52,7 @@ public class PoliceDataConnection implements MapsContract.Model {
      */
     public void markerJsonParse(final CallbackMarkerInterface callback, double lat, double lon, double radius) {
         //cancel all other requests to the backend as they are now outdated
-        mQueue.cancelAll("marker");
+        mQueue.cancelAll("policemarker");
         if(radius>2){ //api is <1 mile
             Toast.makeText(context, "Crime data can only be shown up to a radius of 1 mile.", Toast.LENGTH_SHORT).show();
         }
@@ -87,22 +88,22 @@ public class PoliceDataConnection implements MapsContract.Model {
                             //pass markers back to calling object
                             callback.displayMarkers(markerArrayList);
                         } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(context, "The backend server was not reachable or produced an error", Toast.LENGTH_LONG).show();
+                            Crashlytics.logException(e);
+                            callback.onResponseError("The backend server produced an error.");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                Toast.makeText(context, "The backend server was not reachable or produced an error", Toast.LENGTH_LONG).show();
+                Crashlytics.logException(error);
+                callback.onResponseError("The backend server was not reachable.");
             }
         });
         //30 seconds timeout, because the backend can take multiple seconds to query the database
         int socketTimeout = 30000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         request.setRetryPolicy(policy);
-        request.setTag("marker");
+        request.setTag("policemarker");
         mQueue.add(request);
 
     }
