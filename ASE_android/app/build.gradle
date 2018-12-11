@@ -1,7 +1,10 @@
+plugins {
+    id 'jacoco'
+    id 'com.github.kt3k.coveralls' version '2.6.3'
+}
+
 apply plugin: 'com.android.application'
-apply plugin: 'com.github.kt3k.coveralls'
 apply plugin: 'com.google.gms.google-services'
-apply plugin: "jacoco"
 
 jacoco {
     toolVersion = "0.7.1.201405082137"
