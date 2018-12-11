@@ -2,10 +2,12 @@ const chai = require("chai");
 const expect = chai.expect;
 const sinon = require("sinon");
 const controller = require("../controllers/apiController.js");
-const apiService = require("../services/apiService.js")
+const apiService = require("../services/apiService.js");
 
+var {dbRemote} = require('../services/mongooseRemote.js');
+dbRemote.close();
 
-describe("API Controller", function(){
+describe("API Controller", function(done){
   it("should return postcode details", function(done){
       var post = sinon.stub(apiService, 'getPricesAtAround');
       post.returns({lat:"3442", long:"343432", radius:"1"});
@@ -63,6 +65,5 @@ describe("API Controller", function(){
        expect(res.send.firstCall.args[0]).to.equal("Error getting prices");
        done();
      });
-
-   })
+   });
 })
