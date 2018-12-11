@@ -24,13 +24,24 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
     private List<PostCodeMarker> markerList = new ArrayList<>();
 
     private boolean heatMapEnabled;
+    private boolean crimeMapEnabled;
 
 
 
     public MapsPresenter(MapsContract.View view) {
         this.view = view;
-        ServerConnectionHandler =new ServerConnection(view.getActivity());
+        switchMarker();
+    }
 
+    private void switchMarker() {
+        boolean showCrimeMap = true;
+        if (showCrimeMap){
+            policeMarker();
+            showCrimeMap = false;
+        } else {
+            priceMarker();
+            showCrimeMap = true;
+        }
     }
 
 
@@ -68,14 +79,13 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
         }
     }
 
-
     public MapsContract.Model getServerConnectionHandler(){
         return ServerConnectionHandler;
     }
 
     public void setServerConnectionHandler(MapsContract.Model serverConnectionHandler){
         this.ServerConnectionHandler=serverConnectionHandler;
-    }
+}
 
     /**
      * Switches between the heatmap and marker display
@@ -116,5 +126,23 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
      */
     public void cameraPosChanged(LatLng target, float radius_meter) {
         ServerConnectionHandler.markerJsonParse(this,target.latitude, target.longitude,radius_meter/1000);
+    }
+
+    public void switchMap(boolean showCrimeMap) {
+        this.crimeMapEnabled=showCrimeMap;
+        if (showCrimeMap){
+            policeMarker();
+        } else {
+            priceMarker();
+        }
+    }
+
+    private void policeMarker(){
+        ServerConnectionHandler =new PoliceDataConnection(view.getActivity());
+    }
+
+    private void priceMarker() {
+        ServerConnectionHandler =new ServerConnection(view.getActivity());
+
     }
 }
