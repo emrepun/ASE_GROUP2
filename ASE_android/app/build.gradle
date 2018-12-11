@@ -1,6 +1,6 @@
 plugins {
     id 'net.saliman.cobertura' version '2.3.1'
-    id 'com.github.kt3k.coveralls' version '2.8.2'
+    id 'com.github.kt3k.coveralls' version '3.0.2'
 }
 
 apply plugin: 'com.android.application'
