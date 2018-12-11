@@ -66,12 +66,15 @@ class PropertyTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "propertyCell", for: indexPath) as! PropertyTableViewCell
         let address = properties[indexPath.row].propertyAddress
         let price = properties[indexPath.row].pricePaid
+        let transactionDate = properties[indexPath.row].transactionDate
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
         numberFormatter.groupingSeparator = "."
         let formattedPrice = numberFormatter.string(from: NSNumber(value: price ?? -1))
+        
         cell.addressLabel.text = "\(address?.paon ?? "") - \(address?.street ?? "")"
         cell.priceLabel.text = "\(formattedPrice ?? "") £"
+        cell.transactionDateLabel.text = transactionDate
         return cell
     }
 }

@@ -371,10 +371,11 @@ extension MapViewController {
         
         prepareViewForUpdate()
         
-        let radius = mapView.getRadius() / 1000
-        currentRadius = radius
+//        let radius = mapView.getRadius() / 1000
+//        currentRadius = radius
+        currentRadius = 0.15
         
-        let strRadius = String(radius)
+        //let strRadius = String(radius)
         let latitude = String(place.coordinate.latitude)
         let longitude = String(place.coordinate.longitude)
         
