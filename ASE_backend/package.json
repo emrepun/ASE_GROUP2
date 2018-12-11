@@ -19,6 +19,7 @@
     "homepage": "https://github.com/emrepun/ASE_GROUP2#readme",
     "dependencies": {
         "body-parser": "^1.18.3",
+        "blanket": "^1.2.3",
         "chai": "^4.2.0",
         "csvtojson": "^2.0.8",
         "coveralls": "^3.0.2",
