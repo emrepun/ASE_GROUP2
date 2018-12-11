@@ -9,6 +9,7 @@ import com.android.volley.ResponseDelivery;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
+import com.google.android.gms.maps.GoogleMap;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,8 +25,8 @@ import java.util.concurrent.TimeUnit;
 
 import androidx.test.core.app.ApplicationProvider;
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
-import sussex.android.ase_android.MapsScreen.Model.CallbackInfoInterface;
 import sussex.android.ase_android.MapsScreen.Model.CallbackMarkerInterface;
+import sussex.android.ase_android.MapsScreen.Model.PoliceDataConnection;
 import sussex.android.ase_android.MapsScreen.Model.PostCodeMarker;
 import sussex.android.ase_android.MapsScreen.Model.ServerConnection;
 
@@ -38,7 +39,7 @@ import static org.mockito.Mockito.verify;
 
 
 @RunWith(RobolectricTestRunner.class)
-public class ServerConnectionTest {
+public class PoliceConnectionTest {
     private Context context = ApplicationProvider.getApplicationContext();
     private MapsContract.Model scon;
 
@@ -56,7 +57,7 @@ public class ServerConnectionTest {
 
     @Before
     public void setup() {
-        scon = new ServerConnection(context);
+        scon = new PoliceDataConnection(context);
         RequestQueue queue = newVolleyRequestQueueForTest(context);
         Field privateQueue = null;
         try {
@@ -110,20 +111,4 @@ public class ServerConnectionTest {
         lock.await(10000, TimeUnit.MILLISECONDS);
     }
 
-    @Test
-    public void postcodeJsonParse() throws InterruptedException {
-        scon.postcodeJsonParse(new CallbackInfoInterface() {
-            @Override
-            public void displayInfo(String json, String price) {
-                assertEquals(price, "68000");
-                lock.countDown();
-            }
-
-            @Override
-            public void onResponseError(String errorMessage) {
-                fail(errorMessage);
-            }
-        }, "BN2 0JH");
-        lock.await(10000, TimeUnit.MILLISECONDS);
-    }
 }

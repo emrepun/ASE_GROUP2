@@ -1,6 +1,5 @@
-package sussex.android.ase_android.MapsScreen.model;
+package sussex.android.ase_android.MapsScreen.Model;
 
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 

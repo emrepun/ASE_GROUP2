@@ -1,7 +1,6 @@
 package sussex.android.ase_android.MapsScreen.GoogleMaps;
 
 import android.app.Activity;
-import android.view.View;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -12,9 +11,9 @@ import com.google.android.gms.maps.model.TileOverlayOptions;
 import java.util.List;
 
 import sussex.android.ase_android.BasePresenter;
-import sussex.android.ase_android.MapsScreen.model.CallbackInfoInterface;
-import sussex.android.ase_android.MapsScreen.model.CallbackMarkerInterface;
-import sussex.android.ase_android.MapsScreen.model.PostCodeMarker;
+import sussex.android.ase_android.MapsScreen.Model.CallbackInfoInterface;
+import sussex.android.ase_android.MapsScreen.Model.CallbackMarkerInterface;
+import sussex.android.ase_android.MapsScreen.Model.PostCodeMarker;
 
 public interface MapsContract {
     interface View {

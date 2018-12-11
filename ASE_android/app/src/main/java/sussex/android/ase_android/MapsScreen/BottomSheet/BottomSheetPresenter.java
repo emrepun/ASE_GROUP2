@@ -1,9 +1,7 @@
 package sussex.android.ase_android.MapsScreen.BottomSheet;
 
-import android.app.AlertDialog;
-
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
-import sussex.android.ase_android.MapsScreen.model.CallbackInfoInterface;
+import sussex.android.ase_android.MapsScreen.Model.CallbackInfoInterface;
 
 public class BottomSheetPresenter implements  BottomSheetContract.Presenter, CallbackInfoInterface {
     BottomSheetContract.View view;

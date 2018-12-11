@@ -41,7 +41,7 @@ import java.util.List;
 import sussex.android.ase_android.CustomInfoWindowAdapter;
 import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetContract;
 import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetView;
-import sussex.android.ase_android.MapsScreen.model.PostCodeMarker;
+import sussex.android.ase_android.MapsScreen.Model.PostCodeMarker;
 import sussex.android.ase_android.R;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,MapsContract.View, CompoundButton.OnCheckedChangeListener {

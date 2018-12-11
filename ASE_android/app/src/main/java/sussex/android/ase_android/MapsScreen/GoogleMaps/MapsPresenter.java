@@ -12,10 +12,10 @@ import com.google.maps.android.heatmaps.WeightedLatLng;
 import java.util.ArrayList;
 import java.util.List;
 
-import sussex.android.ase_android.MapsScreen.model.CallbackMarkerInterface;
-import sussex.android.ase_android.MapsScreen.model.PoliceDataConnection;
-import sussex.android.ase_android.MapsScreen.model.PostCodeMarker;
-import sussex.android.ase_android.MapsScreen.model.ServerConnection;
+import sussex.android.ase_android.MapsScreen.Model.CallbackMarkerInterface;
+import sussex.android.ase_android.MapsScreen.Model.PoliceDataConnection;
+import sussex.android.ase_android.MapsScreen.Model.PostCodeMarker;
+import sussex.android.ase_android.MapsScreen.Model.ServerConnection;
 
 public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInterface {
 

@@ -1,4 +1,4 @@
-package sussex.android.ase_android.MapsScreen.model;
+package sussex.android.ase_android.MapsScreen.Model;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -18,7 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
 

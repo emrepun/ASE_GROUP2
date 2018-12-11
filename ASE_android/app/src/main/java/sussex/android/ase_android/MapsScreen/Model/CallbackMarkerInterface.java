@@ -1,4 +1,4 @@
-package sussex.android.ase_android.MapsScreen.model;
+package sussex.android.ase_android.MapsScreen.Model;
 
 import java.util.List;
 
