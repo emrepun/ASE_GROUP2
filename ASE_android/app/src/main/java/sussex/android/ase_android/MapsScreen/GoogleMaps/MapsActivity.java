@@ -70,7 +70,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        crimeMapEnabled=true;
+        crimeMapEnabled=false;
         heatMapEnabled=false;
 
         //create MapsPresenter
@@ -172,6 +172,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         clearMap();
         mapsPresenter.switchDataSource(crimeMapEnabled);
+        mPreviousCameraPosition[0] = null; //invalidate current camera position
         updateCameraRegion();
     }
 
