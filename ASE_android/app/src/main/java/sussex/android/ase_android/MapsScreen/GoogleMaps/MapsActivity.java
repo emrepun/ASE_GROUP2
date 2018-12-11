@@ -162,7 +162,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    public void onClick(View view){
+    public void onClickSwitchMapSrc(View view){
         if(crimeMapEnabled){
             crimeMapEnabled=false;
             ((Button)view).setText("price map");

@@ -55,7 +55,7 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
                 .setMessage(errorMessage + "\n Switching to available data source.")
                 .setPositiveButton("OK", null)
                 .show();
-        switchDataSource(!crimeMapEnabled);
+        view.onClickSwitchMapSrc(null);
     }
 
     /**

@@ -1,6 +1,7 @@
 package sussex.android.ase_android.MapsScreen.GoogleMaps;
 
 import android.app.Activity;
+import android.view.View;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -22,7 +23,7 @@ public interface MapsContract {
         Marker addMarker(MarkerOptions marker);
         TileOverlay addTileOverlay(TileOverlayOptions options);
         void clearMap();
-
+        void onClickSwitchMapSrc(android.view.View view);
     }
 
     interface Presenter extends BasePresenter {

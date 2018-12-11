@@ -61,7 +61,7 @@
         android:text="LOG IN"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="onClick"
+        android:onClick="onClickSwitchMapSrc"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
         android:textSize="18sp"
         android:textStyle="bold"
