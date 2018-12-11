@@ -30,19 +30,9 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
 
     public MapsPresenter(MapsContract.View view) {
         this.view = view;
-        switchMarker();
+        priceMarker();
     }
 
-    private void switchMarker() {
-        boolean showCrimeMap = true;
-        if (showCrimeMap){
-            policeMarker();
-            showCrimeMap = false;
-        } else {
-            priceMarker();
-            showCrimeMap = true;
-        }
-    }
 
 
     /**
