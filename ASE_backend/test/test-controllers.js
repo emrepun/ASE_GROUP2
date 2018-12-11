@@ -1,25 +1,30 @@
-//const controllers =  require('../routes/apiRoutes.js');
-//const http_mocks = require('node-mocks-http');
-//const should = require('should');
+const chai = require("chai");
+const expect = chai.expect;
+const sinon = require("sinon");
+const controller = require("../controllers/apiController.js");
+const apiService = require("../services/apiService.js")
 
-//function buildResponse() {
-//  return http_mocks.createResponse({eventEmitter: require('events').EventEmitter})
-//}
 
-//describe('Bad request tests', function(){
+describe("API Controller", function(){
+  it("should return postcode details", function(done){
+      var post = sinon.stub(apiService, 'getPricesAtAround');
+      post.returns({lat:"3442", long:"343432", radius:"1"});
 
-//  it('Get prices around postcode', function(done){
-//    var response = buildResponse()
-//    var request  = http_mocks.createRequest({
-//       method: 'GET',
-    //   url: '/pcprices',
-  //  });
-//    response.on('end', function() {
-//      console.log(response)
-//      response.statusCode.should.equal(200);
-//      done()
-//     });
+      let res = {
+      send: sinon.spy()
+    }
+      var req = {
+        params: {lat:"3442", long:"343432", radius:"1"}
+      }
+      controller.getPricesAtAround(req, res).then(details => {
+        var output = res.send.firstCall.args[0];
+        expect(output).to.be.a('string');
+        var output = JSON.parse(output);
+        expect(output.lat).to.equal("3442");
+        expect(output.long).to.equal("343432");
+        post.restore();
+        done();
+      });
+  })
 
-//    controllers.handle(request, response)
-//  });
-//})
+})
