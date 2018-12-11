@@ -22,7 +22,6 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -35,7 +34,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.gms.maps.model.VisibleRegion;
-import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.List;
@@ -53,7 +51,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     final int LOCATION_PERMISSION_REQUEST_CODE = 1532;
     View bottomSheet;
 
-    private MapsPresenter mapsPresenter;
+    private MapsContract.Presenter mapsPresenter;
     private BottomSheetContract.View bottomSheetView;
     Switch switch1;
     Button button;
@@ -64,6 +62,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private boolean crimeMapEnabled;
     private boolean heatMapEnabled;
+
+    final CameraPosition[] mPreviousCameraPosition = {null};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,21 +124,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(this));
 
         //Set listener for notifying the presenter when the camera position changes
-        final CameraPosition[] mPreviousCameraPosition = {null};
         mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
-                mClusterManager.onCameraIdle();
-                CameraPosition position = mMap.getCameraPosition();
-                if(mPreviousCameraPosition[0] == null || !mPreviousCameraPosition[0].equals(position)) {
-                    //position changed
-                    mPreviousCameraPosition[0] = mMap.getCameraPosition();
-
-                    float radius_meter = calcVisibleRadius();
-                    enableInfoWindow = radius_meter < 1000;
-
-                    mapsPresenter.cameraPosChanged(mPreviousCameraPosition[0].target,radius_meter);
-                }
+                updateCameraRegion();
             }
         });
 
@@ -159,6 +148,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    private void updateCameraRegion() {
+        mClusterManager.onCameraIdle();
+        CameraPosition position = mMap.getCameraPosition();
+        if(mPreviousCameraPosition[0] == null || !mPreviousCameraPosition[0].equals(position)) {
+            //position changed
+            mPreviousCameraPosition[0] = mMap.getCameraPosition();
+
+            float radius_meter = calcVisibleRadius();
+            enableInfoWindow = radius_meter < 1000;
+
+            mapsPresenter.cameraPosChanged(mPreviousCameraPosition[0].target,radius_meter);
+        }
+    }
+
     public void onClick(View view){
         if(crimeMapEnabled){
             crimeMapEnabled=false;
@@ -168,7 +171,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             ((Button)view).setText("crime map");
         }
         clearMap();
-        mapsPresenter.switchMap(crimeMapEnabled);
+        mapsPresenter.switchDataSource(crimeMapEnabled);
+        updateCameraRegion();
     }
 
     private void markerClicked(Marker marker) {

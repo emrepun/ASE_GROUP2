@@ -62,9 +62,10 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
     public void onResponseError(String errorMessage) {
         new AlertDialog.Builder(view.getActivity())
                 .setTitle("Error")
-                .setMessage(errorMessage)
+                .setMessage(errorMessage + "\n Switching to available data source.")
                 .setPositiveButton("OK", null)
                 .show();
+        switchDataSource(!crimeMapEnabled);
     }
 
     /**
@@ -128,7 +129,7 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
         ServerConnectionHandler.markerJsonParse(this,target.latitude, target.longitude,radius_meter/1000);
     }
 
-    public void switchMap(boolean showCrimeMap) {
+    public void switchDataSource(boolean showCrimeMap) {
         this.crimeMapEnabled=showCrimeMap;
         if (showCrimeMap){
             policeMarker();

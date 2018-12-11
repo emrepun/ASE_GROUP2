@@ -29,6 +29,7 @@ public interface MapsContract {
         void cameraPosChanged(LatLng target, float radius_meter);
         void switchHeatmap(boolean showHeatmap);
         Model getServerConnectionHandler();
+        void switchDataSource(boolean showCrimeMap);
     }
 
     interface Model{
