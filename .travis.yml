@@ -83,9 +83,7 @@ matrix:
                           - adb shell settings put global animator_duration_scale 0 &
                           - adb shell input keyevent 82 &
                   script:
-                          - ./gradlew clean build connectedCheck
-                          - ./gradlew jacoco
-                          - ./gradlew coveralls
+                          - ./gradlew clean build connectedCheck --stacktrace coveralls
                   after_script:
                   
                 - language: swift
