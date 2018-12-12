@@ -13,8 +13,6 @@ public interface BottomSheetContract {
                 void hideBottomSheet();
 
                 void displayAddresses(List<AdressInfo> houseAddressInfo);
-
-                void populateListView(String json, String price, String date);
         }
 
         interface Presenter extends BasePresenter {

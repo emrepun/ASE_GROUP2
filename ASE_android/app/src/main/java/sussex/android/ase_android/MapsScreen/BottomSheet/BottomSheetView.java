@@ -81,7 +81,7 @@ public class BottomSheetView implements BottomSheetContract.View{
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             String address = getItem(position).getAddress();
-            String price = getItem(position).getPricePaid();
+            String price = getItem(position).getPrice();
             String date = getItem(position).getDate();
 
             AdressInfo houseAddress = new AdressInfo(address, price, date);
@@ -89,8 +89,8 @@ public class BottomSheetView implements BottomSheetContract.View{
             LayoutInflater inflater = LayoutInflater.from(mcontext);
             convertView = inflater.inflate(mResource, parent, false);
 
-            TextView tvAddress = (TextView) convertView.findViewById(R.id.priceList);
-            TextView tvPrice = (TextView) convertView.findViewById(R.id.addressList);
+            TextView tvAddress = (TextView) convertView.findViewById(R.id.addressList);
+            TextView tvPrice = (TextView) convertView.findViewById(R.id.priceList);
             TextView tvDate = (TextView) convertView.findViewById(R.id.dateList);
 
             tvAddress.setText(address);

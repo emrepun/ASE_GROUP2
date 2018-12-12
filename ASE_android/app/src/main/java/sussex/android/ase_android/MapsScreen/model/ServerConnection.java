@@ -122,10 +122,6 @@ public class ServerConnection implements MapsContract.Model {
                     public void onResponse(JSONArray response) {
                         ArrayList<AdressInfo> houseAddressInfo = new ArrayList<>();
                         try{
-                            String json="";
-                            String price = "";
-                            String houseAddress="";
-                            String date="";
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject postcodeData = response.getJSONObject(i);
                                 String town;
@@ -139,11 +135,14 @@ public class ServerConnection implements MapsContract.Model {
                                     town="Unknown";
                                     address="Unknown";
                                 }
-                                String pricePaid;
+                                double pricePaid;
+                                String price;
                                 try {
-                                    pricePaid = postcodeData.getString("pricePaid");
+                                    pricePaid = postcodeData.getDouble("pricePaid");
+                                    price = "£"+String.format(Locale.UK, "%,.2f", pricePaid);
+
                                 } catch (JSONException e) {
-                                    pricePaid= "unknown";
+                                    price= "unknown";
                                 }
                                 String transactionDate;
                                 try {
@@ -151,7 +150,7 @@ public class ServerConnection implements MapsContract.Model {
                                 }catch (JSONException e) {
                                     transactionDate="Unknown";
                                 }
-                                houseAddressInfo.add(new AdressInfo(address, pricePaid, transactionDate));
+                                houseAddressInfo.add(new AdressInfo(address, price, transactionDate));
 
                             }
                             callback.displayInfo(houseAddressInfo);

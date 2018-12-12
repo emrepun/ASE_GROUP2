@@ -25,6 +25,4 @@ public class BottomSheetPresenter implements  BottomSheetContract.Presenter, Cal
     public void displayInfo(List<AdressInfo> houseAddressInfo){
         view.displayAddresses(houseAddressInfo);
     }
-
-    public void populateListView(String json, String price, String date){ view.populateListView(json, price, date);}
 }
