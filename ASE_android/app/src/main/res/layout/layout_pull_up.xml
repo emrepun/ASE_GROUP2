@@ -73,51 +73,7 @@
         app:layout_constraintVertical_bias="0.002"
         app:srcCompat="@drawable/ic_arrowdown" />
 
-    <TextView
-        android:id="@+id/addressList"
-        android:layout_width="117dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical"
-        android:padding="8dp"
-        android:text="address"
-        android:textColor="@color/greyText"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/arrowUp" />
-
-    <TextView
-        android:id="@+id/priceList"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical"
-        android:padding="8dp"
-        android:text="price"
-        android:textColor="@color/colorAccent"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/addressList"
-        app:layout_constraintTop_toBottomOf="@+id/arrowUp" />
-
-    <TextView
-        android:id="@+id/dateList"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical"
-        android:padding="8dp"
-        android:text="date"
-        android:textColor="@color/colorAccent"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/priceList"
-        app:layout_constraintTop_toBottomOf="@+id/arrowUp" />
-
-    <!--<ListView
+    <ListView
         android:id="@+id/listView"
         android:layout_width="338dp"
         android:layout_height="392dp"
@@ -129,6 +85,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/arrowUp" />-->
+        app:layout_constraintTop_toBottomOf="@+id/arrowUp" />
 
 </android.support.constraint.ConstraintLayout>

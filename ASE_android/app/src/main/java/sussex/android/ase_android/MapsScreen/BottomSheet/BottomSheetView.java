@@ -1,9 +1,15 @@
 package sussex.android.ase_android.MapsScreen.BottomSheet;
 
 import android.app.Activity;
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -15,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
+import sussex.android.ase_android.MapsScreen.model.AdressInfo;
 import sussex.android.ase_android.R;
 
 public class BottomSheetView implements BottomSheetContract.View{
@@ -55,34 +62,43 @@ public class BottomSheetView implements BottomSheetContract.View{
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 
-    public void displayAddresses(String json, String price, String date){
-        ((TextView)activity.findViewById(R.id.addressList)).setText(json);
-        ((TextView)activity.findViewById(R.id.priceList)).setText(price);
-        ((TextView)activity.findViewById(R.id.dateList)).setText(date);
-
-        /*ListView listView = activity.findViewById(R.id.listView);
-
-        HashMap<String, String[]> addressInfo = new HashMap<>();
-        String[] purchaseData = new String[]{price, date};
-        addressInfo.put(json, purchaseData);
-
-        List<HashMap<String, String>> listItems = new ArrayList<>();
-        SimpleAdapter adapter = new SimpleAdapter(activity, listItems, R.layout.layout_item_ist,
-                new String[]{"address", purchaseData[0], purchaseData[1]}, new int[]{R.id.addressList, R.id.priceList, R.id.dateList});
-
-        Iterator iterator = addressInfo.entrySet().iterator();
-        while (iterator.hasNext()){
-            HashMap<String, String> resultsMap = new HashMap<>();
-            Map.Entry pair = (Map.Entry)iterator.next();
-            resultsMap.put("address", pair.getKey().toString());
-            resultsMap.put(purchaseData[0], pair.getValue().toString());
-            resultsMap.put(purchaseData[1], pair.getValue().toString());
-            listItems.add(resultsMap);
-        }
-
-        listView.setAdapter(adapter);*/
+    public void displayAddresses(List<AdressInfo> houseAddressInfo){
+        ArrayAdapter<AdressInfo> adapter = new CustomAdapter(activity, R.layout.layout_item_ist, houseAddressInfo);
+        ListView listView = activity.findViewById(R.id.listView);
+        listView.setAdapter(adapter);
     }
 
+    private class CustomAdapter extends ArrayAdapter<AdressInfo> {
+        private Context mcontext;
+        int mResource;
+        public CustomAdapter(@NonNull Context context, int resource, @NonNull List<AdressInfo> houseAddressInfo) {
+            super(context, resource, houseAddressInfo);
+            mcontext = context;
+            mResource = resource;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            String address = getItem(position).getAddress();
+            String price = getItem(position).getPricePaid();
+            String date = getItem(position).getDate();
+
+            AdressInfo houseAddress = new AdressInfo(address, price, date);
+
+            LayoutInflater inflater = LayoutInflater.from(mcontext);
+            convertView = inflater.inflate(mResource, parent, false);
+
+            TextView tvAddress = (TextView) convertView.findViewById(R.id.priceList);
+            TextView tvPrice = (TextView) convertView.findViewById(R.id.addressList);
+            TextView tvDate = (TextView) convertView.findViewById(R.id.dateList);
+
+            tvAddress.setText(address);
+            tvPrice.setText(price);
+            tvDate.setText(date);
+            return convertView;
+        }
+    }
     public void populateListView(String json, String price, String date){
 
     }
@@ -98,4 +114,5 @@ public class BottomSheetView implements BottomSheetContract.View{
         inputMethodManager.hideSoftInputFromWindow(
                 activity.getCurrentFocus().getWindowToken(), 0);
     }
+
 }

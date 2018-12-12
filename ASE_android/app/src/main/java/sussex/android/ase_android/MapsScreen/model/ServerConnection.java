@@ -120,6 +120,7 @@ public class ServerConnection implements MapsContract.Model {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        ArrayList<AdressInfo> houseAddressInfo = new ArrayList<>();
                         try{
                             String json="";
                             String price = "";
@@ -127,12 +128,6 @@ public class ServerConnection implements MapsContract.Model {
                             String date="";
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject postcodeData = response.getJSONObject(i);
-                                double pricePaid;
-                                try {
-                                    pricePaid = postcodeData.getDouble("pricePaid");
-                                } catch (JSONException e) {
-                                    pricePaid=0;
-                                }
                                 String town;
                                 String address;
                                 try {
@@ -144,21 +139,22 @@ public class ServerConnection implements MapsContract.Model {
                                     town="Unknown";
                                     address="Unknown";
                                 }
+                                String pricePaid;
+                                try {
+                                    pricePaid = postcodeData.getString("pricePaid");
+                                } catch (JSONException e) {
+                                    pricePaid= "unknown";
+                                }
                                 String transactionDate;
                                 try {
                                     transactionDate = postcodeData.getString("transactionDate");
                                 }catch (JSONException e) {
                                     transactionDate="Unknown";
                                 }
-                                json=json+address+"\n\n";
-                                price=price+"£" + String.format(Locale.UK,"%,.2f", pricePaid)+"\n\n\n\n";
-                                date=date+transactionDate+"\n\n\n";
-
-                                /*json=json+address+"\n"+pricePaid+"\n";*/
-
+                                houseAddressInfo.add(new AdressInfo(address, pricePaid, transactionDate));
 
                             }
-                            callback.displayInfo(json, price, date);
+                            callback.displayInfo(houseAddressInfo);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(context, "The backend server was not reachable or produced an error", Toast.LENGTH_LONG).show();
