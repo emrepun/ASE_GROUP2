@@ -1,23 +1,10 @@
 plugins {
-    id 'jacoco'
     id 'com.github.kt3k.coveralls' version '2.6.3'
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
-
-jacoco {
-    toolVersion = "0.7.1.201405082137"
-    reportsDir = file("$buildDir/customJacocoReportDir")
-}
-
-jacocoTestReport {
-    reports {
-        xml.enabled true
-        html.enabled true
-        csv.enabled true
-    }
-}
+apply from: '../jacoco.gradle'
 
 android {
     compileSdkVersion 27
@@ -75,4 +62,12 @@ dependencies {
     implementation 'com.android.volley:volley:1.1.1'
     implementation 'com.google.maps.android:android-maps-utils:0.5+'
 
+}
+
+coveralls {
+    jacocoReportPath = "${buildDir}/reports/jacoco/testBlueDebugUnitTestCoverage/testBlueDebugUnitTestCoverage.xml"
+}
+tasks.coveralls {
+    dependsOn 'testBlueDebugUnitTestCoverage'
+    onlyIf { System.env.'CI' }
 }
