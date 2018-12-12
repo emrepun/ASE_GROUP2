@@ -67,6 +67,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        int test = 5/0;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
@@ -93,7 +94,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      */
     @Override
     public void onMapReady(final GoogleMap googleMap) {
-        int test = 5/0;
         mMap = googleMap;
 
         enableMyLocation();
