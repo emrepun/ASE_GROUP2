@@ -165,10 +165,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onClickSwitchMapSrc(View view){
         if(crimeMapEnabled){
             crimeMapEnabled=false;
-            ((Button)view).setText("price map");
+            button.setText("price map");
         }else{
             crimeMapEnabled=true;
-            ((Button)view).setText("crime map");
+            button.setText("crime map");
         }
         clearMap();
         mapsPresenter.switchDataSource(crimeMapEnabled);

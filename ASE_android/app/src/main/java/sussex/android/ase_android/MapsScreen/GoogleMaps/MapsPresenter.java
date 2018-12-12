@@ -52,7 +52,7 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
     public void onResponseError(String errorMessage) {
         new AlertDialog.Builder(view.getActivity())
                 .setTitle("Error")
-                .setMessage(errorMessage + "\n Switching to available data source.")
+                .setMessage(errorMessage + "\nSwitching to available data source.")
                 .setPositiveButton("OK", null)
                 .show();
         view.onClickSwitchMapSrc(null);
