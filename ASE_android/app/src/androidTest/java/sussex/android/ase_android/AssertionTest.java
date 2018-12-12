@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.WindowManager;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
@@ -24,6 +26,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsActivity;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -32,21 +36,36 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class AssertionTest {
-//    @Before
-//    public void unlockScreen() {
-//        final CategorySelectionActivity activity = mActivityRule.getActivity();
-//        Runnable wakeUpDevice = new Runnable() {
-//            public void run() {
-//                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
-//                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
-//                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-//            }
-//        };
-//        activity.runOnUiThread(wakeUpDevice);
-//    }
 
     @Rule
-    public ActivityTestRule<MainActivity> mapsActivityActivityTestRule = new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<MapsActivity> mapsActivityActivityTestRule = new ActivityTestRule<>(MapsActivity.class);
+
+
+
+    @Before
+    public void unlockScreenAndInitMap() throws InterruptedException {
+        final MapsActivity activity = mapsActivityActivityTestRule.getActivity();
+        Runnable wakeUpDevice = new Runnable() {
+            public void run() {
+                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            }
+        };
+        activity.runOnUiThread(wakeUpDevice);
+
+        Thread.sleep(5000);
+
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                activity.moveCamera(new LatLng(50.837635, -0.124675),
+                        18);
+            }
+        });
+
+        Thread.sleep(8000);
+    }
+
 
     //Check if object is displayed
     @SmallTest
@@ -64,17 +83,16 @@ public class AssertionTest {
     }
     @SmallTest
     @Test
-    public void assertMarker() throws InterruptedException {
-            Thread.sleep(7000);
+    public void assertMarker() {
         UiDevice mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        UiObject marker = mDevice.findObject(new UiSelector().descriptionContains("GoogleMap")
+        UiObject marker = mDevice.findObject(new UiSelector().descriptionContains("BN2 3QA")
                 .className(android.widget.FrameLayout.class));
         marker.exists();
     }
 
     @SmallTest
     @Test
-    public void assertBottomView() throws UiObjectNotFoundException, InterruptedException {
+    public void assertBottomView() throws UiObjectNotFoundException {
 
         // Added a sleep statement to match the app's execution delay.
         try {
@@ -83,7 +101,7 @@ public class AssertionTest {
             e.printStackTrace();
         }
         UiDevice mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        UiObject marker = mDevice.findObject(new UiSelector().descriptionContains("BN2 3QA. Average price: £114,292.09."));
+        UiObject marker = mDevice.findObject(new UiSelector().descriptionContains("BN2 3QA"));
         marker.click();
 
         UiObject bottomsheet = mDevice.findObject(new UiSelector()

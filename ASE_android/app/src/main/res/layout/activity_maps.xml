@@ -29,18 +29,8 @@
             tools:context=".MapsScreen.GoogleMaps.MapsActivity" />
     </android.support.v4.widget.DrawerLayout>
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="200dp"
-        android:padding="20dp"
-        android:layout_height="wrap_content"
-        android:text="Toggle heatmap"
-        android:layout_gravity="top|center_horizontal"
-        android:checked="false"
-        android:textColor="@color/greyText"
-        />
 
-    <include layout="@layout/layout_pull_up" />
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
@@ -60,5 +50,17 @@
         android:onClick="search_onclick"
         />
 
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="200dp"
+        android:padding="20dp"
+        android:layout_height="wrap_content"
+        android:text="Toggle heatmap"
+        android:layout_gravity="top|center_horizontal"
+        android:checked="false"
+        android:textColor="@color/greyText"
+        />
+
+    <include layout="@layout/layout_pull_up" />
 
 </android.support.design.widget.CoordinatorLayout>

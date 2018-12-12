@@ -22,6 +22,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.lang.reflect.Field;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsActivity;
 
@@ -29,18 +31,34 @@ import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsActivity;
 @RunWith(AndroidJUnit4.class)
 public class InstrumentedTest {
 
-//    @Before
-//    public void unlockScreen() {
-//        final CategorySelectionActivity activity = mActivityRule.getActivity();
-//        Runnable wakeUpDevice = new Runnable() {
-//            public void run() {
-//                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
-//                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
-//                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-//            }
-//        };
-//        activity.runOnUiThread(wakeUpDevice);
-//    }
+    private CountDownLatch lock = new CountDownLatch(1);
+
+
+    @Before
+    public void unlockScreenAndInitMap() throws InterruptedException {
+        final MapsActivity activity = mapsActivityActivityTestRule.getActivity();
+        Runnable wakeUpDevice = new Runnable() {
+            public void run() {
+                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            }
+        };
+        activity.runOnUiThread(wakeUpDevice);
+
+        Thread.sleep(5000);
+
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                activity.moveCamera(new LatLng(50.837635, -0.124675),
+                        18);
+                lock.countDown();
+            }
+        });
+
+        lock.await(60000, TimeUnit.MILLISECONDS);
+
+    }
 
     @Rule
     public ActivityTestRule<MapsActivity> mapsActivityActivityTestRule = new ActivityTestRule<>(MapsActivity.class);
@@ -54,16 +72,6 @@ public class InstrumentedTest {
     @LargeTest
     @Test
     public void ActivityTest() throws UiObjectNotFoundException, InterruptedException, NoSuchFieldException, IllegalAccessException {
-        mapsActivityActivityTestRule.getActivity().runOnUiThread(new Runnable() {
-                                   public void run() {
-                                       mapsActivityActivityTestRule.getActivity().moveCamera(new LatLng(50.837635, -0.124675),
-                                               18);
-                                   }
-                               });
-
-        Thread.sleep(8000);
-
-
         UiDevice mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject marker = mDevice.findObject(new UiSelector().descriptionContains("BN2 3QA"));
         UiObject bottomsheet = mDevice.findObject(new UiSelector()
