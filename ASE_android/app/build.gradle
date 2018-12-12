@@ -1,8 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.github.kt3k.coveralls'
-apply plugin: 'java'
-apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 27
@@ -67,10 +65,10 @@ dependencies {
 }
 
 coveralls {
-    jacocoReportPath = "${buildDir}/reports/coverage/debug/report.xml"
+    jacocoReportPath = "${path}/../build/reports/jacoco/debug/jacoco.xml"
 }
 
 tasks.coveralls {
-    dependsOn 'jacocoTestReport'
+    dependsOn 'jacocoTestReportDebug'
     onlyIf { System.env.'CI' }
 }

@@ -83,9 +83,10 @@ matrix:
                           - adb shell settings put global animator_duration_scale 0 &
                           - adb shell input keyevent 82 &
                   script:
-                          - ./gradlew clean build connectedCheck --stacktrace
+                          - ./gradlew test
+                          - ./gradlew connectedAndroidTest
                   after_success:
-                          - ./gradlew coveralls
+                          - ./gradlew jacocoTestReportDebug coveralls
                   
                 - language: swift
                   os: osx
@@ -94,7 +95,7 @@ matrix:
                   before_script:
                           - cd ASE_iOS
                           - pod repo update
-                           pod install
+                            pod install
                           - brew update
                           - brew install xctool
                   script:
