@@ -38,7 +38,7 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
 
     public MapsPresenter(MapsContract.View view) {
         this.view = view;
-        ServerConnectionHandler =new PoliceDataConnection(view.getActivity());
+        ServerConnectionHandler =new ServerConnection(view.getActivity());
 
     }
 

@@ -9,9 +9,9 @@ public interface BottomSheetContract {
                 void displayBottomSheet(String postcode, String average);
                 void hideBottomSheet();
 
-                void displayAddresses(String json, String price);
+                void displayAddresses(String json, String price, String date);
 
-                void populateListView(String json, String price);
+                void populateListView(String json, String price, String date);
         }
 
         interface Presenter extends BasePresenter {

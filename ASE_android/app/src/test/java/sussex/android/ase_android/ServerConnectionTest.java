@@ -102,7 +102,7 @@ public class ServerConnectionTest {
     public void postcodeJsonParse() throws InterruptedException {
         scon.postcodeJsonParse(new CallbackInfoInterface() {
             @Override
-            public void displayInfo(String json, String price) {
+            public void displayInfo(String json, String price, String date) {
                 assertEquals(price, "68000");
                 lock.countDown();
             }

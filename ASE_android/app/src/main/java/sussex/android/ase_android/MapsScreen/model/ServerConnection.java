@@ -50,7 +50,8 @@ public class ServerConnection implements MapsContract.Model {
     public void markerJsonParse(final CallbackMarkerInterface callback, double lat, double lon, double radius) {
         //cancel all other requests to the backend as they are now outdated
         mQueue.cancelAll("marker");
-        String url = serverURL+"pcprices/"+lat+"/"+lon+"/"+radius;
+        //String url = serverURL+"pcprices/"+lat+"/"+lon+"/"+radius;
+        String url = "https://api.myjson.com/bins/siz6a";
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -109,9 +110,10 @@ public class ServerConnection implements MapsContract.Model {
      * @param callback Callback for passing the properties to the caller
      * @param postcode Postcode
      */
-    public void postcodeJsonParse(final CallbackInfoInterface callback, String postcode) {
+    public void postcodeJsonParse(final CallbackInfoInterface callback, final String postcode) {
         mQueue.cancelAll("address");
-        String url = serverURL+"addresses/"+postcode;
+        //String url = serverURL+"addresses/"+postcode;
+        String url = "https://api.myjson.com/bins/b9emq";
         RequestQueue mQueue = Volley.newRequestQueue(context);
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
@@ -122,6 +124,7 @@ public class ServerConnection implements MapsContract.Model {
                             String json="";
                             String price = "";
                             String houseAddress="";
+                            String date="";
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject postcodeData = response.getJSONObject(i);
                                 double pricePaid;
@@ -141,14 +144,21 @@ public class ServerConnection implements MapsContract.Model {
                                     town="Unknown";
                                     address="Unknown";
                                 }
-                                json=json+address+"\n";
-                                price=price+"£" + String.format(Locale.UK,"%,.2f", pricePaid)+"\n";
+                                String transactionDate;
+                                try {
+                                    transactionDate = postcodeData.getString("transactionDate");
+                                }catch (JSONException e) {
+                                    transactionDate="Unknown";
+                                }
+                                json=json+address+"\n\n";
+                                price=price+"£" + String.format(Locale.UK,"%,.2f", pricePaid)+"\n\n\n\n";
+                                date=date+transactionDate+"\n\n\n";
 
                                 /*json=json+address+"\n"+pricePaid+"\n";*/
 
 
                             }
-                            callback.displayInfo(json, price);
+                            callback.displayInfo(json, price, date);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(context, "The backend server was not reachable or produced an error", Toast.LENGTH_LONG).show();
