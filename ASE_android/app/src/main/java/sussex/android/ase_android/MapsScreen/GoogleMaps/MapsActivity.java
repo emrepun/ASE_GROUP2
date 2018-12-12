@@ -93,7 +93,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      */
     @Override
     public void onMapReady(final GoogleMap googleMap) {
-
+        int test = 5/0;
         mMap = googleMap;
 
         enableMyLocation();
