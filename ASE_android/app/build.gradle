@@ -69,6 +69,6 @@ coveralls {
 }
 
 tasks.coveralls {
-    dependsOn 'connectedCheck'
+    dependsOn 'jacocoTestReport'
     onlyIf { System.env.'CI' }
 }
