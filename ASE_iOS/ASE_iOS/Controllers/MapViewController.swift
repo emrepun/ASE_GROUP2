@@ -81,16 +81,31 @@ class MapViewController: UIViewController, GMSPlacePickerViewControllerDelegate 
     }
     
     private func getPropertyData(lat: String, long: String, radius: String, completion: (() -> Void)?) {
-        networking.performNetworkTask(endpoint: PropertyAPI.postCodes(lat: lat, long: long, radius: radius), type: [PostCode].self) { [weak self] (response) in
-            self?.postCodes = response
-            completion?()
+        
+        networking.performNetworkTask(endpoint: PropertyAPI.postCodes(lat: lat, long: long, radius: radius), type: [PostCode].self) { (response, error) in
+            if error != nil {
+                self.showAlert(title: "Unresponsive Backend", message: "We are currently experiencing some problems with our backend, please try again later.")
+            } else {
+                if let propResponse = response {
+                    self.postCodes = propResponse
+                    completion?()
+                }
+            }
         }
     }
     
     private func getCrimeData(lat: String, long: String, completion: (() -> Void)?) {
-        networking.performNetworkTask(endpoint: CrimeAPI.crimes(lat: lat, long: long), type: [Crime].self) { [weak self] (response) in
-            self?.crimes = response
-            completion?()
+        
+        networking.performNetworkTask(endpoint: CrimeAPI.crimes(lat: lat, long: long), type: [Crime].self) { (response, error) in
+            if error != nil {
+                self.showAlert(title: "Unresponsive Backend", message: "We are currently experiencing some problems with our backend, please try again later.")
+                self.activityIndicator.stopAnimating()
+            } else {
+                if let crimeResponse = response {
+                    self.crimes = crimeResponse
+                    completion?()
+                }
+            }
         }
     }
  
@@ -373,7 +388,7 @@ extension MapViewController {
         
 //        let radius = mapView.getRadius() / 1000
 //        currentRadius = radius
-        currentRadius = 0.15
+        currentRadius = 0.30
         
         //let strRadius = String(radius)
         let latitude = String(place.coordinate.latitude)
@@ -385,7 +400,7 @@ extension MapViewController {
             if success {
                 let location = GMSCameraPosition.camera(withLatitude: place.coordinate.latitude, longitude: place.coordinate.longitude, zoom: 17.0)
                 self.mapView.animate(to: location)
-                self.getPropertyData(lat: latitude, long: longitude, radius: "0.15") {
+                self.getPropertyData(lat: latitude, long: longitude, radius: "0.30") {
                     DispatchQueue.main.async {
                         self.deployMarkerAndHeatmapForProperty()
                     }

@@ -44,9 +44,17 @@ class PropertyTableViewController: UITableViewController {
     }
     
     func getPropertyData(postCode: String, completion: (() -> Void)?) {
-        networking.performNetworkTask(endpoint: PropertyAPI.postCodeSpecific(postCode: postCode), type: [Property].self) { [weak self] (response) in
-            self?.properties = response
-            completion?()
+        
+        networking.performNetworkTask(endpoint: PropertyAPI.postCodeSpecific(postCode: postCode), type: [Property].self) { (response, error) in
+            if error != nil {
+                self.showAlert(title: "Unresponsive Backend", message: "We are currently experiencing some problems with our backend, please try again later.")
+                return
+            } else {
+                if let propertyResponse = response {
+                    self.properties = propertyResponse
+                    completion?()
+                }
+            }
         }
     }
 

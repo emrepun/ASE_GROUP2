@@ -133,7 +133,10 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0W5-ls-jVW">
-                                            <rect key="frame" x="28" y="21.5" width="309" height="17"/>
+                                            <rect key="frame" x="28" y="21.5" width="250" height="17"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="250" id="iDc-9m-Hd2"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -155,7 +158,6 @@
                                         <constraint firstItem="0W5-ls-jVW" firstAttribute="leading" secondItem="7Iz-qg-MD7" secondAttribute="leadingMargin" constant="8" id="439-Lu-eHK"/>
                                         <constraint firstItem="psi-bn-6Kx" firstAttribute="top" secondItem="EwK-yg-GXy" secondAttribute="bottom" constant="4" id="Fee-dN-V8j"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="psi-bn-6Kx" secondAttribute="bottom" constant="8" id="GBR-zM-NMc"/>
-                                        <constraint firstItem="psi-bn-6Kx" firstAttribute="leading" secondItem="0W5-ls-jVW" secondAttribute="trailing" constant="16" id="haY-WM-wbG"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="psi-bn-6Kx" secondAttribute="trailing" constant="8" id="lZu-6e-s9u"/>
                                         <constraint firstItem="EwK-yg-GXy" firstAttribute="trailing" secondItem="psi-bn-6Kx" secondAttribute="trailing" id="xcB-nx-orS"/>
                                         <constraint firstItem="0W5-ls-jVW" firstAttribute="centerY" secondItem="7Iz-qg-MD7" secondAttribute="centerY" id="xqr-ts-oB5"/>
