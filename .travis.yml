@@ -85,7 +85,7 @@ matrix:
                   script:
                           - ./gradlew clean build connectedCheck
                           - ./gradlew jacoco
-                          - coveralls
+                          - ./gradlew coveralls
                   after_script:
                   
                 - language: swift
