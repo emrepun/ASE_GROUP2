@@ -30,9 +30,7 @@ import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsActivity;
 
 @RunWith(AndroidJUnit4.class)
 public class InstrumentedTest {
-
-    private CountDownLatch lock = new CountDownLatch(1);
-
+    
 
     @Before
     public void unlockScreenAndInitMap() throws InterruptedException {
@@ -46,17 +44,15 @@ public class InstrumentedTest {
         };
         activity.runOnUiThread(wakeUpDevice);
 
-        Thread.sleep(5000);
+        Thread.sleep(120000);
 
         activity.runOnUiThread(new Runnable() {
             public void run() {
                 activity.moveCamera(new LatLng(50.837635, -0.124675),
                         18);
-                lock.countDown();
             }
         });
 
-        lock.await(60000, TimeUnit.MILLISECONDS);
 
     }
 
