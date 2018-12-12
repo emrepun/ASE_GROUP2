@@ -9,7 +9,6 @@ import com.android.volley.ResponseDelivery;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
-import com.google.android.gms.maps.GoogleMap;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,15 +28,12 @@ import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
 import sussex.android.ase_android.MapsScreen.Model.CallbackMarkerInterface;
 import sussex.android.ase_android.MapsScreen.Model.PoliceDataConnection;
 import sussex.android.ase_android.MapsScreen.Model.PostCodeMarker;
-import sussex.android.ase_android.MapsScreen.Model.ServerConnection;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.timeout;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 

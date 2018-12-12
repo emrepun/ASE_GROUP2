@@ -56,29 +56,35 @@ public class BottomSheetView implements BottomSheetContract.View{
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 
-    public void displayAddresses(String json, String price){
-        ListView listView = activity.findViewById(R.id.listView);
+    public void displayAddresses(String json, String price, String date){
+        ((TextView)activity.findViewById(R.id.addressList)).setText(json);
+        ((TextView)activity.findViewById(R.id.priceList)).setText(price);
+        ((TextView)activity.findViewById(R.id.dateList)).setText(date);
 
-        HashMap<String, String> addressInfo = new HashMap<>();
-        addressInfo.put(json, price);
+        /*ListView listView = activity.findViewById(R.id.listView);
+
+        HashMap<String, String[]> addressInfo = new HashMap<>();
+        String[] purchaseData = new String[]{price, date};
+        addressInfo.put(json, purchaseData);
 
         List<HashMap<String, String>> listItems = new ArrayList<>();
         SimpleAdapter adapter = new SimpleAdapter(activity, listItems, R.layout.layout_item_ist,
-                new String[]{"address", "price"}, new int[]{R.id.addressList, R.id.priceList});
+                new String[]{"address", purchaseData[0], purchaseData[1]}, new int[]{R.id.addressList, R.id.priceList, R.id.dateList});
 
         Iterator iterator = addressInfo.entrySet().iterator();
         while (iterator.hasNext()){
             HashMap<String, String> resultsMap = new HashMap<>();
             Map.Entry pair = (Map.Entry)iterator.next();
             resultsMap.put("address", pair.getKey().toString());
-            resultsMap.put("price", pair.getValue().toString());
+            resultsMap.put(purchaseData[0], pair.getValue().toString());
+            resultsMap.put(purchaseData[1], pair.getValue().toString());
             listItems.add(resultsMap);
         }
 
-        listView.setAdapter(adapter);
+        listView.setAdapter(adapter);*/
     }
 
-    public void populateListView(String json, String price){
+    public void populateListView(String json, String price, String date){
 
     }
 

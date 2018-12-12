@@ -17,8 +17,8 @@ public class BottomSheetPresenter implements  BottomSheetContract.Presenter, Cal
         mapsPresenter.getServerConnectionHandler().postcodeJsonParse(this,postcode);
     }
 
-    public void displayInfo(String json, String price){
-        view.displayAddresses(json, price);
+    public void displayInfo(String json, String price, String date){
+        view.displayAddresses(json, price, date);
     }
 
     @Override
@@ -26,5 +26,5 @@ public class BottomSheetPresenter implements  BottomSheetContract.Presenter, Cal
         view.onResponseError(errorMessage);
     }
 
-    public void populateListView(String json, String price){ view.populateListView(json, price);}
+    public void populateListView(String json, String price, String date){ view.populateListView(json, price, date);}
 }
