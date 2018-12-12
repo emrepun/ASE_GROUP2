@@ -83,7 +83,7 @@ matrix:
                           - adb shell settings put global animator_duration_scale 0 &
                           - adb shell input keyevent 82 &
                   script:
-                          #- ./gradlew clean build connectedCheck --stacktrace
+                          - ./gradlew clean build connectedCheck
                           - ./gradlew connectedAndroidTest coveralls
                   after_script:
                   
