@@ -56,12 +56,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MapsPresenter mapsPresenter;
     private BottomSheetContract.View bottomSheetView;
     Switch switch1;
+    Button button;
 
     boolean enableInfoWindow =true;
 
     private ClusterManager<PostCodeMarker> mClusterManager;
 
-
+    private boolean crimeMapEnabled;
     private boolean heatMapEnabled;
 
     @Override
@@ -69,6 +70,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        crimeMapEnabled=true;
         heatMapEnabled=false;
 
         //create MapsPresenter
@@ -78,6 +80,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         bottomSheetView = new BottomSheetView(bottomSheet, mapsPresenter, this);
         switch1 = findViewById(R.id.switch1);
         switch1.setOnCheckedChangeListener(this);
+        button = findViewById(R.id.button);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -155,6 +158,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         14));
             }
         }
+    }
+
+    public void onClick(View view){
+        if(crimeMapEnabled){
+            crimeMapEnabled=false;
+            ((Button)view).setText("price map");
+        }else{
+            crimeMapEnabled=true;
+            ((Button)view).setText("crime map");
+        }
+        clearMap();
+        mapsPresenter.switchMap(crimeMapEnabled);
     }
 
     private void markerClicked(Marker marker) {
