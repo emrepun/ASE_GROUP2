@@ -30,7 +30,7 @@ import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsActivity;
 
 @RunWith(AndroidJUnit4.class)
 public class InstrumentedTest {
-    
+
 
     @Before
     public void unlockScreenAndInitMap() throws InterruptedException {
