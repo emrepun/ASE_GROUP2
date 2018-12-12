@@ -50,7 +50,7 @@ public class ServerConnection implements MapsContract.Model {
     public void markerJsonParse(final CallbackMarkerInterface callback, double lat, double lon, double radius) {
         //cancel all other requests to the backend as they are now outdated
         mQueue.cancelAll("marker");
-        String url = serverURL+"pcprices/"+lat+"/"+lon+"/"+radius;
+        final String url = serverURL+"pcprices/"+lat+"/"+lon+"/"+radius;
         //String url = "https://api.myjson.com/bins/siz6a";
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -61,8 +61,10 @@ public class ServerConnection implements MapsContract.Model {
                             parseMarkerResponse(response, markerArrayList);
                             //pass markers back to calling object
                             callback.displayMarkers(markerArrayList);
+                            Crashlytics.log("Successful marker request for: " + url);
                         } catch (JSONException e) {
                             callback.onResponseError("The backend server produced an error.");
+                            Crashlytics.log("Failed (JSONException) marker request for: " + url);
                             Crashlytics.logException(e);
                         }
                     }
@@ -70,6 +72,7 @@ public class ServerConnection implements MapsContract.Model {
             @Override
             public void onErrorResponse(VolleyError error) {
                 callback.onResponseError("The backend server was not reachable.");
+                Crashlytics.log("Failed (not reachable) marker request for: " + url);
                 Crashlytics.logException(error);
             }
         });
@@ -116,10 +119,9 @@ public class ServerConnection implements MapsContract.Model {
      */
     public void postcodeJsonParse(final CallbackInfoInterface callback, final String postcode) {
         mQueue.cancelAll("address");
-        String url = serverURL+"addresses/"+postcode;
+        final String url = serverURL+"addresses/"+postcode;
         //String url = "https://api.myjson.com/bins/b9emq";
         RequestQueue mQueue = Volley.newRequestQueue(context);
-
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -163,7 +165,9 @@ public class ServerConnection implements MapsContract.Model {
 
                             }
                             callback.displayInfo(json, price, date);
+                            Crashlytics.log("Successful postcode request for: " + url);
                         } catch (JSONException e) {
+                            Crashlytics.log("Failed (JSONException) postcode request for :" + url);
                             callback.onResponseError("The backend server produced an error.");
                             Crashlytics.logException(e);
                         }
@@ -171,6 +175,7 @@ public class ServerConnection implements MapsContract.Model {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Crashlytics.log("Failed (not reachable) postcode request for: " + url);
                 callback.onResponseError("The backend server was not reachable.");
                 Crashlytics.logException(error);
             }

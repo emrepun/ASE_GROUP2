@@ -55,7 +55,7 @@ public class PoliceDataConnection implements MapsContract.Model {
         if(radius>2){ //api is <1 mile
             Toast.makeText(context, "Crime data can only be shown up to a radius of 1 mile.", Toast.LENGTH_SHORT).show();
         }
-        String url = serverURL+"?lat="+lat+"&lng="+lon;
+        final String url = serverURL+"?lat="+lat+"&lng="+lon;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -65,8 +65,10 @@ public class PoliceDataConnection implements MapsContract.Model {
                             parseApiResponse(response, markerArrayList);
                             //pass markers back to calling object
                             callback.displayMarkers(markerArrayList);
+                            Crashlytics.log("Successful police marker request for: " + url);
                         } catch (JSONException e) {
                             callback.onResponseError("The backend server produced an error.");
+                            Crashlytics.log("Failed (JSONException) police marker request for: " + url);
                             Crashlytics.logException(e);
                         }
                     }
@@ -74,6 +76,7 @@ public class PoliceDataConnection implements MapsContract.Model {
             @Override
             public void onErrorResponse(VolleyError error) {
                 callback.onResponseError("The backend server was not reachable.");
+                Crashlytics.log("Failed (not reachable) marker request for: " + url);
                 Crashlytics.logException(error);
             }
         });
