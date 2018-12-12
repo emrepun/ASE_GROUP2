@@ -11,6 +11,14 @@ jacoco {
     reportsDir = file("$buildDir/customJacocoReportDir")
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+        csv.enabled true
+    }
+}
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -68,11 +76,3 @@ dependencies {
     implementation 'com.google.maps.android:android-maps-utils:0.5+'
 
 }
-
-jacocoTestReport {
-    reports {
-        xml.enabled = true // coveralls plugin depends on xml format report
-        html.enabled = true
-    }
-}
-
