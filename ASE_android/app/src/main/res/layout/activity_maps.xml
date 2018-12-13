@@ -22,15 +22,23 @@
     </android.support.v4.widget.DrawerLayout>
 
 
-
-
-    <Button
-        android:layout_width="wrap_content"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/switchDataButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button"
-        android:text="price map"
+        android:layout_margin="12dp"
+        android:layout_marginEnd="30dp"
+        android:clickable="true"
+        android:focusable="true"
         android:onClick="onClickSwitchMapSrc"
-        android:layout_gravity="center_vertical|right"/>
+        map:backgroundTint="#82FFFFFF"
+        map:borderWidth="0dp"
+        map:elevation="1dp"
+        map:fabSize="mini"
+        map:layout_anchor="@+id/drawer_layout"
+        map:layout_anchorGravity="left|top"
+        map:pressedTranslationZ="3dp"
+        map:srcCompat="@drawable/ic_marker" />
 
 
     <android.support.design.widget.FloatingActionButton

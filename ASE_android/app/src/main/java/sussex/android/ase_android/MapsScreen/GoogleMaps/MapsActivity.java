@@ -9,6 +9,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -54,7 +55,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MapsContract.Presenter mapsPresenter;
     private BottomSheetContract.View bottomSheetView;
     Switch switch1;
-    Button button;
+    FloatingActionButton button;
 
     boolean enableInfoWindow =true;
 
@@ -80,7 +81,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         bottomSheetView = new BottomSheetView(bottomSheet, mapsPresenter, this);
         switch1 = findViewById(R.id.switch1);
         switch1.setOnCheckedChangeListener(this);
-        button = findViewById(R.id.button);
+        button = findViewById(R.id.switchDataButton);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -164,10 +165,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onClickSwitchMapSrc(View view){
         if(crimeMapEnabled){
             crimeMapEnabled=false;
-            button.setText("price map");
+            button.setImageResource(R.drawable.ic_marker_police);
         }else{
             crimeMapEnabled=true;
-            button.setText("crime map");
+            button.setImageResource(R.drawable.ic_marker);
         }
         clearMap();
         mapsPresenter.switchDataSource(crimeMapEnabled);
