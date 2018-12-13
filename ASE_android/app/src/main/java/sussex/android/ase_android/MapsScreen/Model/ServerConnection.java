@@ -52,8 +52,8 @@ public class ServerConnection implements MapsContract.Model {
     public void markerJsonParse(final CallbackMarkerInterface callback, double lat, double lon, double radius) {
         //cancel all other requests to the backend as they are now outdated
         mQueue.cancelAll("marker");
-        //final String url = serverURL+"pcprices/"+lat+"/"+lon+"/"+radius;
-        final String url = "https://api.myjson.com/bins/siz6a";
+        final String url = serverURL+"pcprices/"+lat+"/"+lon+"/"+radius;
+        //final String url = "https://api.myjson.com/bins/siz6a";
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -121,8 +121,8 @@ public class ServerConnection implements MapsContract.Model {
      */
     public void postcodeJsonParse(final sussex.android.ase_android.MapsScreen.Model.CallbackInfoInterface callback, final String postcode) {
         mQueue.cancelAll("address");
-        //final String url = serverURL+"addresses/"+postcode;
-        final String url = "https://api.myjson.com/bins/b9emq";
+        final String url = serverURL+"addresses/"+postcode;
+        //final String url = "https://api.myjson.com/bins/b9emq";
         RequestQueue mQueue = Volley.newRequestQueue(context);
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
