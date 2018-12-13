@@ -289,14 +289,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void addMarkersClustered(List<PostCodeMarker> markerList){
-                mClusterManager.addItems(markerList);
+        mClusterManager.addItems(markerList);
+        mClusterManager.cluster();
         for (Marker marker: mClusterManager.getMarkerCollection().getMarkers()){
             if(postcodeSearch.equals(marker.getTitle())){
                 postcodeSearch="";
+                mClusterManager.onMarkerClick(marker);
                 markerClicked(marker);
             }
         }
-                mClusterManager.cluster();
 
     }
     @Override
