@@ -44,7 +44,7 @@ public class InstrumentedTest {
         };
         activity.runOnUiThread(wakeUpDevice);
 
-        Thread.sleep(120000);
+        Thread.sleep(5000);
 
         activity.runOnUiThread(new Runnable() {
             public void run() {

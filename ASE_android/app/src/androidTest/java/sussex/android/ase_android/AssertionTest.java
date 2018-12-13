@@ -30,7 +30,9 @@ import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 @RunWith(AndroidJUnit4.class)
@@ -53,7 +55,7 @@ public class AssertionTest {
         };
         activity.runOnUiThread(wakeUpDevice);
 
-        Thread.sleep(300000);
+        Thread.sleep(5000);
 
         activity.runOnUiThread(new Runnable() {
             public void run() {
@@ -105,23 +107,11 @@ public class AssertionTest {
 
         ViewInteraction textView = onView(
                 Matchers.allOf(withId(R.id.postcode_big),
-                        childAtPosition(
-                                Matchers.allOf(withId(R.id.pullUp_bottom_sheet),
-                                        childAtPosition(
-                                                IsInstanceOf.<View>instanceOf(ViewGroup.class),
-                                                4)),
-                                0),
                         isDisplayed()));
         textView.check(matches(isDisplayed()));
 
         ViewInteraction textView2 = onView(
                 Matchers.allOf(withId(R.id.avgprice_big),
-                        childAtPosition(
-                                Matchers.allOf(withId(R.id.pullUp_bottom_sheet),
-                                        childAtPosition(
-                                                IsInstanceOf.<View>instanceOf(ViewGroup.class),
-                                                4)),
-                                1),
                         isDisplayed()));
         textView2.check(matches(isDisplayed()));
 
@@ -132,37 +122,33 @@ public class AssertionTest {
         Thread.sleep(5000);
 
         ViewInteraction textView3 = onView(
-                Matchers.allOf(withId(R.id.addressList),
+                Matchers.allOf(withIndex(withId(R.id.addressList),0),
                         isDisplayed()));
         textView3.check(matches(isDisplayed()));
 
         ViewInteraction textView4 = onView(
-                Matchers.allOf(withId(R.id.priceList),
+                Matchers.allOf(withIndex(withId(R.id.priceList),0),
                         isDisplayed()));
         textView4.check(matches(isDisplayed()));
 
         ViewInteraction textView5 = onView(
-                Matchers.allOf(withId(R.id.priceList),
+                Matchers.allOf(withIndex(withId(R.id.dateList),0),
                         isDisplayed()));
         textView5.check(matches(isDisplayed()));
     }
 
-    private static Matcher<View> childAtPosition(
-            final Matcher<View> parentMatcher, final int position) {
-
+    public static Matcher<View> withIndex(final Matcher<View> matcher, final int index) {
         return new TypeSafeMatcher<View>() {
+            int currentIndex = 0;
             @Override
             public void describeTo(Description description) {
-                description.appendText("Child at position " + position + " in parent ");
-                parentMatcher.describeTo(description);
+                //matches depending on index
             }
-
             @Override
             public boolean matchesSafely(View view) {
-                ViewParent parent = view.getParent();
-                return parent instanceof ViewGroup && parentMatcher.matches(parent)
-                        && view.equals(((ViewGroup) parent).getChildAt(position));
+                return matcher.matches(view) && currentIndex++ == index;
             }
         };
     }
+
 }
