@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/drawer_layout"
@@ -22,6 +21,43 @@
             tools:context=".MapsScreen.GoogleMaps.MapsActivity" />
     </android.support.v4.widget.DrawerLayout>
 
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/switchDataButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:layout_marginEnd="30dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="onClickSwitchMapSrc"
+        map:backgroundTint="#82FFFFFF"
+        map:borderWidth="0dp"
+        map:elevation="1dp"
+        map:fabSize="mini"
+        map:layout_anchor="@+id/drawer_layout"
+        map:layout_anchorGravity="left|top"
+        map:pressedTranslationZ="3dp"
+        map:srcCompat="@drawable/icon_police" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="search_onclick"
+        map:backgroundTint="#82FFFFFF"
+        map:borderWidth="0dp"
+        map:elevation="1dp"
+        map:fabSize="mini"
+        map:layout_anchor="@id/switch1"
+        map:layout_anchorGravity="right"
+        map:pressedTranslationZ="3dp"
+        map:srcCompat="@android:drawable/ic_search_category_default" />
+
     <Switch
         android:id="@+id/switch1"
         android:layout_width="200dp"
@@ -34,24 +70,5 @@
         />
 
     <include layout="@layout/layout_pull_up" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:clickable="true"
-        android:focusable="true"
-        map:backgroundTint="#82FFFFFF"
-        map:borderWidth="0dp"
-        map:elevation="1dp"
-        map:layout_anchor="@+id/drawer_layout"
-        map:layout_anchorGravity="left|top"
-        map:pressedTranslationZ="3dp"
-        map:srcCompat="@android:drawable/ic_search_category_default"
-        map:fabSize="mini"
-        android:onClick="search_onclick"
-        />
-
 
 </android.support.design.widget.CoordinatorLayout>

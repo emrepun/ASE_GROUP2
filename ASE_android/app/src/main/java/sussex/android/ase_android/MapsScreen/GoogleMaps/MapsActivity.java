@@ -9,12 +9,15 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -22,7 +25,6 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -35,7 +37,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.gms.maps.model.VisibleRegion;
-import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.List;
@@ -43,7 +44,7 @@ import java.util.List;
 import sussex.android.ase_android.CustomInfoWindowAdapter;
 import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetContract;
 import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetView;
-import sussex.android.ase_android.MapsScreen.model.PostCodeMarker;
+import sussex.android.ase_android.MapsScreen.Model.PostCodeMarker;
 import sussex.android.ase_android.R;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,MapsContract.View, CompoundButton.OnCheckedChangeListener {
@@ -53,22 +54,26 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     final int LOCATION_PERMISSION_REQUEST_CODE = 1532;
     View bottomSheet;
 
-    private MapsPresenter mapsPresenter;
+    private MapsContract.Presenter mapsPresenter;
     private BottomSheetContract.View bottomSheetView;
     Switch switch1;
+    FloatingActionButton button;
 
     boolean enableInfoWindow =true;
 
     private ClusterManager<PostCodeMarker> mClusterManager;
 
-
+    private boolean crimeMapEnabled;
     private boolean heatMapEnabled;
+
+    final CameraPosition[] mPreviousCameraPosition = {null};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        crimeMapEnabled=false;
         heatMapEnabled=false;
 
         //create MapsPresenter
@@ -78,12 +83,35 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         bottomSheetView = new BottomSheetView(bottomSheet, mapsPresenter, this);
         switch1 = findViewById(R.id.switch1);
         switch1.setOnCheckedChangeListener(this);
+        button = findViewById(R.id.switchDataButton);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        ListView listview = findViewById(R.id.listView);
+        listview.setOnTouchListener(new ListView.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow NestedScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow NestedScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
     }
 
     /**
@@ -91,7 +119,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      */
     @Override
     public void onMapReady(final GoogleMap googleMap) {
-
         mMap = googleMap;
 
         enableMyLocation();
@@ -122,21 +149,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(this));
 
         //Set listener for notifying the presenter when the camera position changes
-        final CameraPosition[] mPreviousCameraPosition = {null};
         mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
-                mClusterManager.onCameraIdle();
-                CameraPosition position = mMap.getCameraPosition();
-                if(mPreviousCameraPosition[0] == null || !mPreviousCameraPosition[0].equals(position)) {
-                    //position changed
-                    mPreviousCameraPosition[0] = mMap.getCameraPosition();
-
-                    float radius_meter = calcVisibleRadius();
-                    enableInfoWindow = radius_meter < 1000;
-
-                    mapsPresenter.cameraPosChanged(mPreviousCameraPosition[0].target,radius_meter);
-                }
+                updateCameraRegion();
             }
         });
 
@@ -157,9 +173,37 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    private void updateCameraRegion() {
+        mClusterManager.onCameraIdle();
+        CameraPosition position = mMap.getCameraPosition();
+        if(mPreviousCameraPosition[0] == null || !mPreviousCameraPosition[0].equals(position)) {
+            //position changed
+            mPreviousCameraPosition[0] = mMap.getCameraPosition();
+
+            float radius_meter = calcVisibleRadius();
+            enableInfoWindow = radius_meter < 1000;
+
+            mapsPresenter.cameraPosChanged(mPreviousCameraPosition[0].target,radius_meter);
+        }
+    }
+
+    public void onClickSwitchMapSrc(View view){
+        if(crimeMapEnabled){
+            crimeMapEnabled=false;
+            button.setImageResource(R.drawable.icon_police);
+        }else{
+            crimeMapEnabled=true;
+            button.setImageResource(R.drawable.icon_house);
+        }
+        clearMap();
+        mapsPresenter.switchDataSource(crimeMapEnabled);
+        mPreviousCameraPosition[0] = null; //invalidate current camera position
+        updateCameraRegion();
+    }
+
     private void markerClicked(Marker marker) {
         if(marker!=null && marker.getTitle()!=null) {
-            if (enableInfoWindow && marker.getSnippet() != null && !marker.getSnippet().isEmpty()) {
+            if (enableInfoWindow && marker.getSnippet() != null && !marker.getSnippet().equals("Occurred within the last month.")) {
                 //only display info window for markers where that information is available
                 bottomSheetView.displayBottomSheet(marker.getTitle(), marker.getSnippet());
             }
@@ -245,8 +289,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void addMarkersClustered(List<PostCodeMarker> markerList){
-                mClusterManager.addItems(markerList);
-                mClusterManager.cluster();
+        mClusterManager.addItems(markerList);
+        mClusterManager.cluster();
+        for (Marker marker: mClusterManager.getMarkerCollection().getMarkers()){
+            if(postcodeSearch.equals(marker.getTitle())){
+                postcodeSearch="";
+                mClusterManager.onMarkerClick(marker);
+                markerClicked(marker);
+            }
+        }
+
     }
     @Override
     public Marker addMarker(MarkerOptions markerOptions) {
@@ -293,6 +345,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
         }
+    }
+
+    public void moveCamera(LatLng latLng, int zoom){
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

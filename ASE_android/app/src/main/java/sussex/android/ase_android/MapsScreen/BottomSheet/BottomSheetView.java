@@ -1,9 +1,16 @@
 package sussex.android.ase_android.MapsScreen.BottomSheet;
 
 import android.app.Activity;
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.app.AlertDialog;
 import android.support.design.widget.BottomSheetBehavior;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -15,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
+import sussex.android.ase_android.MapsScreen.Model.AdressInfo;
 import sussex.android.ase_android.R;
 
 public class BottomSheetView implements BottomSheetContract.View{
@@ -37,9 +45,6 @@ public class BottomSheetView implements BottomSheetContract.View{
 
     }
 
-    public int getPeekHeightPx() {
-     return peekHeight;
-    }
 
     @Override
     public void displayBottomSheet(String postcode, String average) {
@@ -55,41 +60,54 @@ public class BottomSheetView implements BottomSheetContract.View{
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 
-    public void displayAddresses(String json, String price){
+    @Override
+    public void displayAddresses(List<AdressInfo> houseAddressInfo){
+        ArrayAdapter<AdressInfo> adapter = new CustomAdapter(activity, R.layout.layout_item_ist, houseAddressInfo);
         ListView listView = activity.findViewById(R.id.listView);
-
-        HashMap<String, String> addressInfo = new HashMap<>();
-        addressInfo.put(json, price);
-
-        List<HashMap<String, String>> listItems = new ArrayList<>();
-        SimpleAdapter adapter = new SimpleAdapter(activity, listItems, R.layout.layout_item_ist,
-                new String[]{"address", "price"}, new int[]{R.id.addressList, R.id.priceList});
-
-        Iterator iterator = addressInfo.entrySet().iterator();
-        while (iterator.hasNext()){
-            HashMap<String, String> resultsMap = new HashMap<>();
-            Map.Entry pair = (Map.Entry)iterator.next();
-            resultsMap.put("address", pair.getKey().toString());
-            resultsMap.put("price", pair.getValue().toString());
-            listItems.add(resultsMap);
-        }
-
         listView.setAdapter(adapter);
     }
 
-    public void populateListView(String json, String price){
+    private class CustomAdapter extends ArrayAdapter<AdressInfo> {
+        private Context mcontext;
+        int mResource;
+        public CustomAdapter(@NonNull Context context, int resource, @NonNull List<AdressInfo> houseAddressInfo) {
+            super(context, resource, houseAddressInfo);
+            mcontext = context;
+            mResource = resource;
+        }
 
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            String address = getItem(position).getAddress();
+            String price = getItem(position).getPrice();
+            String date = getItem(position).getDate();
+
+            AdressInfo houseAddress = new AdressInfo(address, price, date);
+
+            LayoutInflater inflater = LayoutInflater.from(mcontext);
+            convertView = inflater.inflate(mResource, parent, false);
+
+            TextView tvAddress = (TextView) convertView.findViewById(R.id.addressList);
+            TextView tvPrice = (TextView) convertView.findViewById(R.id.priceList);
+            TextView tvDate = (TextView) convertView.findViewById(R.id.dateList);
+
+            tvAddress.setText(address);
+            tvPrice.setText(price);
+            tvDate.setText(date);
+            return convertView;
+        }
     }
 
-    /**
-     * Hides the on-screen soft keyboard
-     * @param activity
-     */
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
+
+    @Override
+    public void onResponseError(String errorMessage) {
+        new AlertDialog.Builder(activity)
+                .setTitle("Error")
+                .setMessage(errorMessage)
+                .setPositiveButton("OK", null)
+                .show();
     }
+
+
 }

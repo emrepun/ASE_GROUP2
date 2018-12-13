@@ -10,13 +10,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
-import java.util.Locale;
-
-import sussex.android.ase_android.MapsScreen.model.PostCodeMarker;
+import sussex.android.ase_android.MapsScreen.Model.PostCodeMarker;
 import sussex.android.ase_android.R;
 
 public class MarkerRenderer extends DefaultClusterRenderer<PostCodeMarker> {
@@ -48,6 +45,7 @@ public class MarkerRenderer extends DefaultClusterRenderer<PostCodeMarker> {
      */
     private BitmapDescriptor bitmapDescriptorFromVector(int vectorResId) {
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+        assert vectorDrawable != null;
         vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
         Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);

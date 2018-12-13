@@ -26,17 +26,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button gotoLogin = (Button) findViewById(R.id.gotoLogin);
-        Button gotoSignup = (Button) findViewById(R.id.gotoSignup);
-
-
-        gotoSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
-        });
 
         //skip login
         Intent intent = new Intent(MainActivity.this, MapsActivity.class);
