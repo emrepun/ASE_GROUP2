@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.app.AlertDialog;
 import android.support.design.widget.BottomSheetBehavior;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
-import sussex.android.ase_android.MapsScreen.model.AdressInfo;
+import sussex.android.ase_android.MapsScreen.Model.AdressInfo;
 import sussex.android.ase_android.R;
 
 public class BottomSheetView implements BottomSheetContract.View{
@@ -101,6 +102,15 @@ public class BottomSheetView implements BottomSheetContract.View{
     }
     public void populateListView(String json, String price, String date){
 
+    }
+
+    @Override
+    public void onResponseError(String errorMessage) {
+        new AlertDialog.Builder(activity)
+                .setTitle("Error")
+                .setMessage(errorMessage)
+                .setPositiveButton("OK", null)
+                .show();
     }
 
     /**

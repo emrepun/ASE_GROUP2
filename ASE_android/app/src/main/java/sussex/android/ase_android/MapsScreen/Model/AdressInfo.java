@@ -1,4 +1,4 @@
-package sussex.android.ase_android.MapsScreen.model;
+package sussex.android.ase_android.MapsScreen.Model;
 
 import com.google.android.gms.maps.model.LatLng;
 

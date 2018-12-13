@@ -11,9 +11,9 @@ import com.google.android.gms.maps.model.TileOverlayOptions;
 import java.util.List;
 
 import sussex.android.ase_android.BasePresenter;
-import sussex.android.ase_android.MapsScreen.model.CallbackInfoInterface;
-import sussex.android.ase_android.MapsScreen.model.CallbackMarkerInterface;
-import sussex.android.ase_android.MapsScreen.model.PostCodeMarker;
+import sussex.android.ase_android.MapsScreen.Model.CallbackMarkerInterface;
+import sussex.android.ase_android.MapsScreen.Model.PostCodeMarker;
+import sussex.android.ase_android.MapsScreen.Model.CallbackInfoInterface;
 
 public interface MapsContract {
     interface View {
@@ -22,13 +22,14 @@ public interface MapsContract {
         Marker addMarker(MarkerOptions marker);
         TileOverlay addTileOverlay(TileOverlayOptions options);
         void clearMap();
-
+        void onClickSwitchMapSrc(android.view.View view);
     }
 
     interface Presenter extends BasePresenter {
         void cameraPosChanged(LatLng target, float radius_meter);
         void switchHeatmap(boolean showHeatmap);
         Model getServerConnectionHandler();
+        void switchDataSource(boolean showCrimeMap);
     }
 
     interface Model{

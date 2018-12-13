@@ -22,7 +22,6 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -35,7 +34,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.gms.maps.model.VisibleRegion;
-import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.List;
@@ -43,7 +41,7 @@ import java.util.List;
 import sussex.android.ase_android.CustomInfoWindowAdapter;
 import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetContract;
 import sussex.android.ase_android.MapsScreen.BottomSheet.BottomSheetView;
-import sussex.android.ase_android.MapsScreen.model.PostCodeMarker;
+import sussex.android.ase_android.MapsScreen.Model.PostCodeMarker;
 import sussex.android.ase_android.R;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,MapsContract.View, CompoundButton.OnCheckedChangeListener {
@@ -53,7 +51,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     final int LOCATION_PERMISSION_REQUEST_CODE = 1532;
     View bottomSheet;
 
-    private MapsPresenter mapsPresenter;
+    private MapsContract.Presenter mapsPresenter;
     private BottomSheetContract.View bottomSheetView;
     Switch switch1;
     Button button;
@@ -65,12 +63,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private boolean crimeMapEnabled;
     private boolean heatMapEnabled;
 
+    final CameraPosition[] mPreviousCameraPosition = {null};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        crimeMapEnabled=true;
+        crimeMapEnabled=false;
         heatMapEnabled=false;
 
         //create MapsPresenter
@@ -86,7 +86,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
     }
 
     /**
@@ -125,21 +124,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(this));
 
         //Set listener for notifying the presenter when the camera position changes
-        final CameraPosition[] mPreviousCameraPosition = {null};
         mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
-                mClusterManager.onCameraIdle();
-                CameraPosition position = mMap.getCameraPosition();
-                if(mPreviousCameraPosition[0] == null || !mPreviousCameraPosition[0].equals(position)) {
-                    //position changed
-                    mPreviousCameraPosition[0] = mMap.getCameraPosition();
-
-                    float radius_meter = calcVisibleRadius();
-                    enableInfoWindow = radius_meter < 1000;
-
-                    mapsPresenter.cameraPosChanged(mPreviousCameraPosition[0].target,radius_meter);
-                }
+                updateCameraRegion();
             }
         });
 
@@ -160,21 +148,37 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    public void onClick(View view){
+    private void updateCameraRegion() {
+        mClusterManager.onCameraIdle();
+        CameraPosition position = mMap.getCameraPosition();
+        if(mPreviousCameraPosition[0] == null || !mPreviousCameraPosition[0].equals(position)) {
+            //position changed
+            mPreviousCameraPosition[0] = mMap.getCameraPosition();
+
+            float radius_meter = calcVisibleRadius();
+            enableInfoWindow = radius_meter < 1000;
+
+            mapsPresenter.cameraPosChanged(mPreviousCameraPosition[0].target,radius_meter);
+        }
+    }
+
+    public void onClickSwitchMapSrc(View view){
         if(crimeMapEnabled){
             crimeMapEnabled=false;
-            ((Button)view).setText("price map");
+            button.setText("price map");
         }else{
             crimeMapEnabled=true;
-            ((Button)view).setText("crime map");
+            button.setText("crime map");
         }
         clearMap();
-        mapsPresenter.switchMap(crimeMapEnabled);
+        mapsPresenter.switchDataSource(crimeMapEnabled);
+        mPreviousCameraPosition[0] = null; //invalidate current camera position
+        updateCameraRegion();
     }
 
     private void markerClicked(Marker marker) {
         if(marker!=null && marker.getTitle()!=null) {
-            if (enableInfoWindow && marker.getSnippet() != null && !marker.getSnippet().isEmpty()) {
+            if (enableInfoWindow && marker.getSnippet() != null && !marker.getSnippet().equals("Occurred within the last month.")) {
                 //only display info window for markers where that information is available
                 bottomSheetView.displayBottomSheet(marker.getTitle(), marker.getSnippet());
             }
@@ -308,6 +312,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
         }
+    }
+
+    public void moveCamera(LatLng latLng, int zoom){
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

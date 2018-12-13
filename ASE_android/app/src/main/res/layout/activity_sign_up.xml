@@ -80,7 +80,7 @@
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="@font/montserrat"
-        android:onClick="onClick"
+        android:onClick="onClickSwitchMapSrc"
         android:text="SIGN UP"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
         android:textSize="18sp"

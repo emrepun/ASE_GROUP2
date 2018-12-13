@@ -1,7 +1,6 @@
 package sussex.android.ase_android.MapsScreen.model;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -11,6 +10,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.crashlytics.android.Crashlytics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
+import sussex.android.ase_android.MapsScreen.Model.CallbackMarkerInterface;
+import sussex.android.ase_android.MapsScreen.Model.AdressInfo;
 
 public class ServerConnection implements MapsContract.Model {
     private Context context;
@@ -50,50 +52,30 @@ public class ServerConnection implements MapsContract.Model {
     public void markerJsonParse(final CallbackMarkerInterface callback, double lat, double lon, double radius) {
         //cancel all other requests to the backend as they are now outdated
         mQueue.cancelAll("marker");
-        //String url = serverURL+"pcprices/"+lat+"/"+lon+"/"+radius;
-        String url = "https://api.myjson.com/bins/siz6a";
+        //final String url = serverURL+"pcprices/"+lat+"/"+lon+"/"+radius;
+        final String url = "https://api.myjson.com/bins/siz6a";
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        ArrayList<PostCodeMarker> markerArrayList= new ArrayList<>();
+                        ArrayList<sussex.android.ase_android.MapsScreen.Model.PostCodeMarker> markerArrayList= new ArrayList<>();
                         try {
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject postcodeData = response.getJSONObject(i);
-                                double price;
-                                try {
-                                    price = postcodeData.getDouble("price");
-                                }catch (JSONException e){
-                                    price=0;
-                                }
-                                String postcode;
-                                try{
-                                    postcode = postcodeData.getString("postcode");
-                                }catch (JSONException e){
-                                    postcode="Unknown";
-                                }
-                                double lat;double lon;
-                                try {
-                                    lat = postcodeData.getDouble("latitude");
-                                    lon = postcodeData.getDouble("longitude");
-                                }catch (JSONException e){
-                                    lat=lon=0;
-                                }
-                                markerArrayList.add(new PostCodeMarker(lat,lon, price, postcode, PostCodeMarker.HOUSE_MARKER));
-
-                            }
+                            parseMarkerResponse(response, markerArrayList);
                             //pass markers back to calling object
                             callback.displayMarkers(markerArrayList);
+                            Crashlytics.log("Successful marker request for: " + url);
                         } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(context, "The backend server was not reachable or produced an error", Toast.LENGTH_LONG).show();
+                            callback.onResponseError("The backend server produced an error.");
+                            Crashlytics.log("Failed (JSONException) marker request for: " + url);
+                            Crashlytics.logException(e);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                Toast.makeText(context, "The backend server was not reachable or produced an error", Toast.LENGTH_LONG).show();
+                callback.onResponseError("The backend server was not reachable.");
+                Crashlytics.log("Failed (not reachable) marker request for: " + url);
+                Crashlytics.logException(error);
             }
         });
         //20 seconds timeout, because the backend can take multiple seconds to query the database
@@ -105,17 +87,43 @@ public class ServerConnection implements MapsContract.Model {
 
     }
 
+    private void parseMarkerResponse(JSONArray response, ArrayList<sussex.android.ase_android.MapsScreen.Model.PostCodeMarker> markerArrayList) throws JSONException {
+        for (int i = 0; i < response.length(); i++) {
+            JSONObject postcodeData = response.getJSONObject(i);
+            double price;
+            try {
+                price = postcodeData.getDouble("price");
+            }catch (JSONException e){
+                price=0;
+            }
+            String postcode;
+            try{
+                postcode = postcodeData.getString("postcode");
+            }catch (JSONException e){
+                postcode="Unknown";
+            }
+            double lat;double lon;
+            try {
+                lat = postcodeData.getDouble("latitude");
+                lon = postcodeData.getDouble("longitude");
+            }catch (JSONException e){
+                lat=lon=0;
+            }
+            markerArrayList.add(new sussex.android.ase_android.MapsScreen.Model.PostCodeMarker(lat,lon, price, postcode, sussex.android.ase_android.MapsScreen.Model.PostCodeMarker.HOUSE_MARKER));
+
+        }
+    }
+
     /**
      * This method returns all information about the properties within the provided postcode
      * @param callback Callback for passing the properties to the caller
      * @param postcode Postcode
      */
-    public void postcodeJsonParse(final CallbackInfoInterface callback, final String postcode) {
+    public void postcodeJsonParse(final sussex.android.ase_android.MapsScreen.Model.CallbackInfoInterface callback, final String postcode) {
         mQueue.cancelAll("address");
-        //String url = serverURL+"addresses/"+postcode;
-        String url = "https://api.myjson.com/bins/b9emq";
+        //final String url = serverURL+"addresses/"+postcode;
+        final String url = "https://api.myjson.com/bins/b9emq";
         RequestQueue mQueue = Volley.newRequestQueue(context);
-
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -154,16 +162,19 @@ public class ServerConnection implements MapsContract.Model {
 
                             }
                             callback.displayInfo(houseAddressInfo);
+                            Crashlytics.log("Successful postcode request for: " + url);
                         } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(context, "The backend server was not reachable or produced an error", Toast.LENGTH_LONG).show();
+                            Crashlytics.log("Failed (JSONException) postcode request for :" + url);
+                            callback.onResponseError("The backend server produced an error.");
+                            Crashlytics.logException(e);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                Toast.makeText(context, "The backend server was not reachable or produced an error", Toast.LENGTH_LONG).show();
+                Crashlytics.log("Failed (not reachable) postcode request for: " + url);
+                callback.onResponseError("The backend server was not reachable.");
+                Crashlytics.logException(error);
             }
         });
         //20 seconds timeout, because the backend can take multiple seconds to query the database

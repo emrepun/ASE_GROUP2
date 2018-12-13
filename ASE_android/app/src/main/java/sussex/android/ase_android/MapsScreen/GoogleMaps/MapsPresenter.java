@@ -1,16 +1,9 @@
 package sussex.android.ase_android.MapsScreen.GoogleMaps;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
+import android.app.AlertDialog;
 import android.util.Log;
 
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
@@ -18,13 +11,11 @@ import com.google.maps.android.heatmaps.WeightedLatLng;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-import sussex.android.ase_android.MapsScreen.model.CallbackMarkerInterface;
-import sussex.android.ase_android.MapsScreen.model.PoliceDataConnection;
-import sussex.android.ase_android.MapsScreen.model.PostCodeMarker;
+import sussex.android.ase_android.MapsScreen.Model.CallbackMarkerInterface;
+import sussex.android.ase_android.MapsScreen.Model.PoliceDataConnection;
+import sussex.android.ase_android.MapsScreen.Model.PostCodeMarker;
 import sussex.android.ase_android.MapsScreen.model.ServerConnection;
-import sussex.android.ase_android.R;
 
 public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInterface {
 
@@ -39,19 +30,9 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
 
     public MapsPresenter(MapsContract.View view) {
         this.view = view;
-        switchMarker();
+        priceMarker();
     }
 
-    private void switchMarker() {
-        boolean showCrimeMap = true;
-        if (showCrimeMap){
-            policeMarker();
-            showCrimeMap = false;
-        } else {
-            priceMarker();
-            showCrimeMap = true;
-        }
-    }
 
 
     /**
@@ -61,6 +42,20 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
     public void displayMarkers(List<PostCodeMarker> markerList) {
         this.markerList=markerList;
         displayMarkers();
+    }
+
+    /**
+     * displays an error message when the backend produces an error
+     * @param errorMessage message to display
+     */
+    @Override
+    public void onResponseError(String errorMessage) {
+        new AlertDialog.Builder(view.getActivity())
+                .setTitle("Error")
+                .setMessage(errorMessage + "\nSwitching to available data source.")
+                .setPositiveButton("OK", null)
+                .show();
+        view.onClickSwitchMapSrc(null);
     }
 
     /**
@@ -124,7 +119,7 @@ public class MapsPresenter implements MapsContract.Presenter, CallbackMarkerInte
         ServerConnectionHandler.markerJsonParse(this,target.latitude, target.longitude,radius_meter/1000);
     }
 
-    public void switchMap(boolean showCrimeMap) {
+    public void switchDataSource(boolean showCrimeMap) {
         this.crimeMapEnabled=showCrimeMap;
         if (showCrimeMap){
             policeMarker();
