@@ -13,9 +13,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -87,6 +89,29 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        ListView listview = findViewById(R.id.listView);
+        listview.setOnTouchListener(new ListView.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow NestedScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow NestedScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
     }
 
     /**
@@ -265,13 +290,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void addMarkersClustered(List<PostCodeMarker> markerList){
                 mClusterManager.addItems(markerList);
+        for (Marker marker: mClusterManager.getMarkerCollection().getMarkers()){
+            if(postcodeSearch.equals(marker.getTitle())){
+                postcodeSearch="";
+                markerClicked(marker);
+            }
+        }
                 mClusterManager.cluster();
-                for (Marker marker: mClusterManager.getMarkerCollection().getMarkers()){
-                    if(postcodeSearch.equals(marker.getTitle())){
-                        postcodeSearch="";
-                        markerClicked(marker);
-                    }
-                }
+
     }
     @Override
     public Marker addMarker(MarkerOptions markerOptions) {
