@@ -11,9 +11,9 @@ import com.google.android.gms.maps.model.TileOverlayOptions;
 import java.util.List;
 
 import sussex.android.ase_android.BasePresenter;
-import sussex.android.ase_android.MapsScreen.Model.CallbackInfoInterface;
 import sussex.android.ase_android.MapsScreen.Model.CallbackMarkerInterface;
 import sussex.android.ase_android.MapsScreen.Model.PostCodeMarker;
+import sussex.android.ase_android.MapsScreen.Model.CallbackInfoInterface;
 
 public interface MapsContract {
     interface View {

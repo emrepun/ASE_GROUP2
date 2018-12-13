@@ -1,6 +1,9 @@
 package sussex.android.ase_android.MapsScreen.BottomSheet;
 
+import java.util.List;
+
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
+import sussex.android.ase_android.MapsScreen.Model.AdressInfo;
 import sussex.android.ase_android.MapsScreen.Model.CallbackInfoInterface;
 
 public class BottomSheetPresenter implements  BottomSheetContract.Presenter, CallbackInfoInterface {
@@ -17,14 +20,12 @@ public class BottomSheetPresenter implements  BottomSheetContract.Presenter, Cal
         mapsPresenter.getServerConnectionHandler().postcodeJsonParse(this,postcode);
     }
 
-    public void displayInfo(String json, String price, String date){
-        view.displayAddresses(json, price, date);
+    public void displayInfo(List<AdressInfo> houseAddressInfo){
+        view.displayAddresses(houseAddressInfo);
     }
 
     @Override
     public void onResponseError(String errorMessage) {
         view.onResponseError(errorMessage);
     }
-
-    public void populateListView(String json, String price, String date){ view.populateListView(json, price, date);}
 }

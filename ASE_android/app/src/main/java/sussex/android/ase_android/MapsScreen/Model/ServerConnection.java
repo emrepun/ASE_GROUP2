@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
+import sussex.android.ase_android.MapsScreen.Model.CallbackMarkerInterface;
+import sussex.android.ase_android.MapsScreen.Model.AdressInfo;
 
 public class ServerConnection implements MapsContract.Model {
     private Context context;
@@ -51,12 +53,12 @@ public class ServerConnection implements MapsContract.Model {
         //cancel all other requests to the backend as they are now outdated
         mQueue.cancelAll("marker");
         final String url = serverURL+"pcprices/"+lat+"/"+lon+"/"+radius;
-        //String url = "https://api.myjson.com/bins/siz6a";
+        //final String url = "https://api.myjson.com/bins/siz6a";
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        ArrayList<PostCodeMarker> markerArrayList= new ArrayList<>();
+                        ArrayList<sussex.android.ase_android.MapsScreen.Model.PostCodeMarker> markerArrayList= new ArrayList<>();
                         try {
                             parseMarkerResponse(response, markerArrayList);
                             //pass markers back to calling object
@@ -85,7 +87,7 @@ public class ServerConnection implements MapsContract.Model {
 
     }
 
-    private void parseMarkerResponse(JSONArray response, ArrayList<PostCodeMarker> markerArrayList) throws JSONException {
+    private void parseMarkerResponse(JSONArray response, ArrayList<sussex.android.ase_android.MapsScreen.Model.PostCodeMarker> markerArrayList) throws JSONException {
         for (int i = 0; i < response.length(); i++) {
             JSONObject postcodeData = response.getJSONObject(i);
             double price;
@@ -107,7 +109,7 @@ public class ServerConnection implements MapsContract.Model {
             }catch (JSONException e){
                 lat=lon=0;
             }
-            markerArrayList.add(new PostCodeMarker(lat,lon, price, postcode, PostCodeMarker.HOUSE_MARKER));
+            markerArrayList.add(new sussex.android.ase_android.MapsScreen.Model.PostCodeMarker(lat,lon, price, postcode, sussex.android.ase_android.MapsScreen.Model.PostCodeMarker.HOUSE_MARKER));
 
         }
     }
@@ -117,28 +119,19 @@ public class ServerConnection implements MapsContract.Model {
      * @param callback Callback for passing the properties to the caller
      * @param postcode Postcode
      */
-    public void postcodeJsonParse(final CallbackInfoInterface callback, final String postcode) {
+    public void postcodeJsonParse(final sussex.android.ase_android.MapsScreen.Model.CallbackInfoInterface callback, final String postcode) {
         mQueue.cancelAll("address");
         final String url = serverURL+"addresses/"+postcode;
-        //String url = "https://api.myjson.com/bins/b9emq";
+        //final String url = "https://api.myjson.com/bins/b9emq";
         RequestQueue mQueue = Volley.newRequestQueue(context);
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        ArrayList<AdressInfo> houseAddressInfo = new ArrayList<>();
                         try{
-                            String json="";
-                            String price = "";
-                            String houseAddress="";
-                            String date="";
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject postcodeData = response.getJSONObject(i);
-                                double pricePaid;
-                                try {
-                                    pricePaid = postcodeData.getDouble("pricePaid");
-                                } catch (JSONException e) {
-                                    pricePaid=0;
-                                }
                                 String town;
                                 String address;
                                 try {
@@ -150,21 +143,25 @@ public class ServerConnection implements MapsContract.Model {
                                     town="Unknown";
                                     address="Unknown";
                                 }
+                                double pricePaid;
+                                String price;
+                                try {
+                                    pricePaid = postcodeData.getDouble("pricePaid");
+                                    price = "£"+String.format(Locale.UK, "%,.2f", pricePaid);
+
+                                } catch (JSONException e) {
+                                    price= "unknown";
+                                }
                                 String transactionDate;
                                 try {
                                     transactionDate = postcodeData.getString("transactionDate");
                                 }catch (JSONException e) {
                                     transactionDate="Unknown";
                                 }
-                                json=json+address+"\n\n";
-                                price=price+"£" + String.format(Locale.UK,"%,.2f", pricePaid)+"\n\n\n\n";
-                                date=date+transactionDate+"\n\n\n";
-
-                                /*json=json+address+"\n"+pricePaid+"\n";*/
-
+                                houseAddressInfo.add(new AdressInfo(address, price, transactionDate));
 
                             }
-                            callback.displayInfo(json, price, date);
+                            callback.displayInfo(houseAddressInfo);
                             Crashlytics.log("Successful postcode request for: " + url);
                         } catch (JSONException e) {
                             Crashlytics.log("Failed (JSONException) postcode request for :" + url);

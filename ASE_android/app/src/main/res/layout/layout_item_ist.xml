@@ -14,7 +14,42 @@
         android:gravity="center_vertical"
         android:paddingBottom="10dp">
 
+        <TextView
+            android:id="@+id/addressList"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:text="address"
+            android:textColor="@color/greyText"
+            android:textSize="12sp" />
 
+        <TextView
+            android:id="@+id/priceList"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:textSize="12sp"
+            android:text="price"
+            android:textColor="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/dateList"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:textSize="12sp"
+            android:text="date"
+            android:textColor="@color/colorAccent" />
 
     </TableRow>
 

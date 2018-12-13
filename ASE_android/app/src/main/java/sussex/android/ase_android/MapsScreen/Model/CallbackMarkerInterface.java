@@ -7,6 +7,6 @@ import java.util.List;
  */
 public interface CallbackMarkerInterface {
     void displayMarkers(List<PostCodeMarker> markerList);
+
     void onResponseError(String errorMessage);
 }
-
