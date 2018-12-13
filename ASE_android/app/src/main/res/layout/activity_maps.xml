@@ -38,7 +38,7 @@
         map:layout_anchor="@+id/drawer_layout"
         map:layout_anchorGravity="left|top"
         map:pressedTranslationZ="3dp"
-        map:srcCompat="@drawable/ic_marker" />
+        map:srcCompat="@drawable/icon_police" />
 
 
     <android.support.design.widget.FloatingActionButton
