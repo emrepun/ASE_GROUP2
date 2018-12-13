@@ -65,19 +65,31 @@ public class PoliceDataConnection implements MapsContract.Model {
                             parseApiResponse(response, markerArrayList);
                             //pass markers back to calling object
                             callback.displayMarkers(markerArrayList);
-                            Crashlytics.log("Successful police marker request for: " + url);
+                            try{
+                                Crashlytics.log("Successful police marker request for: " + url);
+                            }catch (IllegalStateException ex){
+                                //fails only for unit tests
+                            }
                         } catch (JSONException e) {
+                            try{
+                                Crashlytics.log("Failed (JSONException) police marker request for: " + url);
+                                Crashlytics.logException(e);
+                            }catch (IllegalStateException ex){
+                                //fails only for unit tests
+                            }
                             callback.onResponseError("The backend server produced an error.");
-                            Crashlytics.log("Failed (JSONException) police marker request for: " + url);
-                            Crashlytics.logException(e);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                try{
+                    Crashlytics.log("Failed (not reachable) marker request for: " + url);
+                    Crashlytics.logException(error);
+                }catch (IllegalStateException ex){
+                    //fails only for unit tests
+                }
                 callback.onResponseError("The backend server was not reachable.");
-                Crashlytics.log("Failed (not reachable) marker request for: " + url);
-                Crashlytics.logException(error);
             }
         });
         //30 seconds timeout, because the backend can take multiple seconds to query the database

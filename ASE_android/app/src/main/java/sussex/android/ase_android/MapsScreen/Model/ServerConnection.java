@@ -61,19 +61,31 @@ public class ServerConnection implements MapsContract.Model {
                             parseMarkerResponse(response, markerArrayList);
                             //pass markers back to calling object
                             callback.displayMarkers(markerArrayList);
-                            Crashlytics.log("Successful marker request for: " + url);
+                            try{
+                                Crashlytics.log("Successful marker request for: " + url);
+                            }catch (IllegalStateException e){
+                                //fails only for unit tests
+                            }
                         } catch (JSONException e) {
+                            try{
+                                Crashlytics.log("Failed (JSONException) marker request for: " + url);
+                                Crashlytics.logException(e);
+                            }catch (IllegalStateException ex){
+                                //fails only for unit tests
+                            }
                             callback.onResponseError("The backend server produced an error.");
-                            Crashlytics.log("Failed (JSONException) marker request for: " + url);
-                            Crashlytics.logException(e);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                try{
+                    Crashlytics.log("Failed (not reachable) marker request for: " + url);
+                    Crashlytics.logException(error);
+                }catch (IllegalStateException e){
+                    //fails only for unit tests
+                }
                 callback.onResponseError("The backend server was not reachable.");
-                Crashlytics.log("Failed (not reachable) marker request for: " + url);
-                Crashlytics.logException(error);
             }
         });
         //20 seconds timeout, because the backend can take multiple seconds to query the database
@@ -129,19 +141,31 @@ public class ServerConnection implements MapsContract.Model {
                         try{
                             parsePostcodeResponse(response, houseAddressInfo);
                             callback.displayInfo(houseAddressInfo);
+                            try{
                             Crashlytics.log("Successful postcode request for: " + url);
+                            }catch (IllegalStateException e){
+                                //fails only for unit tests
+                            }
                         } catch (JSONException e) {
+                            try{
+                                Crashlytics.log("Failed (JSONException) postcode request for :" + url);
+                                Crashlytics.logException(e);
+                            }catch (IllegalStateException ex){
+                                //fails only for unit tests
+                            }
                             callback.onResponseError("The backend server produced an error.");
-                            Crashlytics.log("Failed (JSONException) postcode request for :" + url);
-                            Crashlytics.logException(e);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                try{
+                    Crashlytics.log("Failed (not reachable) postcode request for: " + url);
+                    Crashlytics.logException(error);
+                }catch (IllegalStateException e){
+                    //fails only for unit tests
+                }
                 callback.onResponseError("The backend server was not reachable.");
-                Crashlytics.log("Failed (not reachable) postcode request for: " + url);
-                Crashlytics.logException(error);
             }
         });
         //20 seconds timeout, because the backend can take multiple seconds to query the database
