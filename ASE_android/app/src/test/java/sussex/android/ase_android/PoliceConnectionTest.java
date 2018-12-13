@@ -28,6 +28,7 @@ import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
 import sussex.android.ase_android.MapsScreen.Model.CallbackMarkerInterface;
 import sussex.android.ase_android.MapsScreen.Model.PoliceDataConnection;
 import sussex.android.ase_android.MapsScreen.Model.PostCodeMarker;
+import sussex.android.ase_android.MapsScreen.Model.ServerConnection;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -109,6 +110,43 @@ public class PoliceConnectionTest {
         }, 50.822823, -0.131921,0.1);
         lock.await(5000, TimeUnit.MILLISECONDS);
         assertTrue(markerList_result.size()> 0);
+    }
+
+    @Test
+    public void markerErrorJsonParse() throws InterruptedException {
+        breakServerAddress();
+
+        final boolean[] test={false};
+        scon.markerJsonParse(new CallbackMarkerInterface() {
+            @Override
+            public void displayMarkers(List<PostCodeMarker> markerList) {
+                fail("should report error, but answered instead");
+            }
+
+            @Override
+            public void onResponseError(String errorMessage) {
+                test[0]=errorMessage.equals("The backend server was not reachable.");
+                lock.countDown();
+            }
+        }, 1, 1,0);
+        lock.await(10000, TimeUnit.MILLISECONDS);
+        assertTrue(test[0]);
+    }
+
+    private void breakServerAddress(){
+        Field privateServerUrl = null;
+        try {
+            privateServerUrl = PoliceDataConnection.class.getDeclaredField("serverURL");
+        } catch (NoSuchFieldException e1) {
+            e1.printStackTrace();
+        }
+        privateServerUrl.setAccessible(true);
+        try {
+            privateServerUrl.set(scon,"break.server.URL");
+        } catch (IllegalAccessException e1) {
+            e1.printStackTrace();
+        }
+
     }
 
 }

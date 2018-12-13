@@ -45,9 +45,6 @@ public class BottomSheetView implements BottomSheetContract.View{
 
     }
 
-    public int getPeekHeightPx() {
-     return peekHeight;
-    }
 
     @Override
     public void displayBottomSheet(String postcode, String average) {
@@ -63,6 +60,7 @@ public class BottomSheetView implements BottomSheetContract.View{
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 
+    @Override
     public void displayAddresses(List<AdressInfo> houseAddressInfo){
         ArrayAdapter<AdressInfo> adapter = new CustomAdapter(activity, R.layout.layout_item_ist, houseAddressInfo);
         ListView listView = activity.findViewById(R.id.listView);
@@ -100,9 +98,7 @@ public class BottomSheetView implements BottomSheetContract.View{
             return convertView;
         }
     }
-    public void populateListView(String json, String price, String date){
 
-    }
 
     @Override
     public void onResponseError(String errorMessage) {
@@ -113,16 +109,5 @@ public class BottomSheetView implements BottomSheetContract.View{
                 .show();
     }
 
-    /**
-     * Hides the on-screen soft keyboard
-     * @param activity
-     */
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
-    }
 
 }

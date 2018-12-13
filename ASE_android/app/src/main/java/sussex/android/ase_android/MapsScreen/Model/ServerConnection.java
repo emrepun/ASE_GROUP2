@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
-import sussex.android.ase_android.MapsScreen.Model.CallbackMarkerInterface;
-import sussex.android.ase_android.MapsScreen.Model.AdressInfo;
 
 public class ServerConnection implements MapsContract.Model {
     private Context context;
@@ -119,61 +117,30 @@ public class ServerConnection implements MapsContract.Model {
      * @param callback Callback for passing the properties to the caller
      * @param postcode Postcode
      */
-    public void postcodeJsonParse(final sussex.android.ase_android.MapsScreen.Model.CallbackInfoInterface callback, final String postcode) {
+    public void postcodeJsonParse(final CallbackInfoInterface callback, final String postcode) {
         mQueue.cancelAll("address");
-        final String url = serverURL+"addresses/"+postcode;
+        final String url = serverURL+"addresses/"+postcode.replaceAll(" ", "%20");
         //final String url = "https://api.myjson.com/bins/b9emq";
-        RequestQueue mQueue = Volley.newRequestQueue(context);
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         ArrayList<AdressInfo> houseAddressInfo = new ArrayList<>();
                         try{
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject postcodeData = response.getJSONObject(i);
-                                String town;
-                                String address;
-                                try {
-                                    JSONObject propAddrObject = postcodeData.getJSONObject("propertyAddress");
-                                    town = propAddrObject.getString("town");
-                                    address = propAddrObject.getString("paon") + " "
-                                            + propAddrObject.getString("street");
-                                }catch (JSONException e) {
-                                    town="Unknown";
-                                    address="Unknown";
-                                }
-                                double pricePaid;
-                                String price;
-                                try {
-                                    pricePaid = postcodeData.getDouble("pricePaid");
-                                    price = "£"+String.format(Locale.UK, "%,.2f", pricePaid);
-
-                                } catch (JSONException e) {
-                                    price= "unknown";
-                                }
-                                String transactionDate;
-                                try {
-                                    transactionDate = postcodeData.getString("transactionDate");
-                                }catch (JSONException e) {
-                                    transactionDate="Unknown";
-                                }
-                                houseAddressInfo.add(new AdressInfo(address, price, transactionDate));
-
-                            }
+                            parsePostcodeResponse(response, houseAddressInfo);
                             callback.displayInfo(houseAddressInfo);
                             Crashlytics.log("Successful postcode request for: " + url);
                         } catch (JSONException e) {
-                            Crashlytics.log("Failed (JSONException) postcode request for :" + url);
                             callback.onResponseError("The backend server produced an error.");
+                            Crashlytics.log("Failed (JSONException) postcode request for :" + url);
                             Crashlytics.logException(e);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Crashlytics.log("Failed (not reachable) postcode request for: " + url);
                 callback.onResponseError("The backend server was not reachable.");
+                Crashlytics.log("Failed (not reachable) postcode request for: " + url);
                 Crashlytics.logException(error);
             }
         });
@@ -184,5 +151,39 @@ public class ServerConnection implements MapsContract.Model {
         request.setTag("address");
         mQueue.add(request);
 
+    }
+
+    private void parsePostcodeResponse(JSONArray response, ArrayList<AdressInfo> houseAddressInfo) throws JSONException {
+        for (int i = 0; i < response.length(); i++) {
+            JSONObject postcodeData = response.getJSONObject(i);
+            String town;
+            String address;
+            try {
+                JSONObject propAddrObject = postcodeData.getJSONObject("propertyAddress");
+                town = propAddrObject.getString("town");
+                address = propAddrObject.getString("paon") + " "
+                        + propAddrObject.getString("street");
+            }catch (JSONException e) {
+                town="Unknown";
+                address="Unknown";
+            }
+            double pricePaid;
+            String price;
+            try {
+                pricePaid = postcodeData.getDouble("pricePaid");
+                price = "£"+String.format(Locale.UK, "%,.2f", pricePaid);
+
+            } catch (JSONException e) {
+                price= "unknown";
+            }
+            String transactionDate;
+            try {
+                transactionDate = postcodeData.getString("transactionDate");
+            }catch (JSONException e) {
+                transactionDate="Unknown";
+            }
+            houseAddressInfo.add(new AdressInfo(address, price, transactionDate));
+
+        }
     }
 }

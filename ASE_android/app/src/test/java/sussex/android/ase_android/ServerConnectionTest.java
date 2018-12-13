@@ -25,12 +25,15 @@ import java.util.concurrent.TimeUnit;
 
 import androidx.test.core.app.ApplicationProvider;
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
+import sussex.android.ase_android.MapsScreen.Model.AdressInfo;
 import sussex.android.ase_android.MapsScreen.Model.CallbackInfoInterface;
 import sussex.android.ase_android.MapsScreen.Model.CallbackMarkerInterface;
 import sussex.android.ase_android.MapsScreen.Model.PostCodeMarker;
 import sussex.android.ase_android.MapsScreen.Model.ServerConnection;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.spy;
@@ -43,7 +46,7 @@ public class ServerConnectionTest {
     private Context context = ApplicationProvider.getApplicationContext();
     private MapsContract.Model scon;
 
-    private CountDownLatch lock = new CountDownLatch(1);
+    private CountDownLatch lock;
 
     //Volley needs specific queue for testing
     private RequestQueue newVolleyRequestQueueForTest(final Context context) {
@@ -53,6 +56,22 @@ public class ServerConnectionTest {
         RequestQueue queue = new RequestQueue(new DiskBasedCache(cacheDir), network, 4, responseDelivery);
         queue.start();
         return queue;
+    }
+
+    private void breakServerAddress(){
+        Field privateServerUrl = null;
+        try {
+            privateServerUrl = ServerConnection.class.getDeclaredField("serverURL");
+        } catch (NoSuchFieldException e1) {
+            e1.printStackTrace();
+        }
+        privateServerUrl.setAccessible(true);
+        try {
+            privateServerUrl.set(scon,"break.server.URL");
+        } catch (IllegalAccessException e1) {
+            e1.printStackTrace();
+        }
+
     }
 
     @Before
@@ -71,10 +90,11 @@ public class ServerConnectionTest {
         } catch (IllegalAccessException e1) {
             e1.printStackTrace();
         }
+        lock= new CountDownLatch(1);
     }
 
     @Test
-    public void callbackIsCalled() throws InterruptedException {
+    public void callbackIsCalled() {
         final CallbackMarkerInterface callBack = spy(new CallbackMarkerInterface() {
             @Override
             public void displayMarkers(List<PostCodeMarker> markerList) {
@@ -89,6 +109,47 @@ public class ServerConnectionTest {
         scon.markerJsonParse(callBack, 50.822823, -0.131921,0.1);
         //lock.await(10000, TimeUnit.MILLISECONDS);
         verify(callBack, timeout(5000).times(1)).displayMarkers((List<PostCodeMarker>)any());
+    }
+
+    @Test
+    public void markerInvalidJsonParse() throws InterruptedException {
+        final List<PostCodeMarker> markerList_result = new ArrayList<>();
+        scon.markerJsonParse(new CallbackMarkerInterface() {
+            @Override
+            public void displayMarkers(List<PostCodeMarker> markerList) {
+                markerList_result.addAll(markerList);
+                lock.countDown();
+            }
+
+            @Override
+            public void onResponseError(String errorMessage) {
+                fail(errorMessage);
+            }
+        }, 1, 1,0);
+        lock.await(10000, TimeUnit.MILLISECONDS);
+        assertTrue(markerList_result.isEmpty());
+    }
+
+    @Test
+    public void markerErrorJsonParse() throws InterruptedException {
+        breakServerAddress();
+
+        final boolean[] test={false};
+        scon.markerJsonParse(new CallbackMarkerInterface() {
+            @Override
+            public void displayMarkers(List<PostCodeMarker> markerList) {
+                fail("should report error, but answered instead");
+
+            }
+
+            @Override
+            public void onResponseError(String errorMessage) {
+                test[0]=errorMessage.equals("The backend server was not reachable.");
+                lock.countDown();
+            }
+        }, 1, 1,0);
+        lock.await(10000, TimeUnit.MILLISECONDS);
+        assertTrue(test[0]);
     }
 
 
@@ -115,10 +176,12 @@ public class ServerConnectionTest {
 
     @Test
     public void postcodeJsonParse() throws InterruptedException {
-        /*scon.postcodeJsonParse(new CallbackInfoInterface() {
+        final List<AdressInfo> assertList = new ArrayList<>();
+        scon.postcodeJsonParse(new CallbackInfoInterface() {
+
             @Override
-            public void displayInfo(String json, String price, String date) {
-                assertEquals(price, "68000");
+            public void displayInfo(List<AdressInfo> houseAddressInfo) {
+                assertList.addAll(houseAddressInfo);
                 lock.countDown();
             }
 
@@ -127,6 +190,51 @@ public class ServerConnectionTest {
                 fail(errorMessage);
             }
         }, "BN2 0JH");
-        lock.await(10000, TimeUnit.MILLISECONDS);*/
+        lock.await(10000, TimeUnit.MILLISECONDS);
+        assertFalse(assertList.isEmpty());
     }
+
+    @Test
+    public void postcodeInvalidJsonParse() throws InterruptedException {
+        final List<AdressInfo> assertList = new ArrayList<>();
+        scon.postcodeJsonParse(new CallbackInfoInterface() {
+
+            @Override
+            public void displayInfo(List<AdressInfo> houseAddressInfo) {
+                assertList.addAll(houseAddressInfo);
+                lock.countDown();
+            }
+
+            @Override
+            public void onResponseError(String errorMessage) {
+                fail(errorMessage);
+            }
+        }, "sadfdsfg");
+        lock.await(10000, TimeUnit.MILLISECONDS);
+        assertTrue(assertList.isEmpty());
+    }
+
+    @Test
+    public void postcodeErrorJsonParse() throws InterruptedException {
+        breakServerAddress();
+        final boolean test[]={false};
+        scon.postcodeJsonParse(new CallbackInfoInterface() {
+
+            @Override
+            public void displayInfo(List<AdressInfo> houseAddressInfo) {
+                fail("should report error, but answered instead");
+            }
+
+            @Override
+            public void onResponseError(String errorMessage) {
+               test[0]=true;
+               lock.countDown();
+            }
+        }, "sadfdsfg");
+        lock.await(10000, TimeUnit.MILLISECONDS);
+        assertTrue(test[0]);
+    }
+
+
+
 }

@@ -8,7 +8,6 @@ import sussex.android.ase_android.MapsScreen.Model.AdressInfo;
 
 public interface BottomSheetContract {
         interface View {
-                int getPeekHeightPx();
                 void displayBottomSheet(String postcode, String average);
                 void hideBottomSheet();
 
