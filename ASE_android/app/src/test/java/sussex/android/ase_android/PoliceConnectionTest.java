@@ -25,6 +25,8 @@ import java.util.concurrent.TimeUnit;
 
 import androidx.test.core.app.ApplicationProvider;
 import sussex.android.ase_android.MapsScreen.GoogleMaps.MapsContract;
+import sussex.android.ase_android.MapsScreen.Model.AdressInfo;
+import sussex.android.ase_android.MapsScreen.Model.CallbackInfoInterface;
 import sussex.android.ase_android.MapsScreen.Model.CallbackMarkerInterface;
 import sussex.android.ase_android.MapsScreen.Model.PoliceDataConnection;
 import sussex.android.ase_android.MapsScreen.Model.PostCodeMarker;
@@ -131,6 +133,26 @@ public class PoliceConnectionTest {
         }, 1, 1,0);
         lock.await(10000, TimeUnit.MILLISECONDS);
         assertTrue(test[0]);
+    }
+
+    @Test
+    public void postcodeInvalidJsonParse() throws InterruptedException {
+        final List<AdressInfo> assertList = new ArrayList<>();
+        scon.postcodeJsonParse(new CallbackInfoInterface() {
+
+            @Override
+            public void displayInfo(List<AdressInfo> houseAddressInfo) {
+                assertList.addAll(houseAddressInfo);
+                lock.countDown();
+            }
+
+            @Override
+            public void onResponseError(String errorMessage) {
+                fail(errorMessage);
+            }
+        }, "sadfdsfg");
+        lock.await(10000, TimeUnit.MILLISECONDS);
+        assertTrue(assertList.isEmpty());
     }
 
     private void breakServerAddress(){
